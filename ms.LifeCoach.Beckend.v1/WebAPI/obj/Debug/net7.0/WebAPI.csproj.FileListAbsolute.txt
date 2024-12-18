@@ -1,0 +1,392 @@
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.Development.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.exe
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.deps.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.runtimeconfig.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Core.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Identity.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Binder.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Memory.Data.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.AssemblyReference.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.GeneratedMSBuildEditorConfig.editorconfig
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfoInputs.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfo.cs
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CoreCompileInputs.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.WebAPI.props
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.WebAPI.props
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.WebAPI.props
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.pack.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.build.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.development.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\scopedcss\bundle\WebAPI.styles.css
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CopyComplete
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\refint\WebAPI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Humanizer.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.config
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.exe
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.deps.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.runtimeconfig.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extras.DynamicProxy.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Core.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Identity.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Humanizer.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\MicroKnights.Log4NetAdoNetAppender.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Memory.Data.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.AssemblyReference.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfoInputs.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfo.cs
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CoreCompileInputs.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.WebAPI.props
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.WebAPI.props
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.WebAPI.props
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\scopedcss\bundle\WebAPI.styles.css
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CopyComplete
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\refint\WebAPI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.config
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.exe
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.deps.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.runtimeconfig.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extras.DynamicProxy.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Core.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Identity.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Humanizer.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\MicroKnights.Log4NetAdoNetAppender.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Memory.Data.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.AssemblyReference.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfoInputs.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfo.cs
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CoreCompileInputs.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.WebAPI.props
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.WebAPI.props
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.WebAPI.props
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\scopedcss\bundle\WebAPI.styles.css
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CopyComplete
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\refint\WebAPI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.AssemblyReference.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfoInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.AssemblyInfo.cs
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CoreCompileInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\refint\WebAPI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\appsettings.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.config
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.exe
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.deps.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.runtimeconfig.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\WebAPI.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Autofac.Extras.DynamicProxy.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Core.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Azure.Identity.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\log4net.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\MicroKnights.Log4NetAdoNetAppender.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Data.SqlClient.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.SqlServer.Server.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Memory.Data.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Runtime.Caching.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Business.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Core.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\Entities.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.WebAPI.props
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.WebAPI.props
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.WebAPI.props
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\scopedcss\bundle\WebAPI.styles.css
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.csproj.CopyComplete
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\WebAPI.genruntimeconfig.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\obj\Debug\net7.0\ref\WebAPI.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\CloudinaryDotNet.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\CloudinaryDotNet.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\WebAPI\bin\Debug\net7.0\RabbitMQ.Client.dll

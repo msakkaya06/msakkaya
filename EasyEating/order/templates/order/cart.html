@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+Sepetim
+{% endblock title %}
+{% block content %}
+<section class="h-100 h-custom" style="background-color: #FC6832; overflow-y: auto;">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Sepetim</h1>
+                      <h6 class="mb-0 text-muted">{{cart_items|length}} Öğe</h6>
+                    </div>
+                    {% for cart in cart_items  %}
+                    
+                    <hr class="my-4">
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                          <img
+                            src="{{cart.image.url}}"
+                            class="img-fluid rounded-3" alt="Cotton T-shirt">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                          <h6 class="text-muted">{{cart.type}}</h6>
+                          <h6 class="text-black mb-0">{{cart.name}}</h6> x <h6 class="text-muted mb-0">{{cart.quantity}}</h6>
+                          
+
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                          <button class="btn btn-link px-2" value="{{cart.quantity}}"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                          </button>
+    
+                          <input id="form1" min="0" name="quantity" value="{{cart.quantity}}" type="number"
+                            class="form-control form-control-sm" />
+    
+                          <button class="btn btn-link px-2"
+                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                          <h6 class="mb-0">{{cart.sum_price}} TL</h6>
+                        </div>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                          <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                        </div>
+                      </div>
+                    {% endfor %}
+
+                    <hr class="my-4">
+  
+                    <div class="pt-5">
+                      <h6 class="mb-0"><a href="{% url "order_index" %}" class="text-body"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Sipariş Ekranına Geri Dön</a></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Sepet Özeti</h3>
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">{{cart_items|length}} Öğe</h5>
+                      <h5>{{sum_price}} ₺</h5>
+                    </div>
+                    <hr class="my-4">
+  
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">TOPLAM FİYAT</h5>
+                      <h5>{{sum_price}} ₺</h5>
+                    </div>
+                
+                    <form id="cartToOrderForm" method="post" action="{% url 'cart_to_order' cart_id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-dark btn-block btn-lg" data-mdb-ripple-color="dark">Mutfağa Gönder</button>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+
+
+    const businessId = "{{ user.business.id }}";  // İşletme ID'si
+    const deskSlug = "{{ user.username }}";  // Masa slug'ı
+  
+    const businessSocket = new WebSocket(`ws://localhost:8080/ws/business/${businessId}/`);
+    const deskSocket = new WebSocket(`ws://localhost:8080/ws/desk/${deskSlug}/`);
+  
+    businessSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      console.log('Business update:', data.order_data);
+      // Güncellemeleri işleyin
+    };
+  
+    deskSocket.onmessage = function(e) {
+      const data = JSON.parse(e.data);
+      console.log('Desk update:', data.order_data);
+      // Güncellemeleri işleyin
+    };
+  
+    businessSocket.onclose = function(e) {
+      console.error('Business socket closed:', e);
+    };
+  
+    deskSocket.onclose = function(e) {
+      console.error('Desk socket closed:', e);
+    };
+
+
+  </script>
+
+{% endblock content %}

@@ -1,0 +1,83 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-2">
+    <!-- personnel_assignment.html -->
+
+    <img class="mt-2 mb-2" src="{% static 'img/logo.png' %}" alt="Logo" style="max-width: 125px; display: block; margin-left: auto; margin-right: auto;" />
+
+    <h2 class="mb-2 text-center">Tunceli Emniyet Müdürlüğü</h2>
+    <h2 class="mb-4 text-center">{{ current_year }} Yılı Genel Atama İstihdam Yerleri Sonuçları</h2>
+    <!-- Giriş Formu -->
+    <form method="post" action="{% url 'personnel_assignment' %}" onsubmit="clearForm()">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="national_identity_number" class="form-label">T.C. Kimlik Numarası:</label>
+        <input type="text" class="form-control" id="national_identity_number" name="national_identity_number" required style="border: 1px solid #042940;"/>
+      </div>
+      <div class="mb-3">
+        <label for="registration_number" class="form-label">Sicil:</label>
+        <input type="text" class="form-control" id="registration_number" name="registration_number" required style="border: 1px solid #042940;"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Sorgula</button>
+    </form>
+
+    <!-- Kullanıcı Bilgilerini Gösterme Tablosu -->
+    {% if personnel_assignment != 'DoesNotExist' and personnel_assignment != "None" %}
+      <div class=" mb-3">
+        <h4 class="text-center mb-3 text-primary"><strong>ATAMA SONUCU</strong></h4>
+
+        <div style="max-width: 800px;">
+          <table class="table table-striped table-bordered">
+            <tbody>
+              <tr>
+                <th style="width: 40%;">Ad Soyad:</th>
+                <td style="width: 60%;">{{ personnel_assignment.first_last_name }}</td>
+              </tr>
+              <tr>
+                <th style="width: 40%;">Rütbe:</th>
+                <td style="width: 60%;">{{ personnel_assignment.rank }}</td>
+              </tr>
+              <tr>
+                <th style="width: 40%;">Atandığı Birim:</th>
+                <td style="width: 60%;">{{ personnel_assignment.assigned_unit }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% elif personnel_assignment == 'DoesNotExist' %}
+      <div class="alert alert-danger mt-5" role="alert">Kayıt bulunamadı. T.C. Kimlik Numaranızı ve Sicil Bilgilerinizi Kontrol Ediniz.</div>
+    {% endif %}
+  </div>
+
+  <!-- Önemli Duyurular -->
+  <div class="container mt-3">
+    <div class="alert alert-warning text-dark" role="alert">
+      <h5 class="alert-heading">ÖNEMLİ DUYURULAR</h5>
+      <ul>
+        <li>İl merkezine ataması yapılan personelin Vakıfbank'ta hesabı yok ise Vakıfbank'tan hesap açtırması gerekmektedir.</li>
+        <li class="mb-2">Ataması İl Merkezine gerçekleşen personelin mehil müddeti bitimi hafta sonuna denk gelmesi durumunda İlimizde hazır bulunup Müdürlüğümüz Bilgi Teknolojileri ve Haberleşme Şube Müdürlüğü – Haber Merkezi Büro Amirliğinde (Merkez Bina Kat:4) göreve başladığına dair tutanak düzenletecek olup takip eden ilk iş günü Personel Şube Müdürlüğüne tutanakla birlikte gelerek göreve başlama işlemini gerçekleştirecektir.</li>
+        <div class="text-center">
+          <strong><li style="list-style-type: none;">Yeni Görev Yerinizin Hayırlı Olmasını Dileriz.</li>Tunceli Emniyet Müdürlüğü</strong>
+        </div>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Göreve Başlarken İstenilen Evraklar -->
+  <div class="container mb-5">
+    <div class="alert alert-warning text-dark" role="alert">
+        <h5 class="alert-heading">GÖREVE BAŞLARKEN İSTENİLEN EVRAKLARIN LİSTESİ</h5>
+      <ul>
+        <li>Personel Nakil Bildirim Formu (Aslı)</li>
+      </ul>
+      <strong><p class="text-center">Her türlü sorularınız için Personel Şb.Md. Atama Br.A. ile irtibat kurunuz. (Santral: 0 505 318 62 00-01-02 Dahili: 62 15- 62 25)</p></strong>
+    </div>
+  </div>
+{% endblock %}

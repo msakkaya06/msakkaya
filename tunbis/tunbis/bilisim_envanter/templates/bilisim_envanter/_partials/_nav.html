@@ -1,0 +1,54 @@
+{% block sidebar %}
+<a href="{% url 'envanter_index' %}" class="nav_link {% if req.path == '/bilisim-envanter/' %}active{% endif %}"> 
+    <i class='bx bxs-dashboard nav_icon'></i> 
+    <span class="nav_name">Envanter Yönetimi</span> 
+</a>
+<a href="{% url 'envanter_computer' %}" class="nav_link {% if req.path == '/bilisim-envanter/computer/' %}active{% endif %}"> 
+    <i class="bx bx-desktop nav_icon"></i> 
+    <span class="nav_name">Bilgisayar Envanter</span> 
+</a>
+<a href="{% url 'printer_scanner_list' %}" class="nav_link {% if req.path == '/bilisim-envanter/printer/' %}active{% endif %}"> 
+    <i class='bx bxs-printer nav_icon'></i> 
+    <span class="nav_name">Yazıcı-Tarayıcı Envanter</span> 
+</a> 
+<a href="#" class="nav_link {% if req.path == '/bilisim-envanter/oem/' %}active{% endif %}"> 
+    <i class='bx bx-plug nav_icon'></i> 
+    <span class="nav_name">OEM Envanter</span> 
+</a>
+
+
+<!-- Arıza Takip Menüsü -->
+<a href="#faultMenu" id="faultMenuLink" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="faultMenu"> 
+    <i class="bx bxs-down-arrow ml-auto"></i>
+    <span class="nav_name">Arıza İşlemleri</span> 
+
+</a>
+<div id="faultMenu" class="collapse">
+    <a href="{% url 'fault_record_create' %}" class="nav_link ms-2"> 
+        <i class='bx bx-error-circle nav_icon'></i> 
+        <span class="nav_name">Arıza Kaydı Oluştur</span> 
+    </a>
+    <a href="{% url 'fault_tracking' %}" class="nav_link ms-2"> 
+        <i class='bx bx-calendar-check nav_icon'></i> 
+        <span class="nav_name">Arıza Takip</span>
+    </a>
+    <a href="{% url 'fault_summary' %}" class="nav_link ms-2"> 
+        <i class='bx bx-line-chart'></i>
+        <span class="nav_name">Arıza İstatistik</span>
+    </a>
+</div>
+
+<a href="{% url 'envanter_index' %}" class="nav_link {% if req.path == '/bilisim-envanter/stats/' %}active{% endif %}"> 
+    <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
+    <span class="nav_name">İstatistik</span> 
+</a>
+<script>
+    $(document).ready(function() {
+        // Arıza Takip menüsünü tetiklemek için
+        $('#faultMenuLink').on('click', function() {
+          $('#faultMenu').collapse('toggle');
+        });
+      });
+      
+</script>
+{% endblock sidebar %}

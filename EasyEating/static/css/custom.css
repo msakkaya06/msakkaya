@@ -1,0 +1,11 @@
+:root {
+    /* Örnek olarak, varsayılan bootstrap renklerini değiştirelim */
+    --primary: #2681ba;
+    --secondary: #464141f8;
+    --success: #488a3b;
+    --danger: #d46229;
+    --warning: #your-new-warning-color;
+    --info: #your-new-info-color;
+    --light: #your-new-light-color;
+    --dark: #your-new-dark-color;
+}

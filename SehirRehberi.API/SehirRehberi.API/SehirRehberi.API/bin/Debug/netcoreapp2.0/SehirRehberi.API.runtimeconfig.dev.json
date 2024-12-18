@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Tunceli BT\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Tunceli BT\\.nuget\\packages"
+    ]
+  }
+}

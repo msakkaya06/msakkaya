@@ -1,0 +1,376 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+  <div class="row mb-3">
+    <!-- Bilgisayar İsmi Arama Formu -->
+    <div class="col-md-4">
+      <form id="searchForm" method="GET" action="{% url 'search_computer' %}">
+        <div class="input-group">
+
+          <input type="text" name="computer_name" class="form-control" placeholder="Bilgisayar Adı" />
+          <button type="submit" name="searchButton "class="btn btn-primary"><i class="fas fa-search"></i></button>
+        </div>
+        <ul id="computerResults" class="list-group mt-2" style="display: none;"></ul>
+        <div id="modal-error-msg" class="alert alert-danger mt-2" role="alert" style="display: none;"></div>
+        <div id="modal-success-msg" class="alert alert-success mt-2" role="alert" style="display: none;"></div>
+      </form>
+    </div>
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Resim</th>
+            <th>Bilgisayar Adı</th>
+            <th>Üretici</th>
+            <th>Model</th>
+            <th>CPU</th>
+            <th>RAM</th>
+            <th>Sabit Disk</th>
+            <th>Birim</th>
+            <th>Ağ</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody id="computerTableFault">
+          
+        </tbody>
+      </table>
+      <div id="success-msg" class="alert alert-warning mt-2 text-center" role="alert" {% if fault is not None %}style="display: block;"{% endif %} style="display: none;"><i class="bx bxs-info-circle nav_icon"> </i> Açık arıza kaydı mevcut</div>
+    <div id="faultFormdiv" {% if fault is not None %}style="display: block;"{% endif %} style="display: none;">
+      <form id="faultForm" method="post" action="{% url 'save_computer_action' %}">
+        <div class="row">
+          <div class="col-md-12">
+            {% csrf_token %}
+            <input type="hidden" name="computer_id" value="{{ computer.id }}" />
+            <div class="mb-3">
+                <div id="requestUserForm">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="request_username" name="request_username" value="{{fault.requester_username}}"placeholder="Sicil (Talep Eden)" required />
+                    <button type="button" class="btn btn-primary" onclick="requestSearchUser()">Bul</button>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-6">
+                      <input type="text" class="form-control small-input" id="request_first_name" value ="{{fault.requester_first_name}}" placeholder="Ad" disabled />
+                    </div>
+                    <div class="col-md-6">
+                      <input type="text" class="form-control small-input" id="request_last_name" value="{{fault.requester_last_name}}" placeholder="Soyad" disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="mb-3">
+              <label for="requestNotes">Talepte Bulunan Personel Notları</label>
+              <textarea id="requestNotes" name="requester_notes" rows="10" class="form-control">{{fault.requester_notes}}</textarea>
+            </div>
+            <!-- Talepte bulunan personel için -->
+            <input type="hidden" id="computer_id" name="computer_id" value="{{ computer.id }}" />
+          <div id="actionUserForm">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+            <button type="button" onclick="closeForm()" class="btn btn-secondary">Kapat</button>
+            <input type="hidden" name="is_completed" value="false">          
+            <div id="modal-error-msg" class="alert alert-danger mt-2" role="alert" style="display: none;"></div>
+            <div id="modal-success-msg" class="alert alert-success mt-2" role="alert" style="display: none;"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% include "bilisim_envanter/_partials/_modal_computer.html" %}
+
+  <script>
+    function requestSearchUser() {
+      var username = document.getElementById('request_username').value
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', '{% url "search_user" %}?username=' + username, true)
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+      var csrftoken = getCookie('csrftoken')
+      xhr.setRequestHeader('X-CSRFToken', csrftoken)
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText)
+          document.getElementById('request_first_name').value = response.first_name
+          document.getElementById('request_last_name').value = response.last_name
+        } else {
+          console.error('Bir hata oluştu')
+        }
+      }
+      xhr.send()
+    }
+    
+    function actionSearchUser() {
+      var username = document.getElementById('action_username').value
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', '{% url "search_user" %}?username=' + username, true)
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+      var csrftoken = getCookie('csrftoken')
+      xhr.setRequestHeader('X-CSRFToken', csrftoken)
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText)
+          document.getElementById('action_first_name').value = response.first_name
+          document.getElementById('action_last_name').value = response.last_name
+        } else {
+          console.error('Bir hata oluştu')
+        }
+      }
+      xhr.send()
+    }
+    
+    function getCookie(name) {
+      var cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';')
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
+        }
+      }
+      return cookieValue
+    }
+
+
+
+    
+    $(document).ready(function () {
+      $('#faultForm').submit(function (e) {
+        e.preventDefault()
+        var form = $(this)
+        var successMsgDiv = $('#modal-success-msg')
+        var errorMsgDiv = $('#modal-error-msg')
+    
+        $.ajax({
+          type: 'POST',
+          url: form.attr('action'),
+          data: form.serialize(),
+          dataType: 'json',
+          success: function (response) {
+            if (response.success) {
+              errorMsgDiv.hide()
+              successMsgDiv.html('<p>' + response.success + '</p>')
+              successMsgDiv.show()
+            } else {
+              successMsgDiv.hide()
+              errorMsgDiv.html('<p>' + response.error + '</p>')
+              errorMsgDiv.show()
+            }
+          },
+          error: function (xhr, status, error) {
+            successMsgDiv.hide()
+            errorMsgDiv.html('<p>Bir hata oluştu: ' + error + '</p>')
+            errorMsgDiv.show()
+          }
+        })
+      })
+    })
+  </script>
+
+  <script>
+    $(document).ready(function () {
+        $('#action_completed').click(function () {
+            var form = $('#faultForm')
+            var successMsgDiv = $('#modal-success-msg')
+            var errorMsgDiv = $('#modal-error-msg')
+    
+            var isFormValid = true
+            form.find('input[required], textarea[required]').each(function () {
+                if ($(this).val().trim() === '') {
+                    isFormValid = false
+                    return false
+                }
+            })
+    
+            if (!isFormValid) {
+                errorMsgDiv.html('<p>Lütfen tüm alanları doldurun.</p>')
+                errorMsgDiv.show()
+                successMsgDiv.hide()
+                return
+            }
+    
+            form.find('input[name="is_completed"]').val('true')
+    
+            $.ajax({
+                type: 'POST',
+                url: '{% url "finalize_computer_action" %}',
+                data: form.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        errorMsgDiv.hide()
+                        successMsgDiv.html('<p>' + response.success + '</p>')
+                        successMsgDiv.show()
+                    } else {
+                        successMsgDiv.hide()
+                        errorMsgDiv.html('<p>' + response.error + '</p>')
+                        errorMsgDiv.show()
+                    }
+                },
+                error: function (xhr, status, error) {
+                    successMsgDiv.hide()
+                    errorMsgDiv.html('<p>Bir hata oluştu: ' + error + '</p>')
+                    errorMsgDiv.show()
+                }
+            })
+        })
+    })
+    </script>
+
+
+<script>
+  document.getElementById('searchForm').onsubmit = function(event) {
+  event.preventDefault(); // Formun sayfayı yenilemesini engelle
+  const computerName = document.querySelector('input[name="computer_name"]').value;  // Arama alanındaki değeri al
+  console.log('search açılıyor');
+
+  fetch("{% url 'search_computer' %}?computer_name=" + computerName)
+      .then(response => response.json()) 
+      .then(data => {
+          if (data.error) {
+              alert(data.error);
+          } else {
+              const tableBody = document.getElementById('computerTable');
+              tableBody.innerHTML = '';  // Eski veriyi temizle
+
+              // Her bilgisayarı tabloya ekle
+              data.forEach(computer => {
+                  const row = `
+                      <tr>
+                          <td>${computer.computer_name}</td>
+                          <td>${computer.manufacturer}</td>
+                          <td>${computer.model}</td>
+                          <td>${computer.unit}</td>
+                          <td>${computer.network_used}</td>
+                          <td><button id="select-btn" onclick="selectComputer('${computer.id}')" class="btn btn-success" data-id="{{computer.id}}">Seç</button></td>
+                      </tr>
+                  `;
+                  tableBody.insertAdjacentHTML('beforeend', row);
+              });
+
+              // Modalı aç
+              document.getElementById('computerModal').style.display = 'block';
+              // Her "Seç" butonuna tıklama olayı ekle
+              document.querySelectorAll('.select-btn').forEach(button => {
+                  button.addEventListener('click', function() {
+                      const computerId = this.getAttribute('data-id');
+                      alert(`Bilgisayar seçildi: ID - ${computerId}`);
+                      // Ek olarak seçilen bilgisayarla ilgili işlemleri burada gerçekleştirebilirsiniz
+                  });
+              });
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+};
+function selectComputer(computerId) {
+  $.ajax({
+      url: '{% url "search_name_fault" %}',  // view'in URL ismi
+      data: {
+          'computer_id': computerId
+      },
+      success: function(data) {
+          // Gelen veriler ile tabloyu güncelle
+          updateComputerTable(data.computer);
+          
+          // Hidden input alanına computerId değerini atama
+          document.getElementById("computer_id").value = computerId;
+
+          // Form bilgilerini temizle
+          document.getElementById("request_username").value = '';
+          document.getElementById("request_first_name").value = '';
+          document.getElementById("request_last_name").value = '';
+          document.getElementById("requestNotes").value = '';
+
+          // Fault bilgisi varsa success-msg ve faultFormdiv alanlarını göster
+          if (data.fault) {
+              document.getElementById("success-msg").style.display = "block";
+              document.getElementById("faultFormdiv").style.display = "block";
+              
+              // Gelen arıza bilgilerini form alanlarına yerleştirtrt
+              document.getElementById("request_username").value = data.fault.requester_username;
+              document.getElementById("request_first_name").value = data.fault.requester_first_name;
+              document.getElementById("request_last_name").value = data.fault.requester_last_name;
+              document.getElementById("requestNotes").value = data.fault.requester_notes;
+          } else {
+              // Fault bilgisi yoksa ilgili alanları gizle
+              document.getElementById("success-msg").style.display = "none";
+              document.getElementById("faultFormdiv").style.display = "none";
+          }
+
+          // Bilgisayar seçimi tamamlandığında modalı kapat
+          document.getElementById('computerModal').style.display = 'none';
+      },
+      error: function(xhr) {
+          alert(xhr.responseJSON.error);
+      }
+  });
+};
+
+// Tabloyu güncelleme fonksiyonu
+function updateComputerTable(computer) {
+  const tableBody = document.getElementById('computerTableFault');
+  tableBody.innerHTML = ''; // Önceki içerikleri temizle
+
+  const row = document.createElement('tr');
+  row.innerHTML = `
+      <td>
+          <img src="${computer.image ? computer.image : '{% static 'img/gorsel-bulunamadi.jpg' %}'}" 
+               alt="${computer.computer_name}" 
+               class="img-fluid text-center" 
+               style="max-width: 75px; max-height:50px;" />
+      </td>
+      <td>${computer.computer_name}</td>
+      <td>${computer.manufacturer}</td>
+      <td>${computer.model}</td>
+      <td>${computer.processor_name}</td>
+      <td>${computer.total_ram_gb}</td>
+      <td>${computer.disk_drive_model} - ${computer.disk_size_gb}</td>
+      <td>${computer.unit}</td>
+      <td>${computer.network_used}</td>
+      <td>
+          <button type="button" class="btn btn-primary mb-3" onclick="openForm()">Arıza Kaydı Oluştur</button>
+      </td>
+  `;
+  
+  tableBody.appendChild(row);
+}
+
+
+// Modal'i aç
+function openComputerModal() {
+  showComputerModal();
+}
+
+// Modal'i kapat
+document.querySelector(".close").onclick = function() {
+  document.getElementById("computerModal").style.display = "none";
+};
+
+// Seç butonuna tıklanınca modal'i kapatma
+document.getElementById("selectComputerButton").onclick = function() {
+  document.getElementById("computerModal").style.display = "none";
+};
+
+// Pencere dışına tıklanırsa modal'i kapatma
+window.onclick = function(event) {
+  if (event.target == document.getElementById("computerModal")) {
+      document.getElementById("computerModal").style.display = "none";
+  }
+};
+
+
+</script>
+      <script>
+        function openForm() {
+          document.getElementById('faultFormdiv').style.display = 'block';
+        }
+        function closeForm() {
+          document.getElementById('faultFormdiv').style.display = 'none';
+        }
+  </script>
+{% endblock %}

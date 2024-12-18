@@ -1,0 +1,113 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sol Alan (1/4) -->
+        <div class="col-lg-3 mb-4">
+            <!-- Toplam Bilgisayar Arıza -->
+            <div class="card border-left-primary shadow h-25 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                TOPLAM BİLGİSAYAR ARIZASI</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_computer_faults }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tamamlanmış Bilgisayar Arızası -->
+            <div class="card border-left-success shadow h-25 py-2 mt-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                TAMAMLANMIŞ BİLGİSAYAR ARIZASI</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.completed_computer_faults }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toplam Yazıcı-Tarayıcı Arıza -->
+            <div class="card border-left-warning shadow h-25 py-2 mt-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                TOPLAM YAZICI-TARAYICI ARIZASI</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.total_printer_faults }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-print fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tamamlanmış Yazıcı-Tarayıcı Arızası -->
+            <div class="card border-left-info shadow h-25 py-2 mt-4">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                TAMAMLANMIŞ YAZICI-TARAYICI ARIZASI</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.completed_printer_faults }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Alan (3/4) -->
+        <div class="col-lg-9 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Aylara Göre Tamamlanmış Arızalar</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyFaultsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ctx = document.getElementById('monthlyFaultsChart').getContext('2d');
+    var monthlyFaultsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ stats.months | safe }},
+            datasets: [{
+                label: 'Tamamlanmış Cihaz Sayısı',
+                data: {{ stats.completed_faults_per_month | safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock content %}

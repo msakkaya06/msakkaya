@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: easy_admin
+      POSTGRES_PASSWORD: Ea.1806730971
+      POSTGRES_DB: EasyTrade
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:5
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # RabbitMQ'nun default portu
+      - "15672:15672" # RabbitMQ yönetim arayüzü portu
+    environment:
+      RABBITMQ_DEFAULT_USER: easy_admin
+      RABBITMQ_DEFAULT_PASS: Ea.1806730971
+
+volumes:
+  postgres_data:
+  mongo_data:

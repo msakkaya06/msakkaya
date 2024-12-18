@@ -1,0 +1,225 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+ 
+}
+
+body{
+    line-height:1;
+    font-family:'Source Sans Pro', sans-serif;
+    overflow-x:hidden;
+    font-weight:400;
+    background-color: #F2F2F2;
+
+}
+
+.user_profile_info {
+  float: left;
+  width: 100%;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-left: 1px solid #c7bebe;
+  border-right: 1px solid #c7bebe;
+  border-bottom: 2px solid #c7bebe;
+  border-top:1px solid #c7bebe;
+  margin-bottom: 30px;
+
+}
+
+.user-up-info{
+    text-align:center;
+
+}
+
+.user-list{
+    margin-top:100px;
+}
+
+
+.view-more {
+  float: left;
+  width: 100%;
+  border-left: 1px solid #2a2a2a;
+  border-right: 1px solid #2a2a2a;
+  border-bottom: 2px solid #2a2a2a;
+  border-top: 1px solid #2a2a2a;
+  text-align: center;
+  
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700);
+
+*, *:after, *:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-smooth: always;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: inherit;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+
+  background-size: cover;
+  line-height: 1;
+  overflow-x: hidden;
+  font-weight: 400;
+  background-color: #F2F2F2;
+}
+
+
+
+ul {
+  list-style: none;
+}
+
+
+
+.profile-card {
+ 
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  position: relative;
+  margin: auto;
+  background: rgba(255,255,255,1);
+  top: 50%;
+  transform: translateY(-50%);
+  float: left;
+  width: 100%;
+  background-color: #FFFFFF;
+  text-align: center;
+  border-left: 1px solid #c7bebe;
+  border-right: 1px solid #c7bebe;
+  border-bottom: 2px solid #c7bebe;
+  border-top: 1px solid #c7bebe;
+  margin-bottom: 30px;
+}
+
+  .profile-card header {
+    display: block;
+    position: relative;
+    background: rgba(255,255,255,1);
+    text-align: center;
+    padding: 30px 0 20px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+    .profile-card header:before {
+      content: "";
+      position: absolute;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      z-index: -1;
+    }
+
+    .profile-card header:after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: linear-gradient( to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100% );
+    }
+
+    .profile-card header img {
+      border-radius: 100%;
+      overflow: hidden;
+      width: 150px;
+      /*border: 1px solid rgba(255,255,255,.5);*/
+      box-shadow: 0 1px 0 rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.1);
+    }
+
+    .profile-card header h1 {
+      font-weight: 200;
+      font-size: 42px;
+      color: #444;
+      letter-spacing: -3px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile-card header h2 {
+      font-weight: 400;
+      font-size: 14px;
+      color: #666;
+      letter-spacing: .5px;
+      margin: 0;
+      padding: 0;
+    }
+
+  .profile-card .profile-bio {
+    padding: 0 30px;
+    text-align: center;
+    color: #888;
+  }
+
+  .profile-card .profile-social-links {
+    display: table;
+    width: 70%;
+    margin: 20px auto;
+  }
+
+    .profile-card .profile-social-links li {
+      display: table-cell;
+      width: 33.3333333333333333%
+    }
+
+      .profile-card .profile-social-links li a {
+        display: block;
+        text-align: center;
+        padding: 10px;
+        margin: 0 10px;
+        border-radius: 100%;
+        -webkit-transition: box-shadow 0.2s;
+        -moz-transition: box-shadow 0.2s;
+        -o-transition: box-shadow 0.2s;
+        transition: box-shadow 0.2s;
+      }
+
+        .profile-card .profile-social-links li a:hover {
+          box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+        }
+
+        .profile-card .profile-social-links li a:active {
+          box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+        }
+
+        .profile-card .profile-social-links li a img {
+          width: 100%;
+          display: block;
+        }

@@ -1,0 +1,42 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5" style="min-height: 575px;">
+    <h2 class="mb-4">Bugün Doğum Günü Olan Personel</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">S.N.</th>
+          <th scope="col">Sicil</th>
+          <th scope="col">Ad</th>
+          <th scope="col">Soyad</th>
+          <th scope="col">Rütbe</th>
+          <th scope="col">Telefon Numarası</th>
+          <th scope="col">Pasif mi?</th>
+          <th scope="col">Pasif Nedeni</th>
+          <th scope="col">Geçici Görev Yeri</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Örnek veri -->
+        {% for item in data  %}
+        <tr>
+          <td>{{item.id}}</td>
+          <td>{{item.reg_number}}</td>
+          <td>{{item.first_name}}</td>
+          <td>{{item.last_name}}</td>
+          <td>{{item.rank}}</td>
+          <td>{{item.tel_number}}</td>
+          <td>{% if item.is_passive == True %}Evet {% else %} Hayır{% endif %}</td>
+          <td>{{item.passive_desc}}</td>
+          <td>{{item.temp_station}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
+
+{% block title %}
+{% endblock title %}
+

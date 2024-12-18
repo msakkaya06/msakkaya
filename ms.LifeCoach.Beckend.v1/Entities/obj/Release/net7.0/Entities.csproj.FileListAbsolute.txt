@@ -1,0 +1,17 @@
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Entities.deps.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Entities.runtimeconfig.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Entities.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Entities.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Core.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\bin\Release\net7.0\Core.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.csproj.AssemblyReference.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.AssemblyInfoInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.AssemblyInfo.cs
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.csproj.CoreCompileInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.csproj.CopyComplete
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\refint\Entities.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\Entities.genruntimeconfig.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\Entities\obj\Release\net7.0\ref\Entities.dll

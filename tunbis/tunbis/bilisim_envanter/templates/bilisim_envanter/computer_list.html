@@ -1,0 +1,86 @@
+{% extends "module/layout.html" %}
+{% load static %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<h4>Bilgisayar Envanter Listesi</h4>
+<div class="row mb-3">
+    <!-- Bilgisayar İsmi Arama Formu -->
+    <div class="col-md-4">
+        <form method="GET"  action="{% url "search_name" %}">
+            <div class="input-group">
+                <input type="text" name="computer_name" class="form-control" placeholder="Bilgisayar Adı">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Seri Numarası Arama Formu -->
+    <div class="col-md-4">
+        <form method="GET" action="{% url "search_serial" %}">
+            <div class="input-group">
+                <input type="text" name="serial_number" class="form-control" placeholder="Seri Numarası">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Birim Arama Formu -->
+    <div class="col-md-4">
+        <form method="GET"  action="{% url "search_unit" %}">
+            <div class="input-group">
+                <select name="unit" class="form-select">
+                    <option value="">Tüm Birimler</option>
+                    {% for unit in select_units %}
+                        <option value="{{ unit.id }}">{{ unit.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Resim</th>
+                <th>Bilgisayar Adı</th>
+                <th>Üretici</th>
+                <th>Model</th>
+                <th>Birim</th>
+                <th>Ağ</th>
+                <th>Detaylar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for computer in computers %}
+                <tr>
+                    <td>
+                        {% if computer.image %}
+                            <img src="{{ computer.image.url }}" alt="{{ computer.computer_name }}" class="img-fluid text-center" style="max-width: 75px; max-height:50px;">
+                        {% else %}
+                            <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid text-center" style="max-width: 75px; max-height:50px;">
+                        {% endif %}
+                    </td>
+                    
+                    <td>{{ computer.computer_name }}</td>
+                    <td>{{ computer.manufacturer }}</td>
+                    <td>{{ computer.model }}</td>
+                    <td>{{ computer.unit.name }}</td>
+
+                    <td>{{ computer.network_used }}</td>
+                    <td><a href="{% url 'envanter_computer_detail' computer.pk %}" class="btn btn-warning btn-sm">Detaylar</a></td>
+                </tr>
+            {% endfor %}
+            {% if page_obj.paginator.num_pages > 1 %}
+            {% include "bilisim_envanter/_partials/_pagination.html" %}
+            {% endif %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

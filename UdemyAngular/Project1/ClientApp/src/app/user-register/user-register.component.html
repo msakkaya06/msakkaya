@@ -1,0 +1,147 @@
+<header id="home">
+  <div class="container" >
+    <div class="row">
+      <div class="col-lg-8 d-none d-lg-block">
+
+      </div>
+        <div class="col-lg-4 py-1">
+          <body class="hold-transition register-page py-1" style="margin-top: 100px; height: auto;">
+            <form [formGroup]="registerForm" (ngSubmit)="register()" style="height:500px">
+              <div class="form-group">
+                <div >
+                  <div class="card-header text-center">
+                    <a href="#" class="h1"><b>Life</b>Coach</a>
+                  </div>
+                  <div class="card-body">
+                    <p class="login-box-msg"><b>Life</b>Coach'a Katıl</p>
+                    <div class="input-group mb-2">
+                      <input type="text" class="form-control" 
+                      formControlName="email" placeholder="Elektronik Posta"/>
+                    
+                      <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="alert alert-danger">
+                        <ul>
+                            <li *ngIf="registerForm.get('email')?.errors?.required"> E-Posta Giriniz. </li>
+                        </ul>
+                    </div>
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-envelope"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" class="form-control"   formControlName="username" placeholder="Kullanıcı Adı" />
+                      <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.invalid" class="alert alert-danger">
+                        <ul *ngIf="registerForm.get('username')?.touched">
+                            <li *ngIf="registerForm.get('username')?.errors?.required"> Kullanıcı Adı Giriniz. </li>
+                            <li *ngIf="registerForm.get('username')?.errors?.minlength"> Kullanıcı Adı {{registerForm.get('username')?.errors?.minlength.requiredLength}} karakterden fazla olmalı. </li>
+                        </ul>
+                    </div>
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-user"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" class="form-control" formControlName="firstname" placeholder="İsim" />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-user"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input  type="text" class="form-control"
+                        formControlName="lastname" Placeholder="Soyisim" />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-user"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="password" class="form-control"
+                      formControlName="password" placeholder="Şifre" />
+                      <!-- <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
+                        <p *ngIf="password.errors?.required">Şifre giriniz</p>
+                        <p *ngIf="password.errors?.minlength">Şifre 5 karakterden fazla olmalıdır</p>
+
+                      </div> -->
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-lock"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="password" class="form-control"
+                      formControlName="confirmPassword" placeholder="Şifre'yi Tekrar Giriniz" />
+                      <!-- <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
+                        <p *ngIf="password.errors?.required">Şifre giriniz</p>
+                        <p *ngIf="password.errors?.minlength">Şifre 5 karakterden fazla olmalıdır</p>
+
+                      </div> -->
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-lock"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" class="form-control"formControlName="birthday" placeholder="Doğum Tarihi" />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fa-solid fa-calendar-days"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-8">
+                        <div class="icheck-primary">
+                          <!-- <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                        <label for="agreeTerms">
+                          I agree to the <a href="#">terms</a>
+                        </label> -->
+                        </div>
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-12">
+                        <button [disabled]="registerForm.invalid" class="btn btn-outline-warning btn-block">Kaydol ve Giriş Yap</button>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+
+
+                    <!-- <div class="social-auth-links text-center">
+                    <a href="#" class="btn btn-block btn-primary">
+                      <i class="fab fa-facebook mr-2"></i>
+                      Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                      <i class="fab fa-google-plus mr-2"></i>
+                      Sign up using Google+
+                    </a>
+                  </div> -->
+
+                    <!-- <a href="login.html" class="text-center">I already have a membership</a> -->
+                  </div>
+                  <!-- /.form-box -->
+                </div><!-- /.card -->
+              </div>
+              <!-- /.register-box -->
+
+              <!-- jQuery -->
+              <script src="../../plugins/jquery/jquery.min.js"></script>
+              <!-- Bootstrap 4 -->
+              <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <!-- AdminLTE App -->
+              <script src="../../dist/js/adminlte.min.js"></script>
+            </form>
+          </body>
+
+        </div>
+      
+    </div>
+  </div>
+</header>

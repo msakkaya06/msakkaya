@@ -1,0 +1,321 @@
+<script src="./profile.js"></script>
+
+<div class="content-wrapper" style="margin-top: 75px;">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div>
+        <div class="col-sm-6">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle"
+                  src="{{user.profileImageURL || 'assets/images/profile.jpg'}}" height="200" width="200" alt="User profile picture">
+           
+                <!-- <button class="btn btn-success btn-block" data-toggle="modal"
+                  data-target="#ProfilePhotoUploadModal">Profil
+                  Fotoğrafını Güncelle</button> -->
+                  <input type="file" ng2FileSelect [uploader]="uploader">
+                  <div *ngFor="let item of uploader.queue">
+                 <button type="button" class="btn btn-success btn-block" (click)="item.upload()">Profil
+                  Fotoğrafını Güncelle</button>
+                  </div>
+              </div>
+              <h3 class="profile-username text-center">{{user.firstName}} {{user.lastName}}</h3>
+              <p class="text-muted text-center"> {{user.introduction}}</p>
+              <!-- <div class="btn-group float-left" role="group">
+                              <button *ngIf="!user.isFollowing" type="button" (click)="followUser(user.id)"
+                                  class="btn btn-danger btn-sm"><i class="fas fa-plus center"></i>Takip Et</button>
+                              <button *ngIf="user.isFollowing" type="button" (click)="unfollowUser(user.id)"
+                                  class="btn btn-outline-primary btn-sm">Takip Ediliyor</button>
+                              <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                  data-target="#SendMessageModal">Mesaj Gönder</button>
+                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                  data-target="#FollowModal">Takip Listesi</button>
+                          </div> -->
+            </div>
+          </div>
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Hakkımda</h3>
+            </div>
+
+            <div class="card-body">
+              <strong><i class="fas fa-book mr-1"></i> Eğitim</strong>
+              <input type="text" class="form-control" [(ngModel)]="user.educations" id="educations"
+                placeholder="Eğitim">
+              <hr>
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Yer</strong>
+              <input type="text" class="form-control" [(ngModel)]="user.city" id="city" placeholder="Şehir">
+              <br>
+              <input type="text" class="form-control" id="country" [(ngModel)]="user.country" placeholder="Ülke">
+              <hr>
+              <strong><i class="fas fa-pencil-alt mr-1"></i> Hobiler</strong>
+              <textarea class="form-control" id="hobbies" [(ngModel)]="user.hobbies" placeholder="Hobiler"></textarea>
+              <hr>
+              <strong><i class="far fa-file-alt mr-1"></i> Web Site</strong>
+              <input type="text" class="form-control" id="webSiteAdress" [(ngModel)]="user.webSiteAdress"
+                placeholder="Web Site">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="card">
+            <!-- <div class="card-header p-2">
+                          <ul class="nav nav-pills">
+                              <li class="nav-item"><a class="nav-link active" href="#activity"
+                                      data-toggle="tab">Activity</a></li>
+                              <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
+                              </li>
+                          </ul>
+                      </div> -->
+            <div class="card-body">
+              <div class="tab-content">
+
+                <div class="tab-content" id="settings">
+                  <form class="form-horizontal" #editForm="ngForm" (ngSubmit)="updateUser()">
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Kullanıcı Adı</label>
+                      <div class="col-sm-10">
+                        <input type="text" [(ngModel)]="user.username" name="username" class="form-control" id="inputName"
+                          placeholder="Kullanıcı Adı">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Ad</label>
+                      <div class="col-sm-10">
+                        <input type="text" [(ngModel)]="user.firstName" name="firstname" class="form-control" id="firstName"
+                          placeholder="Ad">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputName" class="col-sm-2 col-form-label">Soyad</label>
+                      <div class="col-sm-10">
+                        <input type="text" [(ngModel)]="user.lastName" name="lastname" class="form-control" id="inputName"
+                          placeholder="Soyad">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" [(ngModel)]="user.email" name="email" id="inputEmail" placeholder="Email">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="inputExperience" class="col-sm-2 col-form-label">Hakkımda</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" [(ngModel)]="user.introduction" name="introduction" id="introduction"
+                          placeholder="Hakkımda"></textarea>
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> I agree to the <a href="#">terms and
+                              conditions</a>
+                          </label>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">Bilgileri Güncelle</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<div  class="modal fade" id="ProfilePhotoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <div class="btn-group btn-group-toggle text-center" data-toggle="buttons">
+
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-9" style="margin-bottom: 40px">
+            <h3>Upload queue</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="50%">Name</th>
+                  <th>Size</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td><strong>{{ item?.file?.name }}</strong></td>
+                  <!-- <td *ngIf="getNotUploadedItems.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
+                  <td>
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs" (click)="item.upload()"
+                      [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                      <span class="glyphicon glyphicon-upload"></span> Yükle
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
+                      [disabled]="!item.isUploading">
+                      <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                      <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div>
+              <div>
+                Queue progress:
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+              </div>
+              <!-- <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Upload all
+              </button>
+              <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+              </button>
+              <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+              </button> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br /> -->
+          Single
+
+          <input type="file" ng2FileSelect [uploader]="uploader">
+
+          <input type="file" ng2FileSelect [uploader]="uploader" multiple />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ProfilePhotoUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <div class="btn-group btn-group-toggle text-center" data-toggle="buttons">
+
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <div class="file-upload">
+          <input type="file" class="file-upload-btn" ng2FileSelect [uploader]="uploader" />
+          <!-- <button type="button" class="btn btn-success btn-xs" (click)="item.upload()"
+            [disabled]="item.isReady || item.isUploading || item.isSuccess"></button>
+            <span class="glyphicon glyphicon-upload"></span> Yükle -->
+
+          <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <!-- <td *ngIf="getNotUploadedItems.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
+            <td>
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
+                </div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+            <td nowrap>
+              <button type="button" class="btn btn-success btn-xs" (click)="item.upload()"
+                [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Yükle
+              </button>
+              <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"
+                [disabled]="!item.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+              </button>
+              <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                <span class="glyphicon glyphicon-trash"></span> Remove
+              </button>
+            </td>
+          </tr>
+          <button class="file-upload-btn" type="button" onclick="item.upload()">Add
+            Image</button>
+
+          <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' src="item.url" onchange="readURL(this);" accept="image/*" />
+            <div class="drag-text">
+              <h3>Drag and drop a file or select add Image</h3>
+            </div>
+          </div>
+          <div class="file-upload-content">
+            <img class="file-upload-image" src="#" alt="your image" />
+            <div class="image-title-wrap">
+              <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
+                  class="image-title">Uploaded Image</span></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

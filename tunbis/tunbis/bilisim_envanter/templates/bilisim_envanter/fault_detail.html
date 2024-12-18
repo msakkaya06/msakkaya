@@ -1,0 +1,242 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container col md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-warning mb-3">
+                <div class="card-header bg-warning text-dark">
+                    Bilgisayar Bilgileri
+                </div>
+                <div class="card-body">
+                    {% if fault_detail.computer.image %}
+                        <img src="{{ fault_detail.computer.image.url }}" alt="{{ fault_detail.computer.computer_name }}" class="img-fluid" style="max-width: 100px;" />
+                    {% else %}
+                        <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid" style="max-width: 100px;" />
+                    {% endif %}
+                    <form>
+                        <div class="form-group mt-3">
+                            <label for="computerName">Bilgisayar Adı</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="computerName" value="{{ fault_detail.computer.computer_name }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="serialNumber">Seri Numarası</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.computer.serial_number }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="manufacturer">Üretici</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="manufacturer" value="{{ fault_detail.computer.manufacturer }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Model</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="model" value="{{ fault_detail.computer.model }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="processor">İşlemci</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="processor" value="{{ fault_detail.computer.processor_name }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramInfo">RAM(GB)</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="ramInfo" value="{{ fault_detail.computer.total_ram_gb }}" readonly>
+                        </div>
+               
+                        <div class="form-group">
+                            <label for="diskModel">Hard Disk Modeli</label>
+                            <input type="text" class="form-control-plaintext" id="diskModel" value="{{ fault_detail.computer.disk_drive_model }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="diskSize">Hard Disk Boyutu</label>
+                            <input type="text" class="form-control-plaintext" id="diskSize" value="{{ fault_detail.computer.disk_size_gb }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="unitName">Birim Adı</label>
+                            <input type="text" class="form-control-plaintext" id="unitName" value="{{ fault_detail.computer.unit.name }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="networkUsed">Kullanılan Ağ</label>
+                            <input type="text" class="form-control-plaintext" id="networkUsed" value="{{ fault_detail.computer.network_used }}" readonly>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="requester">Talep Açan Kişi</label>
+                            <input type="text" class="form-control-plaintext" id="requester" value="{{ fault_detail.requester.registration_number }} - {{ fault_detail.requester.first_name }} {{ fault_detail.requester.last_name }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="requesterNotes">Talep Notu</label>
+                            <textarea class="form-control-plaintext text-wrap" id="requesterNotes" rows="3" readonly>{{ fault_detail.requester_notes }}</textarea>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-success mb-3">
+                <div class="card-header bg-success text-white">
+                    İşlem Bilgileri
+                </div>
+                <div class="card-body">
+
+            <form id="faultForm" method="post" action="{% url "finalize_computer_action" %}">
+                {% csrf_token %}
+                <input type="hidden" name="computer_id" value="{{ fault_detail.computer.id }}" />
+                <div class="form-group">
+                    <label for="performerSearch">İşlem Yapan Personel</label>
+                    <div class="input-group">
+                        <input type="text" placeholder="Sicil" name="action_username" class="form-control" id="performerSearch">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" onclick="actionSearchUser()" type="button">Bul</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="performerName">Ad Soyad</label>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control small-input" id="action_first_name" value="{{fault_detail.performer.first_name}}" placeholder="Ad" disabled />
+                        </div>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control small-input" id="action_last_name" value="{{fault_detail.performer.last_name}}" placeholder="Soyad" disabled />
+                        </div>
+                      </div>
+                </div>
+                <div class="form-group">
+                    <label for="performerUnit">Birim</label>
+                    <input type="text" class="form-control" id="performerUnit" value="{{ fault_detail.performer.unit.name }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="actionNotes">Talep Sonucu İşlem Notları</label>
+                    <textarea id="actionNotes" name="action_notes" rows="10"  {% if fault_detail.is_active == False %}disabled{% endif %} class="form-control">{{fault_detail.action_notes}}</textarea>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input"  {% if fault_detail.is_active == False %}disabled{% endif %} name="partInstalled" {% if fault_detail.part_installed %}checked{% endif %}>
+                    <label class="form-check-label" for="partInstalled">Parça Takıldı</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="osInstalled" id="osInstalled" {% if fault_detail.is_active == False %}disabled{% endif %}  {% if fault_detail.os_installed %}checked{% endif %}>
+                    <label class="form-check-label" for="osInstalled">İşletim Sistemi Kuruldu</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="other" id="other" {% if fault_detail.is_active == False %}disabled{% endif %} {% if fault_detail.other %}checked{% endif %}>
+                    <label class="form-check-label" for="other">Diğer İşlemler</label>
+                </div>
+                <button type="submit" class="btn btn-success mt-3" {% if fault_detail.is_active == False %}disabled{% endif %} > {% if fault_detail.is_active == False %}Arıza Kaydı Tamamlanmıştır {% else %}Arıza Kaydını Tamamla{% endif %} </button>
+            </form>
+            <div id="modal-error-msg" class="alert alert-danger mt-2" role="alert" style="display: none;"></div>
+            <div id="modal-success-msg" class="alert alert-success mt-2" role="alert" style="display: none;"></div>
+    </div>
+        </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card border-dark mb-3">
+                <div class="card-header bg-info text-white">
+                    Önceki İşlemler
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>İşlem</th>
+                                <th>Yapan Kişi</th>
+                                <th>Notlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for action in fault_detail.computer.actions.all %}
+                            <tr>
+                                <td>{{ action.requester_date }}</td>
+                                <td>
+                                    {% if action.part_installed %}Parça Takıldı{% endif %}
+                                    {% if action.os_installed %}İşletim Sistemi Kuruldu{% endif %}
+                                    {% if action.other %}Diğer İşlemler{% endif %}
+                                </td>
+                                <td>{{ action.performer.first_name }} {{ action.performer.last_name }}</td>
+                                <td>{{ action.action_notes }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+    function getCookie(name) {
+        var cookieValue = null
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';')
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim()
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+              break
+            }
+          }
+        }
+        return cookieValue
+      }
+    function actionSearchUser() {
+        var username = document.getElementById('performerSearch').value
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', '{% url "search_user" %}?username=' + username, true)
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+        var csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText)
+            document.getElementById('action_first_name').value = response.first_name
+            document.getElementById('action_last_name').value = response.last_name
+            document.getElementById('performerUnit').value = response.department
+
+          } else {
+            console.error('Bir hata oluştu')
+          }
+        }
+        xhr.send()
+      }
+      $(document).ready(function () {
+        $('#faultForm').submit(function (e) {
+          e.preventDefault()
+          var form = $(this)
+          var successMsgDiv = $('#modal-success-msg')
+          var errorMsgDiv = $('#modal-error-msg')
+      
+          $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+                errorMsgDiv.hide()
+                successMsgDiv.html('<p>' + response.success + '</p>')
+                successMsgDiv.show()
+              } else {
+                successMsgDiv.hide()
+                errorMsgDiv.html('<p>' + response.error + '</p>')
+                errorMsgDiv.show()
+              }
+            },
+            error: function (xhr, status, error) {
+              successMsgDiv.hide()
+              errorMsgDiv.html('<p>Bir hata oluştu: ' + error + '</p>')
+              errorMsgDiv.show()
+            }
+          })
+        })
+      })
+</script>
+{% endblock %}

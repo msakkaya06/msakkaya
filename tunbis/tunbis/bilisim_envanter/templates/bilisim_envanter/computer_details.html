@@ -1,0 +1,136 @@
+{% extends 'module/layout.html' %}
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+  <div>
+    <h3>{{ computer.computer_name }} Detay Bilgileri</h3>
+  </div>
+  <style>
+    .container {
+      display: flex;
+    }
+    
+    .left {
+      flex: 1;
+      padding-right: 20px;
+    }
+    
+    .middle,
+    .right {
+      flex: 1;
+      padding-left: 20px;
+    }
+    
+    .computer-image {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .detail-input {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .small-input {
+      font-size: 0.875em; /* Küçük font boyutu */
+      height: 30px; /* Küçük yükseklik */
+      padding: 2px 5px; /* Az padding */
+      margin-bottom: 2px; /* Az margin */
+    }
+  </style>
+  <div class="container">
+    <div class="left">
+      {% if computer.image %}
+    <img src="{{ computer.image.url }}" alt="{{ computer.computer_name }}" class="computer-image" />
+{% else %}
+    <span>None</span>
+{% endif %}
+
+    </div>
+    <div class="middle">
+      <div>
+        <label for="computer_name">Bilgisayar Adı:</label>
+        <input type="text" id="computer_name" class="detail-input" value="{{ computer.computer_name }}" placeholder="Computer Name" />
+        <label for="network_used">Ağ Bilgisi:</label>
+        <input type="text" id="network_used" class="detail-input" value="{{ computer.network_used }}" placeholder="Network Used" />
+        <label for="manufacturer">Üretici:</label>
+        <input type="text" id="manufacturer" class="detail-input" value="{{ computer.manufacturer }}" placeholder="Manufacturer" />
+        <label for="model">Model:</label>
+        <input type="text" id="model" class="detail-input" value="{{ computer.model }}" placeholder="Model" />
+        <label for="serial_number">Seri Numarası:</label>
+        <input type="text" id="serial_number" class="detail-input" value="{{ computer.serial_number }}" placeholder="Serial Number" />
+        <label for="number_of_processors">İşlemci Sayısı:</label>
+        <input type="text" id="number_of_processors" class="detail-input" value="{{ computer.number_of_processors }}" placeholder="Number of Processors" />
+        <label for="processor_name">İşlemci(CPU):</label>
+        <input type="text" id="processor_name" class="detail-input" value="{{ computer.processor_name }}" placeholder="Processor Name" />
+      </div>
+      <div>
+        <label for="number_of_cores">İşlemci Çekirdek Sayısı:</label>
+        <input type="text" id="number_of_cores" class="detail-input" value="{{ computer.number_of_cores }}" placeholder="Number of Cores" />
+        <label for="number_of_memory_slots">Bellek Yuva Sayısı:</label>
+        <input type="text" id="number_of_memory_slots" class="detail-input" value="{{ computer.number_of_memory_slots }}" placeholder="Number of Memory Slots" />
+      </div>
+      <div>
+        <label for="base_board_serial_number">Anakart Seri Numarası:</label>
+        <input type="text" id="base_board_serial_number" class="detail-input" value="{{ computer.base_board_serial_number }}" placeholder="Base Board Serial Number" />
+
+        <label for="max_clock_speed_ghz">Maks. Saat Hızı (GHz):</label>
+        <input type="text" id="max_clock_speed_ghz" class="detail-input" value="{{ computer.max_clock_speed_ghz }}" placeholder="Max Clock Speed (GHz)" />
+        <label for="bios_version">BIOS Versiyon:</label>
+        <input type="text" id="bios_version" class="detail-input" value="{{ computer.bios_version }}" placeholder="BIOS Version" />
+        <label for="product">BIOS Üreticisi:</label>
+        <input type="text" id="product" class="detail-input" value="{{ computer.product }}" placeholder="Product" />
+        <label for="ip_address">IP Adresi:</label>
+        <input type="text" id="ip_address" class="detail-input" value="{{ computer.ip_address }}" placeholder="IP Address" />
+      </div>
+      <div>
+        <label for="disk_partition_name">Sabit Disk Bölümleri:</label>
+        <input type="text" id="disk_partition_name" class="detail-input" value="{{ computer.disk_partition_name }}" placeholder="Disk Partition Name" />
+        <label for="operating_system">İşletim Sistemi:</label>
+        <input type="text" id="operating_system" class="detail-input" value="{{ computer.operating_system }}" placeholder="Operating System" />
+        <label for="os_version">İşletim Sistemi Versiyonu:</label>
+        <input type="text" id="os_version" class="detail-input" value="{{ computer.os_version }}" placeholder="OS Version" />
+        <label for="os_build_number">İşletim Sistemi İnşa Numarası:</label>
+        <input type="text" id="os_build_number" class="detail-input" value="{{ computer.os_build_number }}" placeholder="OS Build Number" />
+        <label for="office_version">Office Versiyon:</label>
+        <input type="text" id="office_version" class="detail-input" value="{{ computer.office_version }}" placeholder="Office Version" />
+      </div>
+      <div>
+        <label for="office_license_status">Office Lisans Bilgisi:</label>
+        <input type="text" id="office_license_status" class="detail-input" value="{{ computer.office_license_status }}" placeholder="Office License Status" />
+      </div>
+    </div>
+    <div class="right">
+      <div>
+        <label for="total_ram_gb">Toplam RAM (GB):</label>
+        <input type="text" id="total_ram_gb" class="detail-input" value="{{ computer.total_ram_gb }}" placeholder="Total RAM (GB)" />
+        <label for="used_ram_slots">Kullanılan Bellek Yuva Sayısı:</label>
+        <input type="text" id="used_ram_slots" class="detail-input" value="{{ computer.used_ram_slots }}" placeholder="Used RAM Slots" />
+        <label for="ram_brands">RAM Üreticisi:</label>
+        <input type="text" id="ram_brands" class="detail-input" value="{{ computer.ram_brands }}" placeholder="RAM Brands" />
+        <label for="average_ram_speed">Ortalama RAM Hızı(MHz):</label>
+        <input type="text" id="average_ram_speed" class="detail-input" value="{{ computer.average_ram_speed }}" placeholder="Average RAM Speed" />
+        <label for="ram_slot_types">Bellek Yuva Çeşidi:</label>
+        <input type="text" id="ram_slot_types" class="detail-input" value="{{ computer.ram_slot_types }}" placeholder="RAM Slot Types" />
+        <label for="disk_drive_model">Sabit Disk Model/Marka:</label>
+        <input type="text" id="disk_drive_model" class="detail-input" value="{{ computer.disk_drive_model }}" placeholder="Disk Drive Model" />
+        <label for="disk_size_gb">Sabit Disk Boyutu (GB):</label>
+        <input type="text" id="disk_size_gb" class="detail-input" value="{{ computer.disk_size_gb }}" placeholder="Disk Size (GB)" />
+        <label for="disk_usage_percentage">Sabit Disk Kullanımı (%):</label>
+        <input type="text" id="disk_usage_percentage" class="detail-input" value="{{ computer.disk_usage_percentage }}" placeholder="Disk Usage (%)" />
+        <label for="media_type">Sabit Disk Tipi:</label>
+        <input type="text" id="media_type" class="detail-input" value="{{ computer.media_type }}" placeholder="Media Type" />
+        <label for="graphics_card">Ekran Kartı:</label>
+        <input type="text" id="graphics_card" class="detail-input" value="{{ computer.graphics_card }}" placeholder="Graphics Card" />
+        <label for="system_type">Sistem Mimarisi:</label>
+        <input type="text" id="system_type" class="detail-input" value="{{ computer.system_type }}" placeholder="System Type" />
+      </div>
+    </div>
+  </div>
+
+  
+{% endblock %}

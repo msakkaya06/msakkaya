@@ -1,0 +1,86 @@
+{% extends 'module/layout.html' %}
+
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+
+{% block content %}
+<div>
+  <h3>{{ printer_scanner.device_name }} Detay Bilgileri</h3>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .column {
+    flex: 1;
+  }
+  
+  .device-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .detail-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.9em;
+  }
+</style>
+
+<div class="container">
+  <!-- Sol Sütun -->
+  <div class="column">
+    {% if printer_scanner.image %}
+      <img src="{{ printer_scanner.image.url }}" alt="{{ printer_scanner.device_name }}" class="device-image" />
+    {% else %}
+      <span>Görsel Yok</span>
+    {% endif %}
+
+    <label for="device_name">Cihaz Adı:</label>
+    <input type="text" id="device_name" class="detail-input" value="{{ printer_scanner.device_name }}" placeholder="Cihaz Adı" />
+
+    <label for="manufacturer">Üretici:</label>
+    <input type="text" id="manufacturer" class="detail-input" value="{{ printer_scanner.manufacturer }}" placeholder="Üretici" />
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" class="detail-input" value="{{ printer_scanner.model }}" placeholder="Model" />
+  </div>
+
+  <!-- Orta Sütun -->
+  <div class="column">
+    <label for="serial_number">Seri Numarası:</label>
+    <input type="text" id="serial_number" class="detail-input" value="{{ printer_scanner.serial_number }}" placeholder="Seri Numarası" />
+
+    <label for="ip_address">IP Adresi:</label>
+    <input type="text" id="ip_address" class="detail-input" value="{{ printer_scanner.ip_address }}" placeholder="IP Adresi" />
+
+    <label for="connection_type">Bağlantı Tipi:</label>
+    <input type="text" id="connection_type" class="detail-input" value="{{ printer_scanner.connection_interface }}" placeholder="Bağlantı Tipi" />
+
+    <label for="unit">Birim:</label>
+    <input type="text" id="unit" class="detail-input full-width" value="{{ printer_scanner.unit.name }}" placeholder="Birim" />
+  </div>
+
+  <!-- Sağ Sütun -->
+  <div class="column">
+    <label for="type">Cihaz Türü:</label>
+    <input type="text" id="type" class="detail-input" value="{{ printer_scanner.device_type }}" placeholder="Cihaz Türü (Yazıcı/Tarayıcı)" />
+
+    <label for="toner_level">Toner Durum:</label>
+    <input type="text" id="toner_level" class="detail-input" value="%{{ printer_scanner.toner_level }}" placeholder="Toner Durumu" />
+
+    <label for="features">Özellik:</label>
+    <input type="text" id="features" class="detail-input" value="{{ printer_scanner.color_mode }}" placeholder="Özellik" />
+</div>
+{% endblock %}

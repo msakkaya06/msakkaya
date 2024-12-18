@@ -1,0 +1,22 @@
+{% block sidebar %}
+<a href="#" class="nav_link {% if req.path == '/personel/' %}active{% endif %}"> 
+    <i class='bx bx-grid-alt nav_icon'></i> 
+    <span class="nav_name">Personel Ana Ekran</span> 
+</a>
+<a href="{% url "personnel_operations" %}" class="nav_link {% if req.path == '/personel/' %}active{% endif %}"> 
+    <i class="bx bx-user nav_icon"></i> 
+    <span class="nav_name">Personel İşlemleri</span> 
+</a>
+<a href="{% url "personel_atama" %}" class="nav_link {% if req.path == '/personel/atama/' %}active{% endif %}"> 
+    <i class='bx bx-message-square-detail nav_icon'></i> 
+    <span class="nav_name">Personel Atama</span> 
+</a> 
+<a href="#" class="nav_link {% if req.path == '/performans_islemleri/' %}active{% endif %}"> 
+    <i class='bx bx-bookmark nav_icon'></i> 
+    <span class="nav_name">Performans İşlemleri</span> 
+</a> 
+<a href="#" class="nav_link {% if req.path == '/istatistik/' %}active{% endif %}"> 
+    <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
+    <span class="nav_name">İstatistik</span> 
+</a>
+{% endblock sidebar %}

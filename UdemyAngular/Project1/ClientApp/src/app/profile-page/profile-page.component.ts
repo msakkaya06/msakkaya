@@ -1,0 +1,94 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Message } from 'src/app/_models/message';
+import { AuthService } from 'src/app/_services/auth.service';
+import { MessageService } from 'src/app/_services/message.service';
+import { User } from '../_models/user';
+import { AlertifyService } from '../_services/alertify.service';
+import { UserService } from '../_services/user.service';
+
+@Component({
+  selector: 'profile-page',
+  templateUrl: './profile-page.component.html',
+  styleUrls: ['./profile-page.component.css']
+})
+export class ProfilePageComponent implements OnInit {
+  user: User;
+  followingUsers:User[];
+  followerUsers:User[];
+  followers:boolean=true;
+  followings:boolean;
+  messageText:string='';
+  constructor
+  ( private userService: UserService,
+    private route:ActivatedRoute,
+    private authService:AuthService,
+    private alertify: AlertifyService,
+    private messageService:MessageService) { }
+  ngOnInit(): void {
+
+      this.route.data.subscribe(data => {this.user=data.user;});
+      this.getUserFollowers(this.user.id);
+      this.getUserFollowings(this.user.id);
+  }
+
+  getUser() {
+    this.userService.getUser(this.route.snapshot.params['username'],this.authService.decodedToken.NameId).subscribe(user => { this.user = user; }, err => { this.alertify.error(err); });
+
+  }
+
+  unfollowUser(userId:number){
+
+    this.userService.unfollowUser(this.authService.decodedToken.NameId,userId).subscribe(result => {
+      this.alertify.warning(this.user.username + ' kullanıcısını takibi bıraktın')},
+      err=>{this.alertify.error(err);
+      });
+     this.getUser();
+      this.getUserFollowers(this.user.id);
+      this.getUserFollowings(this.user.id);
+
+  }
+
+  followUser(userId:number){
+
+    this.userService.followUser(this.authService.decodedToken.NameId,userId,this.authService.decodedToken.NameId).subscribe(result => {
+      this.alertify.success(this.user.username + ' kullanıcısını takip etmeye başladın')},
+      err=>{this.alertify.error(err);
+      });
+     this.getUser();
+      this.getUserFollowers(this.user.id);
+      this.getUserFollowings(this.user.id);
+
+  }
+
+  getUserFollowings(userId: number)
+  {
+    this.userService.getUsers(userId,"Followings").subscribe(users=>{this.followingUsers=users;},
+      err=>{this.alertify.error(err);})
+
+  }
+  getUserFollowers(userId: number)
+  {
+    this.userService.getUsers(userId,"Followers").subscribe(users=>{this.followerUsers=users;},
+      err=>{this.alertify.error(err);})
+
+  }
+modalClosed(userId: number)
+{this.getUserFollowers(userId);
+this.getUserFollowings(userId);
+}
+
+sendMessage(recipientId:number, messageText:string)
+{
+this.messageService.sendMessage(recipientId,this.authService.decodedToken.NameId,messageText).subscribe(result => {
+  this.alertify.success("Başarılı")},
+  err=>{this.alertify.error(err);
+  });
+}
+
+closeMessageModal()
+{
+
+}
+
+}

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: Ms1806730971  # root şifresi
+      MYSQL_DATABASE: dbTebs# Varsayılan oluşturulacak veritabanı (isteğe bağlı)
+      MYSQL_USER: user  # Veritabanı kullanıcısı (isteğe bağlı)
+      MYSQL_PASSWORD: user_password  # Veritabanı kullanıcısının şifresi (isteğe bağlı)
+    ports:
+      - "3306:3306"  # 3306 portunu dışarıya açar
+    volumes:
+      - mysql_data:/var/lib/mysql  # Veritabanı verilerini kalıcı hale getirir
+    networks:
+      - mysql_network
+
+volumes:
+  mysql_data:  # Veritabanı verilerini kaydetmek için volume oluşturur
+
+networks:
+  mysql_network:
+    driver: bridge

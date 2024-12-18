@@ -1,0 +1,17 @@
+.btn-outline-primary{color:#007bff;border-color:#007bff}
+.btn-outline-primary:hover{color:#fff;background-color:#007bff;border-color:#007bff}
+
+.btn-success{color:#fff;background-color:#4a7053;border-color:#4a7053}
+.btn-success:hover{color:#fff;background-color:#4a7053;border-color:#4a7053}
+
+.btn-primary{color:#fff;background-color:#4a7053;border-color:#4a7053}
+.btn-priamry:hover{color:#fff;background-color:#4a7053;border-color:#4a7053}
+
+.btn-secondary{color:#fff;background-color:#ccab63;border-color:#ccab63}
+.btn-secondary:hover{color:#fff;background-color:#ccab63;border-color:#ccab63}
+
+
+.btn-outline-success{color:#4a7053;border-color:#4a7053}
+.btn-outline-success:hover{color:#fff;background-color:#4a7053;border-color:#d6d6b2}
+.btn-outline-success.focus,.btn-outline-success:focus{box-shadow:0 0 0 .2rem rgba(69, 151, 88, 0.5)}
+.btn-outline-success.disabled,.btn-outline-success:disabled{color:#4a7053;background-color:transparent}

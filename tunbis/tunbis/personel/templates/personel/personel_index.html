@@ -1,0 +1,15 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "personel/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<ul>
+    {% for group in groups %}
+        {% if group.name == 'Personel' %}
+            <li><a href="{% url 'personel_index' %}">Personel Modülü</a></li>
+        {% elif group.name == 'idari_buro' %}
+            <li><a href="{% url 'idari_buro_index' %}">İdari Büro Modülü</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock content %}

@@ -1,0 +1,320 @@
+<div class="content-wrapper" style="min-height: 1566.8px; margin-top: 75px;">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+      </div>
+    </div>
+  </section>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card card-secondary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle"
+                  src="{{user.profileImageURL || '../assets/images/profile.jpg'}}" alt="User profile picture">
+              </div>
+              <h3 class="profile-username text-center">{{user.firstName}} {{user.lastName}}</h3>
+              <p class="text-muted text-center"> {{user.introduction}}</p>
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Takipçiler</b> <a class="float-right">{{user.followersCount}}</a>
+                </li>
+                <li class="list-group-item">
+                  <b>Takip Edilenler</b> <a class="float-right">{{user.followingsCount}}</a>
+                </li>
+              </ul>
+              <div *ngIf="!isMe" class="btn-group float-left  btn-block" role="group">
+                <button *ngIf="!user.isFollowing" type="button" (click)="followUser(user.id)"
+                  class="btn btn-danger btn-sm"><i class="fas fa-plus center"></i>Takip Et</button>
+                <button *ngIf="user.isFollowing" type="button" (click)="unfollowUser(user.id)"
+                  class="btn btn-outline-primary btn-sm">Takip Ediliyor</button>
+              </div>
+            </div>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#SendMessageModal">Mesaj
+                Gönder</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#FollowModal">Takip
+                Listesi</button>
+            </div>
+          </div>
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Hakkımda</h3>
+            </div>
+
+            <div class="card-body">
+              <strong><i class="fas fa-book mr-1"></i> Eğitim</strong>
+              <p class="text-muted">
+                {{user.educations}}
+              </p>
+              <hr>
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Yer</strong>
+              <p class="text-muted"> {{user.city}}, {{user.country}}</p>
+              <hr>
+              <strong><i class="fas fa-pencil-alt mr-1"></i> Hobiler</strong>
+              <p class="text-muted">
+                <span class="tag tag-danger"> {{user.hobbies}}</span>
+              </p>
+              <hr>
+              <strong><i class="far fa-file-alt mr-1"></i> Son Görülme</strong>
+              <p class="text-muted">{{user.lastActive}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-header p-2">
+              <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
+                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a>
+                </li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                  <div class="post clearfix" *ngFor="let item of activities">
+                    <div class="user-block">
+                      <img class="img-circle img-bordered-sm"
+                        src="{{user.profileImageURL || '../assets/images/profile.jpg'}}" alt="User Image">
+                      <span class="username">
+                        <p>{{item.userFirstName}} {{item.userLastName}}</p>
+                        <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
+                      </span>
+                    </div>
+                    <p>{{item.description}}</p>
+                    <div class="row mb-3">
+                      <div class="col-sm-10">
+                        <img *ngIf="!item.isMultiPhoto" class="img-fluid" src="{{item.images[0].url}}" alt="Photo">
+                        <div *ngIf="item.isMultiPhoto" id="carouselExampleControls{{item.activityId}}" data-interval="false" class="carousel slide" data-ride="carousel">
+                          <div class="carousel-inner">
+                            <div class="carousel-item" style="height: 300px;"
+                                    *ngFor="let photo of item.images let i = index"
+                                     [ngClass]="{'active': i == 1 }">
+                                     <img [src]="photo.url" class="d-block w-100">
+                            </div>      
+                          </div>
+                          <a class="carousel-control-prev" href="#carouselExampleControls{{item.activityId}}" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls{{item.activityId}}" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+                        <!-- carousel controls omitted -->
+                        </div>
+                      </div>
+
+                    </div>
+                    <p>
+                      <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
+                      <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i>
+                        Like</a>
+                      <span class="float-right">
+                        <a href="#" class="link-black text-sm">
+                          <i class="far fa-comments mr-1"></i> Yorumlar ()
+                        </a>
+                      </span>
+                    </p>
+                    <div class="media-block" *ngFor="let comment of item.comments">
+                      <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture"
+                          src="{{comment.userProfileImageUrl}}">
+                      </a>
+                      <div class="media-body">
+                        <div class="mar-btm">
+                          <a [routerLink]="['/members', comment.username]"
+                            class="btn-link text-semibold media-heading box-inline"> {{comment.userFirstName}}
+                            {{comment.userLastName}}</a>
+                          <p class="text-muted text-sm"><i></i> 2 min ago</p>
+                        </div>
+                        <p>{{comment.commentText}}</p>
+                        <div class="pad-ver">
+                          <div class="btn-group">
+                            <a class="btn btn-sm btn-default btn-hover-success" href="#"><i
+                                class="fa fa-thumbs-up"></i></a>
+                            <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i
+                                class="fa fa-thumbs-down"></i></a>
+                          </div>
+                          <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
+                        </div>
+                        <hr>
+                      </div>
+                    </div>
+                    <div class="input-group input-group-sm mb-0">
+                      <input type="text" class="form-control form-control-sm" [(ngModel)]="item.commentText"
+                        name="commentText" placeholder="Comment">
+                      <div class="input-group-append">
+                        <button (click)="addComment(item.activityId,item.commentText)"
+                          class="btn btn-success">Yorumla</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="timeline">
+                  <div class="timeline timeline-inverse">
+                    <div class="time-label">
+                      <span class="bg-danger">
+                        10 Feb. 2014
+                      </span>
+                    </div>
+                    <div>
+                      <i class="fas fa-envelope bg-primary"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 12:05</span>
+                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
+                          email</h3>
+                        <div class="timeline-body">
+                          Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                          weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                          jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                          quora plaxo ideeli hulu weebly balihoo...
+                        </div>
+                        <div class="timeline-footer">
+                          <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <i class="fas fa-user bg-info"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
+                        <h3 class="timeline-header border-0"><a href="#">Sarah Young</a>
+                          accepted your friend request
+                        </h3>
+                      </div>
+                    </div>
+                    <div>
+                      <i class="fas fa-comments bg-warning"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
+                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your
+                          post</h3>
+                        <div class="timeline-body">
+                          Take me to your leader!
+                          Switzerland is small and neutral!
+                          We are more like Germany, ambitious and misunderstood!
+                        </div>
+                        <div class="timeline-footer">
+                          <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="time-label">
+                      <span class="bg-success">
+                        3 Jan. 2014
+                      </span>
+                    </div>
+                    <div>
+                      <i class="fas fa-camera bg-purple"></i>
+                      <div class="timeline-item">
+                        <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
+                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
+                        </h3>
+                        <div class="timeline-body">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                          <img src="https://placehold.it/150x100" alt="...">
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <i class="far fa-clock bg-gray"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="modal fade" id="FollowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <div class="btn-group btn-group-toggle text-center" data-toggle="buttons">
+          <label class="btn btn-secondary btn-sm active">
+            <input type="radio" name="options" id="option1" autocomplete="off" [(ngModel)]="followers" [value]="true"
+              checked> Takipçiler
+          </label>
+          <label class="btn btn-secondary btn-sm">
+            <input type="radio" name="options" id="option2" [(ngModel)]="followers" [value]="false" autocomplete="off">
+            Takip Edilenler
+          </label>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="followers">
+          <ul class="list-group" *ngFor="let user of followerUsers">
+            <li class="list-group-item" data-dismiss="modal" (click)="modalClosed(user.id)"
+              [routerLink]="['/members', user.username]">
+              <img class="img-top" width="50" height="50"
+                src="{{user.profileImageURL || '../assets/images/profile.jpg'}}">
+              {{user.username}}-{{user.age}} | {{user.firstName}} {{user.lastName}}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="!followers">
+          <ul class="list-group" *ngFor="let user of followingUsers">
+
+            <li class="list-group-item text-blocked" (click)="modalClosed(user.id)" data-dismiss="modal"
+              [routerLink]="['/members', user.username]">
+              <img class="img-top" width="50" height="50"
+                src="{{user.profileImageURL || '../assets/images/profile.jpg'}}">
+              {{user.username}}-{{user.age}} | {{user.firstName}} {{user.lastName}}
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="SendMessageModal" tabindex="-1" aria-labelledby="SendMessageModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Yeni Mesaj Oluştur</h1>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form #messageForm="ngForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label text-success">{{user.firstName}} {{user.lastName}}
+                Kullanıcısına Mesaj Gönder</label>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Mesajınızı Yazın:</label>
+              <textarea [(ngModel)]="messageText" required [ngModelOptions]="{standalone:true}" rows="5"
+                class="form-control" id="text"></textarea>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"
+              (click)="closeMessageModal()">Kapat</button>
+            <button type="button" class="btn btn-primary" [disabled]="!messageForm.valid"
+              (click)="sendMessage(user.id,messageText)">Mesaj Gönder</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

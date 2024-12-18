@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}
+Giriş Yap
+{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center text-secondary bg-warning">
+                    <h4>K O L A Y  R E S T O R A N </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            {% if form.errors.email %}
+                                <div class="text-danger mt-1">{{ form.errors.username }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            {% if form.errors.password %}
+                                <div class="text-danger mt-1">{{ form.errors.password }}</div>
+                            {% endif %}
+                        </div>
+                        {% if form.non_field_errors %}
+                            <div class="text-danger mt-3">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-warning w-100">Giriş Yap</button>
+                    </form>
+                    <div class="mt-3">
+                        <a href="#" class="text-decoration-none text-secondary">Şifremi Unuttum</a>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

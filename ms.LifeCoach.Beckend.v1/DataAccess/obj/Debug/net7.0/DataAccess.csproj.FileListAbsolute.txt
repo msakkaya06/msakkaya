@@ -1,0 +1,80 @@
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.dll
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.pdb
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+G:\Drive'ım\PROJECTS\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\appsettings.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\appsettings.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+C:\Users\407678\source\repos\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\appsettings.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+C:\Users\407678\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Core.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\Entities.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.AssemblyInfo.cs
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.csproj.CopyComplete
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\refint\DataAccess.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\appsettings.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.deps.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.runtimeconfig.json
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.dll
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\bin\Debug\net7.0\DataAccess.pdb
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\DataAccess.genruntimeconfig.cache
+C:\Users\Tunceli BT\Documents\GitHub\lc.msakkaya\ms.LifeCoach.Beckend.v1\DataAccess\obj\Debug\net7.0\ref\DataAccess.dll

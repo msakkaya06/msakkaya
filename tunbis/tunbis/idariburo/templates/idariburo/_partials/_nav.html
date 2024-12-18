@@ -1,0 +1,22 @@
+{% block sidebar %}
+<a href="#" class="nav_link {% if req.path == '/idari-buro/' %}active{% endif %}"> 
+    <i class='bx bx-grid-alt nav_icon'></i> 
+    <span class="nav_name">İdari Büro Ana Ekran</span> 
+</a>
+<a href="{% url "idari_buro_index" %}" class="nav_link {% if req.path == '/idari-buro/' %}active{% endif %}"> 
+    <i class="bx bx-user nav_icon"></i> 
+    <span class="nav_name">Büro İşlemleri</span> 
+</a>
+<a href="{% url "idariburo_unit_assignment" %}" class="nav_link {% if req.path == '/idari-buro/buro-atama/' %}active{% endif %}"> 
+    <i class='bx bx-message-square-detail nav_icon'></i> 
+    <span class="nav_name">Personel Büro Atama</span> 
+</a> 
+<a href="#" class="nav_link {% if req.path == '/performans_islemleri/' %}active{% endif %}"> 
+    <i class='bx bx-bookmark nav_icon'></i> 
+    <span class="nav_name">Performans İşlemleri</span> 
+</a> 
+<a href="#" class="nav_link {% if req.path == '/istatistik/' %}active{% endif %}"> 
+    <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
+    <span class="nav_name">İstatistik</span> 
+</a>
+{% endblock sidebar %}

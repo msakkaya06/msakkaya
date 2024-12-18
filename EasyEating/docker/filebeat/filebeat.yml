@@ -1,0 +1,26 @@
+# Filebeat Configuration Example
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/*.log  # Log dosyalarınızın bulunduğu yol
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]  # Elasticsearch'ün çalıştığı sunucu ve port
+  username: "kibana_user"  # Kibana ile Elasticsearch'e bağlanırken kullanılan kullanıcı adı
+  password: "Ms1806730971"  # Kibana ile Elasticsearch'e bağlanırken kullanılan şifre
+
+# Optional Kibana configuration
+setup.kibana:
+  host: "kibana:5601"  # Kibana'nın çalıştığı host
+
+# Logging configuration
+logging:
+  level: info  # Filebeat log seviyesini ayarlamak
+  to_files: true  # Filebeat loglarını dosyaya kaydet
+  files:
+    path: /var/log/filebeat  # Filebeat log dosyalarının tutulacağı yol
+    name: filebeat
+    keepfiles: 7  # 7 gün boyunca log dosyalarını sakla
+    permissions: 0644  # Dosya izinleri

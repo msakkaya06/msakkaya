@@ -1,0 +1,77 @@
+{% extends "module/layout.html" %}
+{% load static %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<h4>Yazıcı ve Tarayıcı Envanter Listesi</h4>
+<div class="row mb-3">
+    <div class="col-md-4">
+        <form method="GET" action="{% url 'search_printer_name' %}">
+            <div class="input-group">
+                <input type="text" name="device_name" class="form-control" placeholder="Cihaz Adı">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form method="GET" action="{% url 'search_printer_serial' %}">
+            <div class="input-group">
+                <input type="text" name="serial_number" class="form-control" placeholder="Seri Numarası">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form method="GET" action="{% url 'search_printer_unit' %}">
+            <div class="input-group">
+                <select name="unit" class="form-select">
+                    <option value="">Tüm Birimler</option>
+                    {% for unit in select_units %}
+                        <option value="{{ unit.id }}">{{ unit.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Resim</th>
+                <th>Cihaz Adı</th>
+                <th>Üretici</th>
+                <th>Model</th>
+                <th>Birim</th>
+                <th>Ağ</th>
+                <th>Detaylar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in printers_scanners %}
+                <tr>
+                    <td>
+                        {% if device.image %}
+                            <img src="{{ device.image.url }}" alt="{{ device.device_name }}" class="img-fluid" style="max-width: 75px; max-height:50px;">
+                        {% else %}
+                            <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid" style="max-width: 75px; max-height:50px;">
+                        {% endif %}
+                    </td>
+                    <td>{{ device.device_name }}</td>
+                    <td>{{ device.manufacturer }}</td>
+                    <td>{{ device.model }}</td>
+                    <td>{{ device.unit.name }}</td>
+                    <td>{{ device.network_used }}</td>
+                    <td><a href="{% url 'printer_scanner_detail' device.pk %}" class="btn btn-warning btn-sm">Detaylar</a></td>
+                </tr>
+            {% endfor %}
+            {% if page_obj.paginator.num_pages > 1 %}
+            {% include "bilisim_envanter/_partials/_pagination.html" %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

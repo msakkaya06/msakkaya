@@ -1,0 +1,41 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<div class="container posts-content">
+  
+    <div class="col-lg-12 mt-5">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <textarea [(ngModel)]="description" name="description" class="form-control" id="description"
+                placeholder="Metin Ekle"></textarea>
+            </div>
+          </div>
+        </div>
+          <main class="main_full">
+            <div class="container">
+              <div class="panel">
+                <div class="button_outer">
+                  <div class="btn_upload">
+                    <input type="file" id="upload_file" multiple ng2FileSelect [uploader]="uploader" name="">
+                    Fotoğraf Seç
+                  </div>
+                  <div class="processing_bar"></div>
+                  <div class="success_box"></div>
+                </div>
+              </div>
+              <div class="error_msg"></div>
+              <div class="uploaded_file_view" id="uploaded_view">
+                <span class="file_remove" (click)="ImgInit()">X</span>
+              </div>
+            </div>
+          </main>
+        </div>
+        <!-- <div *ngFor="let item of uploader.queue">
+          <button type="button" class="btn btn-success btn-block" (click)="item.upload()">Gönderiyi Paylaş</button>
+      </div> -->
+        <div>
+          <button type="button" class="btn btn-success btn-block"   (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">Gönderiyi Paylaş</button>
+      </div>
+    </div>
+
+</div>

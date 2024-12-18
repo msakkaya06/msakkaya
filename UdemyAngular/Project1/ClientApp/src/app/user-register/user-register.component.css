@@ -1,0 +1,38 @@
+.register-page{
+
+    background-color: rgba(31, 39, 29, 0.4);
+    
+    
+} 
+
+
+#home {
+    background-image: url(../../assets/images/background-5.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: 50%;
+    min-height: 745px;
+    padding-bottom: 0%;
+    
+
+   
+}
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 800px;
+    background: rgba(black,0.5);
+}
+.h1 {
+    color: azure;
+}
+.login-box-msg{ color: azure;}
+
+.card-body{
+    background-color: none;
+}
+
+.card{   background-color: none;}

@@ -1,0 +1,52 @@
+
+
+<script>
+  $(document).ready(function() {
+
+      $("#FollowButton").click(function () {
+
+          if ($(this).hasClass('btn btn-outline-primary btn-sm')){
+              $('#FollowButton').removeClass('btn btn-outline-primary btn-sm').addClass('btn btn-outline-danger btn-sm');
+              $(this).addClass('btn btn-outline-danger btn-sm').removeClass('btn btn-outline-primary btn-sm');   
+          }
+
+          else if ($(this).hasClass('btn btn-outline-danger btn-sm')){
+              $('#FollowButton').removeClass('btn btn-outline-primary btn-sm').addClass('btn-defaultbtn btn-outline-danger btn-sm');
+              $(this).addClass('btn btn-outline-danger btn-sm').removeClass('btn btn-outline-primary btn-sm');
+          }
+
+      })
+  })
+ </script><div class="container mt-3" style="margin-top: 75px;">
+  <div class="user-list">
+    <div class="row">
+      <div *ngFor="let user of users" class="col-lg-4 col-md-4 col-sm-8  col-12">
+        <div class="card border-success mb-3" style="max-width: 17rem;">
+          <div class="card-header bg-transparent border-success">
+            <h6 class="text-center text-success">{{user.firstName}} {{user.lastName}}</h6>
+          </div>
+          <div class="card-body text-secondary text-center">
+            <img class ="img-top rounded-circle img-fluid img-thumbnail" width = "200" height = "200" src="{{user.profileImageURL|| 'assets/images/profile.jpg'}}" alt="" />
+            <h5><small>{{user.username}} - {{user.age}}</small></h5>
+          </div>
+          <div class="card-footer bg-transparent border-success text-center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-success btn-sm" [routerLink]="['/members', user.username]">Profili Görüntüle</button>
+              <button *ngIf="user.isFollowing"id="FollowButton" type="button" class="btn btn-outline-primary btn-sm"[routerLink]="['/members', user.username]">
+                Takip Ediliyor
+              </button>
+              <button *ngIf="!user.isFollowing" (click)="followUser(user.id)" id="FollowButton" type="button" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-plus"></i>
+                Takip Et
+              </button>
+
+            </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,41 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+<ul class="module-card-list">
+    {% for group in groups %}
+        <li class="module-card">
+            {% if group.name == 'Personel' %}
+                <a href="{% url 'personel_index' %}">
+                    <div class="module-card-content">
+                        <i class="fas fa-users"></i>
+                        <h3>Personel Modülü</h3>
+                    </div>
+                </a>
+            {% elif group.name == 'idari-buro' %}
+                <a href="{% url 'idari_buro_index' %}">
+                    <div class="module-card-content">
+                        <i class="fas fa-building"></i>
+                        <h3>İdari Büro Modülü</h3>
+                    </div>
+                </a>
+            {% elif group.name == 'bilisim-envanter' %}
+            <a href="{% url 'envanter_index' %}">
+                <div class="module-card-content">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Envanter Modülü</h3>
+                </div>
+            </a>    
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+{% endblock content %}
+
+{% block title %}
+{% endblock title %}
+

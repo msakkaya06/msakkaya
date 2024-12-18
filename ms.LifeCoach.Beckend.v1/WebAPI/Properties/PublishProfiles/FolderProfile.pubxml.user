@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>\\10.240.62.14\inetpub\wwwroot\lc-server</_PublishTargetUrl>
+    <History>True|2023-05-26T09:26:13.5134333Z;True|2023-05-12T10:02:10.6894515+03:00;True|2023-05-12T09:56:31.6343196+03:00;True|2023-05-11T19:58:54.5029950+03:00;True|2023-05-11T02:56:02.5341345+03:00;True|2023-05-10T23:57:26.7888903+03:00;False|2023-05-10T22:02:57.6960756+03:00;False|2023-05-10T19:56:19.9370257+03:00;False|2023-05-10T19:14:54.4977175+03:00;False|2023-05-10T19:13:21.1988322+03:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

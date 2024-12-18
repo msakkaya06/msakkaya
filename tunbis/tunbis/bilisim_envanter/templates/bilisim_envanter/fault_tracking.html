@@ -1,0 +1,104 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+  <style>
+    .font-lighter {
+      font-weight: lighter;
+    }
+  </style>
+
+  <div class="row mb-3">
+    <!-- Aktif Arızalar Başlığı -->
+    <h4 class="text-primary font-weight-bold">Aktif Arızalar</h4>
+    
+    <!-- Aktif Arızalar Tablosu -->
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Resim</th>
+            <th class="text-center">Bilgisayar Adı</th>
+            <th class="text-center">Üretici</th>
+            <th class="text-center">Model</th>
+            <th class="text-center">Birim</th>
+            <th class="text-center">Ağ</th>
+            <th class="text-center">Arıza Talep Notları</th>
+            <th class="text-center">Talepte Bulunan</th>
+            <th class="text-center">İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for computer in active_faults %}
+            <tr>
+              <td>
+                {% if computer.computer_image %}
+                  <img src="{{ computer.computer_image }}" alt="{{ computer.computer_name }}" class="img-fluid text-center" style="max-width: 75px; max-height:50px;" />
+                {% else %}
+                  <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid text-center" style="max-width: 75px; max-height:50px;" />
+                {% endif %}
+              </td>
+              <td class="text-center">{{ computer.computer_name }}</td>
+              <td class="text-center">{{ computer.computer_manufacturer }}</td>
+              <td class="text-center">{{ computer.computer_model }}</td>
+              <td class="text-center">{{ computer.computer_unit_name }}</td>
+              <td class="text-center">{{ computer.computer_network_used }}</td>
+              <td class="text-center text-success">
+                <span style="word-wrap: break-word; word-break: break-word;">{{ computer.requester_notes }}</span>
+              </td>
+              <td class="text-center text-success">{{ computer.requester_first_name }} {{ computer.requester_last_name }}</td>
+              <td><a href="{% url 'fault_tracking_detail' computer.action_pk %}" class="btn btn-warning btn-sm">Arıza Detayları</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Geçmiş Arızalar Başlığı -->
+    <h5 class="text-muted font-weight-bold mt-5">Geçmiş Arızalar (Son 10)</h5>
+
+    <!-- Geçmiş Arızalar Tablosu -->
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Resim</th>
+            <th class="text-center">Bilgisayar Adı</th>
+            <th class="text-center">Üretici</th>
+            <th class="text-center">Model</th>
+            <th class="text-center">Birim</th>
+            <th class="text-center">Ağ</th>
+            <th class="text-center">Yapılan İşlem Notları</th>
+            <th class="text-center">İşlemi Yapan</th>
+            <th class="text-center">Detaylar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for computer in completed_faults %}
+            <tr>
+              <td>
+                {% if computer.computer_image %}
+                  <img src="{{ computer.computer_image }}" alt="{{ computer.computer_name }}" class="img-fluid text-center" style="max-width: 75px; max-height:50px;" />
+                {% else %}
+                  <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid text-center" style="max-width: 75px; max-height:50px;" />
+                {% endif %}
+              </td>
+              <td class="text-center">{{ computer.computer_name }}</td>
+              <td class="text-center">{{ computer.computer_manufacturer }}</td>
+              <td class="text-center">{{ computer.computer_model }}</td>
+              <td class="text-center">{{ computer.computer_unit_name }}</td>
+              <td class="text-center">{{ computer.computer_network_used }}</td>
+              <td class="text-center text-muted">
+                <span style="word-wrap: break-word; word-break: break-word;">{{ computer.action_notes }}</span>
+              </td>
+              <td class="text-center text-muted">{{ computer.performer_first_name }} {{ computer.performer_last_name }}</td>
+              <td><a href="{% url 'fault_tracking_detail' computer.action_pk %}" class="btn btn-secondary btn-sm">Arıza Detayları</a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

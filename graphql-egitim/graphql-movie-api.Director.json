@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "673c9aa89ad234ebfef584a8"
+  },
+  "id": "1",
+  "name": "Francis Ford Coppola",
+  "birth": 1939
+},
+{
+  "_id": {
+    "$oid": "673c9aa89ad234ebfef584a9"
+  },
+  "id": "2",
+  "name": "Brian De Palma",
+  "birth": 1940
+},
+{
+  "_id": {
+    "$oid": "673c9aa89ad234ebfef584aa"
+  },
+  "id": "3",
+  "name": "Quentin Tarantino",
+  "birth": 1963
+},
+{
+  "_id": {
+    "$oid": "673c9aa89ad234ebfef584ab"
+  },
+  "id": "4",
+  "name": "Peter Jackson",
+  "birth": 1961
+}]
