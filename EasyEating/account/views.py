@@ -54,7 +54,7 @@ def desk_login(request):
         if username and token:
             try:
                 # Kullanıcıyı bul
-                user = EEUser.objects.get(username=username)
+                user = EEUser.objects.get(username=username, token=token)
                 print(user.token)
                 if user:
                     login(request, user)

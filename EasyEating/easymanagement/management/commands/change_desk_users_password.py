@@ -9,7 +9,7 @@ class Command(BaseCommand):
         new_password = "kolaymasa"
         desk_users = EEUser.objects.filter(is_desk=True)
         for user in desk_users:
-            user.password=make_password(new_password)
-            self.stdout.write(self.style.SUCCESS(f"kullanıcının şifresi.{user.password} "))
+            user.password=new_password
+            self.stdout.write(self.style.SUCCESS(f"{user.username} kullanıcısının şifresi sıfırlandı "))
             user.save()
         self.stdout.write(self.style.SUCCESS(f"{desk_users.count()} kullanıcının şifresi başarıyla güncellendi."))
