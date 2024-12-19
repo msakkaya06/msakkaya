@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'account',
     'order',
     'payment',
+    'debug_toolbar',
    
 ]
 
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'logging_helper.middleware.UserActivityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
   
 ]
 

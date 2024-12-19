@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'tunbis.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'dbTebs',
+		'NAME': 'DbTebs',
 		'USER': 'root',
 		'PASSWORD': 'Ms1806730971',
 		'HOST':'localhost',

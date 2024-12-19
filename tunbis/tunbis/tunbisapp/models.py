@@ -40,7 +40,7 @@ class Unit(models.Model):
     super_unit=models.BooleanField(default=False) # Şube Müdürlükleri ve İl Emniyet Müdürlüğü için bu alan kullanılacak.
     is_active=models.BooleanField(default=True)
     def save(self, *args, **kwargs):
-        super().save(args,kwargs)
+        super().save(*args,**kwargs)
     def __str__(self):
         return self.name
     #uniqidentifier eklenecek
@@ -55,7 +55,7 @@ class TebsUser(AbstractUser):
     passive_description = models.TextField(null=True, blank=True)
     temp_duty_station = models.TextField(null=True, blank=True)
     rank = models.CharField(max_length=50, null=True)
-    birthday = models.DateField(default=date.today, blank=True)
+    birthday = models.DateField(default=date.today, blank=True,null=True)
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, null=True)
     last_login = models.DateTimeField(null=True, blank=True)
 
