@@ -7,73 +7,106 @@
     <div class="row">
         <!-- Sol Alan (1/4) -->
         <div class="col-lg-3 mb-4">
-            <div class="card border-left-primary shadow h-25 py-2">
+            <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                POLNET BİLGİSAYAR SAYISI</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{count.polnet}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-desktop fa-2x text-gray-300"></i>
+                    <h6 class="m-0 font-weight-bold text-primary">Üreticilere Göre Bilgisayar Sayısı</h6>
+                    <hr>
+                    {% for manufacturer in manufacturers %}
+                    <div class="card border-left-{{ manufacturer.color_class }} shadow-sm mb-2">
+                        <div class="card-body p-2">
+                            <h6 class="font-weight-bold">{{ manufacturer.manufacturer }}</h6>
+                            <span class="text-muted">Toplam: {{ manufacturer.total }}</span>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="card border-left-success shadow h-25 py-2 mt-4">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                İNTERNET BİLGİSAYAR SAYISI</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{count.internet}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-globe fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
+        </div>
+
+        <!-- Sağ Alan (3/4) -->
+        <div class="col-lg-9 mb-4">
+            <div class="card shadow mb-4" style="height: 100%;">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Birimlere Göre Bilgisayar Sayısı</h6>
                 </div>
-            </div>
-            <div class="card border-left-warning shadow h-25 py-2 mt-4">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                KGYS BİLGİSAYAR SAYISI</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{count.kgys}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-camera fa-2x text-gray-300"></i>
-                        </div>
+                <div class="card-body" style="height: calc(100vh - 160px); overflow-y: auto;">
+                    <div class="chart-bar" style="height: 100%;">
+                        <canvas id="unitChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-<!-- Sağ Alan (3/4) -->
-<div class="col-lg-9 mb-4">
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Üretici Firmalara Göre Bilgisayar Sayısı</h6>
-        </div>
-        <div class="card-body">
-            {% for manufacturer in manufacturers %}
-            <h4 class="small font-weight-bold">{{ manufacturer.manufacturer }} <span class="float-right">{{ manufacturer.total }}</span></h4>
-            <div class="progress mb-4">
-            {% if manufacturer.total %}
-                <div class="progress-bar bg-{{ manufacturer.color }}" role="progressbar" style="width: {{ manufacturer.total }}%;" aria-valuenow="{{ manufacturer.total }}" aria-valuemin="0" aria-valuemax="100"></div>
-            {% else %}
-                <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            {% endif %}
-            </div>
+    </div>
+</div>
+
+
+        <script>
+        const unitLinks = [
+            {% for unit in unit_data %}
+                {
+                    name: "{{ unit.name }}",  // Birim adı
+                    url: "{% url 'computer_detail_for_unit' unit.id %}",  // Dinamik URL
+                    polnet: {{ unit.polnet }},  // PolNet bilgisayar sayısı
+                    internet: {{ unit.internet }}  // İnternet bilgisayar sayısı
+                }{% if not forloop.last %},{% endif %}
             {% endfor %}
-        </div>
-    </div>
-</div>
-
-
-    </div>
-</div>
-
-
+        ];
+        
+        const ctx = document.getElementById('unitChart').getContext('2d');
+        const unitChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: unitLinks.map(unit => unit.name),  // Birim adları
+                datasets: [
+                    {
+                        label: 'PolNet Bilgisayar Sayısı',
+                        data: unitLinks.map(unit => unit.polnet),  // PolNet bilgisayar sayısı
+                        backgroundColor: 'rgba(0, 123, 255, 0.8)',
+                    },
+                    {
+                        label: 'İnternet Bilgisayar Sayısı',
+                        data: unitLinks.map(unit => unit.internet),  // İnternet bilgisayar sayısı
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            // Tooltip üzerine hem sayıları hem de URL'yi gösterme
+                            label: function(tooltipItem) {
+                                const datasetIndex = tooltipItem.datasetIndex;
+                                const unitIndex = tooltipItem.dataIndex;
+                                const unit = unitLinks[unitIndex];  // Tıklanan birimi al
+        
+                                // Sayıyı ve URL'yi Tooltip'te göster
+                                if (datasetIndex === 0) {
+                                    return `PolNet Bilgisayar Sayısı: ${unit.polnet} Detay İçin Tıklayınız`;
+                                } else if (datasetIndex === 1) {
+                                    return `İnternet Bilgisayar Sayısı: ${unit.internet} Detay İçin Tıklayınız`;
+                                }
+                            }
+                        }
+                    }
+                },
+                onClick: function(e, elements) {
+                    if (elements.length > 0) {
+                        const unitIndex = elements[0].index; // Tıklanan birimin indexi
+                        const unitLink = unitLinks[unitIndex].url; // UnitLinks dizisinden ilgili URL'yi al
+                        window.location.href = unitLink; // Dinamik URL ile yönlendirme
+                    }
+                },
+            }
+        });
+        </script>
+        
+    
+</script>
 {% endblock content %}

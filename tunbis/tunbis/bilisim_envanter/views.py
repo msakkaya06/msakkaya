@@ -7,37 +7,68 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from datetime import datetime, timedelta
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+
 
 from django.views.decorators.csrf import csrf_exempt
-
 def index(request):
-    # Üretici firmaların isimlerini ve bu firmalara ait bilgisayar sayılarını hesapla
+    # Üretici firmaların bilgileri
     manufacturers = Computer_Informations.objects.values('manufacturer').annotate(total=Count('manufacturer')).order_by('-total')
     network_computer_counts = Computer_Informations.objects.values('network_used').annotate(total=Count('network_used')).order_by('-total')
+    units = Unit.objects.filter(is_active=True)
+    unit_data = []
+    
     count = {}
     for network in network_computer_counts:
         count[network['network_used'].lower()] = network['total']
     polnet_count = count.get('polnet', 0)
     internet_count = count.get('internet', 0)
-    kgys_count = count.get('kgys', 0)  
-    count={
-        "polnet":polnet_count,
-        "kgys":kgys_count,
-        "internet":internet_count
-    } 
-    # Renk paleti
-    COLOR_PALETTE = ['#FF5733', '#33FF57', '#5733FF', '#FF33B5', '#33B5FF', '#B5FF33', '#B533FF', '#FFB533', '#33FFB5']
-    # Her üreticiye bir renk ata
-    for i, manufacturer in enumerate(manufacturers):
-        manufacturer['color'] = COLOR_PALETTE[i % len(COLOR_PALETTE)]
+    kgys_count = count.get('kgys', 0)
+    
+    count = {
+        "polnet": polnet_count,
+        "kgys": kgys_count,
+        "internet": internet_count
+    }
 
-    # İndex sayfasına gönderilecek context
+    # Renk paleti ve üreticilere renk sınıfı atama
+    COLOR_CLASSES = ['primary', 'success', 'info', 'warning', 'danger']
+    for i, manufacturer in enumerate(manufacturers):
+        manufacturer['color_class'] = COLOR_CLASSES[i % len(COLOR_CLASSES)]
+    
+    # Birimlere göre bilgisayar sayıları
+    for unit in units:
+        polnet = Computer_Informations.objects.filter(unit=unit, network_used='PolNet').count()
+        internet = Computer_Informations.objects.filter(unit=unit, network_used='Internet').count()
+        if polnet > 0 or internet > 0:
+            unit_data.append({
+                "id": unit.pk,
+                "name": unit.name,
+                "polnet": polnet,
+                "internet": internet,
+            })
+    
     context = {
         'manufacturers': manufacturers,
-        'count':count   
+        'count': count,
+        'unit_data': unit_data
     }
-    return render(request,'bilisim_envanter/envanter_index.html',context)
-# Create your views here.
+    return render(request, 'bilisim_envanter/envanter_index.html', context)
+
+
+
+def computer_detail_for_unit(request, pk):
+    # İlgili birimi getir
+    unit = get_object_or_404(Unit, pk=pk)
+    # Birime ait bilgisayarları filtrele
+    computers = Computer_Informations.objects.filter(unit=unit)
+
+    context = {
+        'unit': unit,
+        'computers': computers,
+    }
+    return render(request, 'bilisim_envanter/computer_detail_for_unit.html', context)
+
 
 from django.utils import timezone
 from django.db.models import Q

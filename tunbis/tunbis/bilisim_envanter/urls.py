@@ -24,6 +24,8 @@ urlpatterns = [
     path('search-printer-name/', views.search_printer_name, name='search_printer_name'),
     path('search-printer-serial/', views.search_printer_serial, name='search_printer_serial'),
     path('search-printer-unit/', views.search_printer_unit, name='search_printer_unit'),
+    path('computer-detail-for-unit/<int:pk>/', views.computer_detail_for_unit, name='computer_detail_for_unit'),
+
 
 
 
