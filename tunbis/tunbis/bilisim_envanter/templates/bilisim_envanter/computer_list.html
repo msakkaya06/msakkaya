@@ -4,8 +4,10 @@
     {% include "bilisim_envanter/_partials/_nav.html" %}
 {% endblock sidebar %}
 {% block content %}
-<h4>Bilgisayar Envanter Listesi</h4>
-<div class="row mb-3">
+<div class="card-header bg-white border-secondary border-4 text-info text-bold">
+    <h4 class="m-1 text-center text-uppercase font-weight-bold">BİLGİSAYAR ENVANTER LİSTESİ</h4>
+</div>
+<div class="row mb-3 mt-3">
     <!-- Bilgisayar İsmi Arama Formu -->
     <div class="col-md-4">
         <form method="GET"  action="{% url "search_name" %}">

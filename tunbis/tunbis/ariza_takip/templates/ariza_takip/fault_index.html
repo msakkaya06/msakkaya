@@ -1,0 +1,100 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+{% block sidebar %}
+  {% include 'ariza_takip/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="card border-primary mb-4 p-0"> <!-- Kenarlık rengi ve alt kenar kalınlığı eklendi -->
+        <div class="card-header bg-white border-secondary border-4 text-danger text-bold">
+            <h6 class="m-1 p-2 text-center text-uppercase font-weight-bold">{{unit.name}}</h6>
+            <h3 class="m-1 p-2 text-center text-uppercase font-weight-bold">BİRİME AİT BİLGİSAYARLAR</h3>
+        </div>
+        <div class="card-body m-0">
+            <table class="table table-bordered table-striped table-sm w-100 text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Görsel</th>
+                        <th>Bilgisayar Adı</th>
+                        <th>Üretici</th>
+                        <th>Model</th>
+                        <th>Network</th>
+                        <th>IP Adres</th>
+                        <th>RAM</th>
+                        <th>İşlemci</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for computer in computers %}
+                        <tr>
+                            <td style="width:20px;">
+                                {% if computer.image %}
+                                    <img src="{{ computer.image.url }}" alt="{{ computer.computer_name }}" class="img-fluid text-center">
+                                {% endif %}
+                            </td>
+                            <td>{{ computer.computer_name }}</td>
+                            <td>{{ computer.manufacturer }}</td>
+                            <td>{{ computer.model }}</td>
+                            <td>{{ computer.network_used }}</td>
+                            <td>{{ computer.ip_address }}</td>
+                            <td>{{ computer.total_ram_gb }}</td>
+                            <td>{{ computer.processor_name }}</td>
+                            
+                            <td>
+                                <a href="{% url 'ariza_takip_fault' pk=computer.id %}?type=computer" class="btn btn-primary btn-sm">
+                                    Arıza Kaydı Oluştur
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="card border-secondary mb-4 p-0"> <!-- Kenarlık rengi ve alt kenar kalınlığı eklendi -->
+        <div class="card-header bg-white border-secondary border-4 text-danger text-bold">
+            <h6 class="m-1 p-2 text-center text-uppercase font-weight-bold">{{unit.name}}</h6>
+            <h3 class="m-1 p-2 text-center text-uppercase font-weight-bold">BİRİME AİT YAZICILAR</h3>
+        </div>
+        <div class="card-body m-0">
+            <table class="table table-bordered table-striped table-sm w-100 text-center">
+                <thead>
+                    <tr>
+                        <th>Resim</th>
+                        <th>Yazıcı Adı</th>
+                        <th>Üretici</th>
+                        <th>Model</th>
+                        <th>İşlemler</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for printer in printers %}
+                    <tr>
+                        <td>
+                            <img src="{{ printer.image.url }}" alt="Resim" style="width: 50px; height: auto;">
+                        </td>
+                        <td>{{ printer.device_name }}</td>
+                        <td>{{ printer.manufacturer|default:"-" }}</td>
+                        <td>{{ printer.model|default:"-" }}</td>
+                         <td>         
+                        <a href="{% url 'ariza_takip_fault' pk=printer.id %}?type=printer" class="btn btn-primary btn-sm">
+                            Arıza Kaydı Oluştur
+                        </a>
+                    </td>
+                    </tr>
+                    
+                </tr>
+                    {% endfor %}
+                  
+                 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

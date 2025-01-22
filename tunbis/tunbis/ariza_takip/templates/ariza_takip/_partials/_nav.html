@@ -1,0 +1,23 @@
+{% block sidebar %}
+<a href="{% url 'ariza_takip_index' %}" class="nav_link {% if req.path == '/ariza-takip/' %}active{% endif %}"> 
+    <i class='bx bxs-dashboard nav_icon'></i> 
+    <span class="nav_name">Arıza Kaydı Oluştur</span> 
+</a>
+<a href="{% url 'envanter_computer' %}" class="nav_link {% if req.path == '/bilisim-envanter/computer/' %}active{% endif %}"> 
+    <i class="bx bx-desktop nav_icon"></i> 
+    <span class="nav_name">Arıza Takip</span> 
+</a>
+<a href="{% url 'envanter_index' %}" class="nav_link {% if req.path == '/bilisim-envanter/stats/' %}active{% endif %}"> 
+    <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
+    <span class="nav_name">İstatistik</span> 
+</a>
+<script>
+    $(document).ready(function() {
+        // Arıza Takip menüsünü tetiklemek için
+        $('#faultMenuLink').on('click', function() {
+          $('#faultMenu').collapse('toggle');
+        });
+      });
+      
+</script>
+{% endblock sidebar %}

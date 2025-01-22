@@ -2,15 +2,14 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from tunbisapp.models import Computer_Informations, TebsUser, Unit, computer_action, PrinterScannerInformation
+from tunbisapp.models import Computer_Informations, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction
 from django.core.paginator import Paginator
 from django.contrib import messages
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
-
-
 from django.views.decorators.csrf import csrf_exempt
+
 def index(request):
     # Üretici firmaların bilgileri
     manufacturers = Computer_Informations.objects.values('manufacturer').annotate(total=Count('manufacturer')).order_by('-total')
@@ -57,6 +56,7 @@ def index(request):
 
 
 
+
 def computer_detail_for_unit(request, pk):
     # İlgili birimi getir
     unit = get_object_or_404(Unit, pk=pk)
@@ -70,13 +70,10 @@ def computer_detail_for_unit(request, pk):
     return render(request, 'bilisim_envanter/computer_detail_for_unit.html', context)
 
 
-from django.utils import timezone
-from django.db.models import Q
-
 def fault_tracking(request):
     # Aktif arızaları çekiyoruz
     active_faults = []
-    active_actions = computer_action.objects.filter(is_active=True)
+    active_actions = FaultAction.objects.filter(is_active=True,device_type='computer')
 
     for action in active_actions:
         requester = action.requester
@@ -100,12 +97,13 @@ def fault_tracking(request):
 
     # Geçmiş arızaları (tamamlanmış son 10 arıza) çekiyoruz
     completed_faults = []
-    completed_actions = computer_action.objects.filter(is_active=False).order_by('-completed_date')[:10]
+    completed_actions = FaultAction.objects.filter(is_active=False,device_type='computer').order_by('-completed_date')[:10]
 
     for action in completed_actions:
         requester = action.requester
         performer = action.performer
         computer = action.computer
+
         
         fault_dto = {
             'computer_id': computer.id,
@@ -130,8 +128,8 @@ def fault_tracking(request):
     return render(request, 'bilisim_envanter/fault_tracking.html', context)
 def fault_summary(request):
     # Bilgisayar arızaları ve tamamlanmış arıza sayısı
-    total_computer_faults = computer_action.objects.all().count()
-    completed_computer_faults = computer_action.objects.filter(is_active=False).count()
+    total_computer_faults = FaultAction.objects.all().count()
+    completed_computer_faults = FaultAction.objects.filter(is_active=False).count()
 
     # Yazıcı-Tarayıcı verileri (örnek)
     total_printer_faults = 5  # Örnek sayı
@@ -146,7 +144,7 @@ def fault_summary(request):
         start_month = month.replace(day=1)
         end_month = (start_month + timedelta(days=31)).replace(day=1) - timedelta(days=1)
         
-        completed_fault_count = computer_action.objects.filter(
+        completed_fault_count = FaultAction.objects.filter(
             completed_date__range=[start_month, end_month], is_active=False
         ).count()
         
@@ -165,7 +163,7 @@ def fault_summary(request):
     return render(request, 'bilisim_envanter/fault_summary.html', {'stats': stats})
 
 def fault_tracking_detail(request, pk):
-    fault_detail=computer_action.objects.get(pk=pk)
+    fault_detail=FaultAction.objects.get(pk=pk)
     print(fault_detail.computer.id)
     return render(request, 'bilisim_envanter/fault_detail.html', {'fault_detail': fault_detail})
 
@@ -196,7 +194,7 @@ def search_name_fault_temp(request):
         messages.add_message(request,messages.ERROR,"Bilgisayar Adı Boş Olamaz")
         return redirect("fault_record_create")
     computer = Computer_Informations.objects.get(computer_name=computer_name)
-    existing_action = computer_action.objects.filter(computer=computer, is_active=True).first()
+    existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
     if existing_action is not None:
         requester=TebsUser.objects.get(username=existing_action.requester.username)
         fault_dto ={
@@ -222,7 +220,7 @@ def search_name_fault(request):
     except Computer_Informations.DoesNotExist:
         return JsonResponse({'error': 'Bilgisayar Bulunamadı. İsmi kontrol edin'}, status=404)
 
-    existing_action = computer_action.objects.filter(computer=computer, is_active=True).first()
+    existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
     if existing_action:
         requester = TebsUser.objects.get(username=existing_action.requester.username)
         fault_dto = {
@@ -308,16 +306,18 @@ def save_computer_action(request):
         requester_notes = request.POST.get("requester_notes")
         computer=Computer_Informations.objects.get(pk=computer_id)      
         # Var olan arıza kaydını kontrol et
-        existing_action = computer_action.objects.filter(computer=computer, is_active=True).first()
+        existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
         # Kullanıcıları bul
         requester = TebsUser.objects.get(username=request_username)
         if existing_action is not None:
+            existing_action.device_type='computer'
             existing_action.requester = requester
             existing_action.requester_notes = requester_notes
             existing_action.save()
             return JsonResponse({'success': 'Açık arıza kaydı güncellendi.'}, status=200)
         # Talep edilen işlemi kaydet
-        action = computer_action.objects.create(
+        action = FaultAction.objects.create(
+            device_type='computer',
             computer=computer,
             requester=requester,
             requester_notes=requester_notes
@@ -344,7 +344,7 @@ def finalize_computer_action(request):
 
         computer = Computer_Informations.objects.get(pk=computer_id)
         performer = TebsUser.objects.get(username=action_username)
-        existing_action = computer_action.objects.filter(computer=computer, is_active=True).first()
+        existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
         
         if existing_action is None:
             return JsonResponse({'error': 'Aktif arıza kaydı bulunamadı.'}, status=200)
@@ -433,3 +433,14 @@ def render_printer_scanner_list(request, printers_scanners):
         "printers_scanners": page_obj
     }
     return render(request, 'bilisim_envanter/printer_scanner_list.html', context)
+
+
+
+def import_computer_info(request):
+    try:
+        # PowerShell betiğinin yolunu dışarıdan belirtin veya sabit bir yol kullanın
+        powershell_script_path = r"C:\Users\Tunceli BT\Documents\GET.ps1" 
+        run_powershell_and_import_data(powershell_script_path)
+        return JsonResponse({"status": "success", "message": "Bilgisayar bilgileri başarıyla içe aktarıldı."})
+    except Exception as e:
+        return JsonResponse({"status": "error", "message": str(e)})

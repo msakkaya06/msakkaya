@@ -3,9 +3,14 @@
   {% include 'bilisim_envanter/_partials/_nav.html' %}
 {% endblock %}
 {% block content %}
-  <div>
-    <h3>{{ computer.computer_name }} Detay Bilgileri</h3>
-  </div>
+
+<div class="card-header bg-white border-secondary border-4 text-info text-bold position-relative">
+  <h4 class="m-1 text-uppercase font-weight-bold">{{ computer.computer_name }}</h4>
+  <h6 class="m-1 text-muted font-weight-bold">{{ computer.unit.name }}</h6>
+  <h1 style="position: absolute; top: 0; right: 0;"><i class="bx bx-info-square pt-4 px-2"></i></h1>
+</div>
+
+
   <style>
     .container {
       display: flex;
@@ -42,7 +47,7 @@
       margin-bottom: 2px; /* Az margin */
     }
   </style>
-  <div class="container">
+  <div class="container mt-3">
     <div class="left">
       {% if computer.image %}
     <img src="{{ computer.image.url }}" alt="{{ computer.computer_name }}" class="computer-image" />
@@ -54,80 +59,80 @@
     <div class="middle">
       <div>
         <label for="computer_name">Bilgisayar Adı:</label>
-        <input type="text" id="computer_name" class="detail-input" value="{{ computer.computer_name }}" placeholder="Computer Name" />
+        <input type="text" id="computer_name" class="detail-input" value="{{ computer.computer_name }}" placeholder="Computer Name" readonly />
         <label for="network_used">Ağ Bilgisi:</label>
-        <input type="text" id="network_used" class="detail-input" value="{{ computer.network_used }}" placeholder="Network Used" />
+        <input type="text" id="network_used" class="detail-input" value="{{ computer.network_used }}" placeholder="Network Used" readonly/>
         <label for="manufacturer">Üretici:</label>
-        <input type="text" id="manufacturer" class="detail-input" value="{{ computer.manufacturer }}" placeholder="Manufacturer" />
+        <input type="text" id="manufacturer" class="detail-input" value="{{ computer.manufacturer }}" placeholder="Manufacturer" readonly />
         <label for="model">Model:</label>
-        <input type="text" id="model" class="detail-input" value="{{ computer.model }}" placeholder="Model" />
+        <input type="text" id="model" class="detail-input" value="{{ computer.model }}" placeholder="Model" readonly />
         <label for="serial_number">Seri Numarası:</label>
-        <input type="text" id="serial_number" class="detail-input" value="{{ computer.serial_number }}" placeholder="Serial Number" />
+        <input type="text" id="serial_number" class="detail-input" value="{{ computer.serial_number }}" placeholder="Serial Number" readonly/>
         <label for="number_of_processors">İşlemci Sayısı:</label>
-        <input type="text" id="number_of_processors" class="detail-input" value="{{ computer.number_of_processors }}" placeholder="Number of Processors" />
+        <input type="text" id="number_of_processors" class="detail-input" value="{{ computer.number_of_processors }}" placeholder="Number of Processors" readonly/>
         <label for="processor_name">İşlemci(CPU):</label>
-        <input type="text" id="processor_name" class="detail-input" value="{{ computer.processor_name }}" placeholder="Processor Name" />
+        <input type="text" id="processor_name" class="detail-input" value="{{ computer.processor_name }}" placeholder="Processor Name" readonly/>
       </div>
       <div>
         <label for="number_of_cores">İşlemci Çekirdek Sayısı:</label>
-        <input type="text" id="number_of_cores" class="detail-input" value="{{ computer.number_of_cores }}" placeholder="Number of Cores" />
+        <input type="text" id="number_of_cores" class="detail-input" value="{{ computer.number_of_cores }}" placeholder="Number of Cores" readonly/>
         <label for="number_of_memory_slots">Bellek Yuva Sayısı:</label>
-        <input type="text" id="number_of_memory_slots" class="detail-input" value="{{ computer.number_of_memory_slots }}" placeholder="Number of Memory Slots" />
+        <input type="text" id="number_of_memory_slots" class="detail-input" value="{{ computer.number_of_memory_slots }}" placeholder="Number of Memory Slots" readonly/>
       </div>
       <div>
         <label for="base_board_serial_number">Anakart Seri Numarası:</label>
-        <input type="text" id="base_board_serial_number" class="detail-input" value="{{ computer.base_board_serial_number }}" placeholder="Base Board Serial Number" />
+        <input type="text" id="base_board_serial_number" class="detail-input" value="{{ computer.base_board_serial_number }}" placeholder="Base Board Serial Number" readonly/>
 
         <label for="max_clock_speed_ghz">Maks. Saat Hızı (GHz):</label>
-        <input type="text" id="max_clock_speed_ghz" class="detail-input" value="{{ computer.max_clock_speed_ghz }}" placeholder="Max Clock Speed (GHz)" />
+        <input type="text" id="max_clock_speed_ghz" class="detail-input" value="{{ computer.max_clock_speed_ghz }}" placeholder="Max Clock Speed (GHz)" readonly/>
         <label for="bios_version">BIOS Versiyon:</label>
-        <input type="text" id="bios_version" class="detail-input" value="{{ computer.bios_version }}" placeholder="BIOS Version" />
+        <input type="text" id="bios_version" class="detail-input" value="{{ computer.bios_version }}" placeholder="BIOS Version" readonly/>
         <label for="product">BIOS Üreticisi:</label>
-        <input type="text" id="product" class="detail-input" value="{{ computer.product }}" placeholder="Product" />
+        <input type="text" id="product" class="detail-input" value="{{ computer.product }}" placeholder="Product" readonly/>
         <label for="ip_address">IP Adresi:</label>
-        <input type="text" id="ip_address" class="detail-input" value="{{ computer.ip_address }}" placeholder="IP Address" />
+        <input type="text" id="ip_address" class="detail-input" value="{{ computer.ip_address }}" placeholder="IP Address" readonly/>
       </div>
       <div>
         <label for="disk_partition_name">Sabit Disk Bölümleri:</label>
-        <input type="text" id="disk_partition_name" class="detail-input" value="{{ computer.disk_partition_name }}" placeholder="Disk Partition Name" />
+        <input type="text" id="disk_partition_name" class="detail-input" value="{{ computer.disk_partition_name }}" placeholder="Disk Partition Name" readonly/>
         <label for="operating_system">İşletim Sistemi:</label>
-        <input type="text" id="operating_system" class="detail-input" value="{{ computer.operating_system }}" placeholder="Operating System" />
+        <input type="text" id="operating_system" class="detail-input" value="{{ computer.operating_system }}" placeholder="Operating System" readonly/>
         <label for="os_version">İşletim Sistemi Versiyonu:</label>
-        <input type="text" id="os_version" class="detail-input" value="{{ computer.os_version }}" placeholder="OS Version" />
+        <input type="text" id="os_version" class="detail-input" value="{{ computer.os_version }}" placeholder="OS Version" readonly/>
         <label for="os_build_number">İşletim Sistemi İnşa Numarası:</label>
-        <input type="text" id="os_build_number" class="detail-input" value="{{ computer.os_build_number }}" placeholder="OS Build Number" />
+        <input type="text" id="os_build_number" class="detail-input" value="{{ computer.os_build_number }}" placeholder="OS Build Number" readonly/>
         <label for="office_version">Office Versiyon:</label>
-        <input type="text" id="office_version" class="detail-input" value="{{ computer.office_version }}" placeholder="Office Version" />
+        <input type="text" id="office_version" class="detail-input" value="{{ computer.office_version }}" placeholder="Office Version" readonly/>
       </div>
       <div>
         <label for="office_license_status">Office Lisans Bilgisi:</label>
-        <input type="text" id="office_license_status" class="detail-input" value="{{ computer.office_license_status }}" placeholder="Office License Status" />
+        <input type="text" id="office_license_status" class="detail-input" value="{{ computer.office_license_status }}" placeholder="Office License Status" readonly/>
       </div>
     </div>
     <div class="right">
       <div>
         <label for="total_ram_gb">Toplam RAM (GB):</label>
-        <input type="text" id="total_ram_gb" class="detail-input" value="{{ computer.total_ram_gb }}" placeholder="Total RAM (GB)" />
+        <input type="text" id="total_ram_gb" class="detail-input" value="{{ computer.total_ram_gb }}" placeholder="Total RAM (GB)" readonly/>
         <label for="used_ram_slots">Kullanılan Bellek Yuva Sayısı:</label>
-        <input type="text" id="used_ram_slots" class="detail-input" value="{{ computer.used_ram_slots }}" placeholder="Used RAM Slots" />
+        <input type="text" id="used_ram_slots" class="detail-input" value="{{ computer.used_ram_slots }}" placeholder="Used RAM Slots" readonly/>
         <label for="ram_brands">RAM Üreticisi:</label>
-        <input type="text" id="ram_brands" class="detail-input" value="{{ computer.ram_brands }}" placeholder="RAM Brands" />
+        <input type="text" id="ram_brands" class="detail-input" value="{{ computer.ram_brands }}" placeholder="RAM Brands" readonly/>
         <label for="average_ram_speed">Ortalama RAM Hızı(MHz):</label>
-        <input type="text" id="average_ram_speed" class="detail-input" value="{{ computer.average_ram_speed }}" placeholder="Average RAM Speed" />
+        <input type="text" id="average_ram_speed" class="detail-input" value="{{ computer.average_ram_speed }}" placeholder="Average RAM Speed" readonly/>
         <label for="ram_slot_types">Bellek Yuva Çeşidi:</label>
-        <input type="text" id="ram_slot_types" class="detail-input" value="{{ computer.ram_slot_types }}" placeholder="RAM Slot Types" />
+        <input type="text" id="ram_slot_types" class="detail-input" value="{{ computer.ram_slot_types }}" placeholder="RAM Slot Types" readonly/>
         <label for="disk_drive_model">Sabit Disk Model/Marka:</label>
-        <input type="text" id="disk_drive_model" class="detail-input" value="{{ computer.disk_drive_model }}" placeholder="Disk Drive Model" />
+        <input type="text" id="disk_drive_model" class="detail-input" value="{{ computer.disk_drive_model }}" placeholder="Disk Drive Model" readonly/>
         <label for="disk_size_gb">Sabit Disk Boyutu (GB):</label>
-        <input type="text" id="disk_size_gb" class="detail-input" value="{{ computer.disk_size_gb }}" placeholder="Disk Size (GB)" />
+        <input type="text" id="disk_size_gb" class="detail-input" value="{{ computer.disk_size_gb }}" placeholder="Disk Size (GB)" readonly/>
         <label for="disk_usage_percentage">Sabit Disk Kullanımı (%):</label>
-        <input type="text" id="disk_usage_percentage" class="detail-input" value="{{ computer.disk_usage_percentage }}" placeholder="Disk Usage (%)" />
+        <input type="text" id="disk_usage_percentage" class="detail-input" value="{{ computer.disk_usage_percentage }}" placeholder="Disk Usage (%)" readonly/>
         <label for="media_type">Sabit Disk Tipi:</label>
-        <input type="text" id="media_type" class="detail-input" value="{{ computer.media_type }}" placeholder="Media Type" />
+        <input type="text" id="media_type" class="detail-input" value="{{ computer.media_type }}" placeholder="Media Type" readonly/>
         <label for="graphics_card">Ekran Kartı:</label>
-        <input type="text" id="graphics_card" class="detail-input" value="{{ computer.graphics_card }}" placeholder="Graphics Card" />
+        <input type="text" id="graphics_card" class="detail-input" value="{{ computer.graphics_card }}" placeholder="Graphics Card" readonly/>
         <label for="system_type">Sistem Mimarisi:</label>
-        <input type="text" id="system_type" class="detail-input" value="{{ computer.system_type }}" placeholder="System Type" />
+        <input type="text" id="system_type" class="detail-input" value="{{ computer.system_type }}" placeholder="System Type" readonly/>
       </div>
     </div>
   </div>

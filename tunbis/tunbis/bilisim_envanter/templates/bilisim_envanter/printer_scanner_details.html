@@ -6,7 +6,16 @@
 
 {% block content %}
 <div>
-  <h3>{{ printer_scanner.device_name }} Detay Bilgileri</h3>
+  <h3></h3>
+</div>
+
+<div class="card-header bg-white border-secondary border-4 text-info text-bold position-relative">
+
+  <h4 class="m-1  text-uppercase font-weight-bold">{{ printer_scanner.device_name }}</h4>
+  <h6 class="m-1  text-muted font-weight-bold">{{printer_scanner.unit.name}}
+  <h1 style="position: absolute; top: 0; right: 0;"><i class="bx bx-info-square pt-4 px-2"></i></h1>
+
+  </h6>
 </div>
 
 <style>
@@ -38,7 +47,7 @@
   }
 </style>
 
-<div class="container">
+<div class="container mt-3">
   <!-- Sol Sütun -->
   <div class="column">
     {% if printer_scanner.image %}
@@ -48,39 +57,39 @@
     {% endif %}
 
     <label for="device_name">Cihaz Adı:</label>
-    <input type="text" id="device_name" class="detail-input" value="{{ printer_scanner.device_name }}" placeholder="Cihaz Adı" />
+    <input type="text" id="device_name" class="detail-input" value="{{ printer_scanner.device_name }}" placeholder="Cihaz Adı" readonly/>
 
     <label for="manufacturer">Üretici:</label>
-    <input type="text" id="manufacturer" class="detail-input" value="{{ printer_scanner.manufacturer }}" placeholder="Üretici" />
+    <input type="text" id="manufacturer" class="detail-input" value="{{ printer_scanner.manufacturer }}" placeholder="Üretici" readonly/>
 
     <label for="model">Model:</label>
-    <input type="text" id="model" class="detail-input" value="{{ printer_scanner.model }}" placeholder="Model" />
+    <input type="text" id="model" class="detail-input" value="{{ printer_scanner.model }}" placeholder="Model" readonly/>
   </div>
 
   <!-- Orta Sütun -->
   <div class="column">
     <label for="serial_number">Seri Numarası:</label>
-    <input type="text" id="serial_number" class="detail-input" value="{{ printer_scanner.serial_number }}" placeholder="Seri Numarası" />
+    <input type="text" id="serial_number" class="detail-input" value="{{ printer_scanner.serial_number }}" placeholder="Seri Numarası" readonly />
 
     <label for="ip_address">IP Adresi:</label>
-    <input type="text" id="ip_address" class="detail-input" value="{{ printer_scanner.ip_address }}" placeholder="IP Adresi" />
+    <input type="text" id="ip_address" class="detail-input" value="{{ printer_scanner.ip_address }}" placeholder="IP Adresi" readonly />
 
     <label for="connection_type">Bağlantı Tipi:</label>
-    <input type="text" id="connection_type" class="detail-input" value="{{ printer_scanner.connection_interface }}" placeholder="Bağlantı Tipi" />
+    <input type="text" id="connection_type" class="detail-input" value="{{ printer_scanner.connection_interface }}" placeholder="Bağlantı Tipi" readonly />
 
     <label for="unit">Birim:</label>
-    <input type="text" id="unit" class="detail-input full-width" value="{{ printer_scanner.unit.name }}" placeholder="Birim" />
+    <input type="text" id="unit" class="detail-input full-width" value="{{ printer_scanner.unit.name }}" placeholder="Birim" readonly />
   </div>
 
   <!-- Sağ Sütun -->
   <div class="column">
     <label for="type">Cihaz Türü:</label>
-    <input type="text" id="type" class="detail-input" value="{{ printer_scanner.device_type }}" placeholder="Cihaz Türü (Yazıcı/Tarayıcı)" />
+    <input type="text" id="type" class="detail-input" value="{{ printer_scanner.device_type }}" placeholder="Cihaz Türü (Yazıcı/Tarayıcı)" readonly/>
 
     <label for="toner_level">Toner Durum:</label>
-    <input type="text" id="toner_level" class="detail-input" value="%{{ printer_scanner.toner_level }}" placeholder="Toner Durumu" />
+    <input type="text" id="toner_level" class="detail-input" value="%{{ printer_scanner.toner_level }}" placeholder="Toner Durumu" readonly />
 
     <label for="features">Özellik:</label>
-    <input type="text" id="features" class="detail-input" value="{{ printer_scanner.color_mode }}" placeholder="Özellik" />
+    <input type="text" id="features" class="detail-input" value="{{ printer_scanner.color_mode }}" placeholder="Özellik" readonly/>
 </div>
 {% endblock %}

@@ -232,9 +232,9 @@ input[type="password"] {
 }
 
 .module-card {
-    width: 125px;
-    height: 125px;
-    margin: 10px;
+    width: 200px;
+    height: 150px;
+    margin: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     display: inline-block;
@@ -255,10 +255,10 @@ input[type="password"] {
 }
 
 .module-card-content i {
-    font-size: 86px;
+    font-size: 72px;
 }
 
 .module-card-content h3 {
     font-size: 14px;
-    margin-top: 5px;
+    margin-top: 15px;
 }

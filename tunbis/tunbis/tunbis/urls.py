@@ -25,7 +25,11 @@ urlpatterns = [
     path('account/',include('account.urls')),
     path('personel/',include('personel.urls')),
     path('idari-buro/',include('idariburo.urls')),
-    path('bilisim-envanter/',include('bilisim_envanter.urls'))
+    path('bilisim-envanter/',include('bilisim_envanter.urls')),
+    path('bilisim-ariza-takip/',include('ariza_takip.urls')),
+    path('api/',include('api.urls')),
+
+
 
 
 

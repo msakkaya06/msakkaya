@@ -179,6 +179,47 @@ class computer_action(models.Model):
 
 
 
+class FaultAction(models.Model):
+    DEVICE_TYPE_CHOICES = [
+        ('computer', 'Bilgisayar'),
+        ('printer', 'Yazıcı/Tarayıcı'),
+        ('tablet', 'Tablet'),
+    ]
+
+    # Cihaz türü ve cihaz ile ilişkili alanlar
+    device_type = models.CharField(max_length=20, choices=DEVICE_TYPE_CHOICES)
+    computer = models.ForeignKey('Computer_Informations', on_delete=models.CASCADE, null=True, blank=True, related_name='fault_actions')
+    printer = models.ForeignKey('PrinterScannerInformation', on_delete=models.CASCADE, null=True, blank=True, related_name='fault_actions')
+    
+    # Bilgisayar için özel alanlar
+    part_installed = models.BooleanField(default=False, null=True, verbose_name="Parça Takıldı")
+    os_installed = models.BooleanField(default=False, null=True, verbose_name="İşletim Sistemi Kuruldu")
+
+    # Yazıcı için özel alanlar
+    ink_replaced = models.BooleanField(default=False,null=True, verbose_name="Kartuş Değiştirildi")
+    paper_jam_fixed = models.BooleanField(default=False,null=True, verbose_name="Kağıt Sıkışması Giderildi")
+
+    # Ortak işlemler
+    other = models.BooleanField(default=False, verbose_name="Diğer İşlemler",null=True)
+    action_notes = models.TextField(blank=True, verbose_name="İşlem Notları",null=True)
+    requester_notes = models.TextField(blank=True, verbose_name="Talep Eden Notları")
+    requester_date = models.DateTimeField(auto_now_add=True, verbose_name="Talep Tarihi")
+    completed_date = models.DateTimeField(null=True, blank=True, verbose_name="Tamamlanma Tarihi")
+    performer = models.ForeignKey('TebsUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='performed_fault_actions', verbose_name="İşlemi Yapan")
+    requester = models.ForeignKey('TebsUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='requested_fault_actions', verbose_name="Talep Eden")
+    is_active = models.BooleanField(default=True, verbose_name="Aktif")
+
+    def __str__(self):
+        if self.device_type == 'computer' and self.computer:
+            return f"FaultAction for Computer: {self.computer.computer_name}"
+        elif self.device_type == 'printer' and self.printer:
+            return f"FaultAction for Printer: {self.printer.device_name}"
+        return "FaultAction"
+
+    class Meta:
+        verbose_name_plural = "Fault Actions"
+
+
 class PrinterScannerInformation(models.Model):
     DEVICE_TYPE_CHOICES = (
         ('Yazıcı', 'Printer'),
@@ -206,8 +247,8 @@ class PrinterScannerInformation(models.Model):
     )
 
     device_type = models.CharField(max_length=75, choices=DEVICE_TYPE_CHOICES, default='Printer')
-    device_name = models.CharField(max_length=75)
-    manufacturer = models.CharField(max_length=75, blank=True, null=True)
+    device_name = models.CharField(max_length=150)
+    manufacturer = models.CharField(max_length=100, blank=True, null=True)
     model = models.CharField(max_length=75, blank=True, null=True)
     serial_number = models.CharField(max_length=75, blank=True, null=True)
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, null=True)
@@ -243,3 +284,39 @@ class PrinterScannerInformation(models.Model):
     def __str__(self):
         return f"{self.device_name} ({self.device_type})"
 
+class PrinterAction(models.Model):
+    FAULT_TYPE_CHOICES = (
+        ('paper_jam', 'Kağıt Sıkışması'),
+        ('ink_toner', 'Toner veya Kartuş Sorunu'),
+        ('hardware', 'Donanım Arızası'),
+        ('software', 'Yazılım Sorunu'),
+        ('network', 'Ağ Bağlantı Sorunu'),
+        ('other', 'Diğer'),
+    )
+    
+    STATUS_CHOICES = (
+        ('pending', 'Beklemede'),
+        ('in_progress', 'İşlemde'),
+        ('completed', 'Tamamlandı'),
+        ('cancelled', 'İptal Edildi'),
+    )
+    
+    printer = models.ForeignKey(PrinterScannerInformation, on_delete=models.CASCADE, related_name='actions', verbose_name="Yazıcı")
+    fault_type = models.CharField(max_length=20, choices=FAULT_TYPE_CHOICES, default='other', verbose_name="Arıza Türü")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Arıza Durumu")
+    toner_replaced = models.BooleanField(default=False, verbose_name="Toner Değiştirildi")
+    firmware_updated = models.BooleanField(default=False, verbose_name="Firmware Güncellendi")
+    other = models.BooleanField(default=False, verbose_name="Diğer İşlemler")
+    requester_date = models.DateTimeField(auto_now_add=True, verbose_name="Talep Tarihi")
+    completed_date = models.DateTimeField(null=True, blank=True, verbose_name="Tamamlanma Tarihi")
+    performer = models.ForeignKey(TebsUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='performed_printer_actions', verbose_name="İşlem Yapan")
+    requester = models.ForeignKey(TebsUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='requested_printer_actions', verbose_name="Talep Eden")
+    action_notes = models.TextField(blank=True, verbose_name="İşlem Notları")
+    requester_notes = models.TextField(blank=True, verbose_name="Talep Notları")
+    is_active = models.BooleanField(default=True, verbose_name="Aktif")
+
+    def __str__(self):
+        return f"Printer Action for {self.printer.printer_name} - {self.get_status_display()}"
+
+    class Meta:
+        verbose_name_plural = "Printer Actions"

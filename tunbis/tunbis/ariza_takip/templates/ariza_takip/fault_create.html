@@ -1,0 +1,113 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+{% block sidebar %}
+  {% include 'ariza_takip/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card-header bg-white border-secondary border-4 text-danger text-bold">
+       
+        <h3 class="m-1 p-2 text-center text-uppercase font-weight-bold">Arıza Kaydı Oluştur</h3>
+    </div>
+
+    {% if device %}
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Üst Satır: Fotoğraf ve Cihaz Bilgileri -->
+                    <div class="row">
+                        <!-- Sol sütun: Fotoğraf -->
+                        <div class="col-md-4">
+                            {% if device.image %}
+                                <div class=" pt-3 text-center">
+                                    <img src="{{ device.image }}" alt="Cihaz Resmi" class="img-fluid" style="max-width: 100%;">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Sağ sütun: Cihaz Bilgileri -->
+                        <div class="col-md-8">
+           
+
+                            <!-- Cihaz Adı -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Cihaz Adı</label>
+                                <input type="text" id="name" class="form-control" value="{{ device.name }}" readonly>
+                            </div>
+
+                            <!-- IP Adresi -->
+                            <div class="mb-3">
+                                <label for="ip_address" class="form-label">IP Adresi</label>
+                                <input type="text" id="ip_address" class="form-control" value="{{ device.ip_address|default:'-' }}" readonly>
+                            </div>
+
+                            <!-- Marka -->
+                            <div class="mb-3">
+                                <label for="manufacturer" class="form-label">Marka</label>
+                                <input type="text" id="manufacturer" class="form-control" value="{{ device.manufacturer|default:'-' }}" readonly>
+                            </div>
+
+                            <!-- Model -->
+                            <div class="mb-3">
+                                <label for="model" class="form-label">Model</label>
+                                <input type="text" id="model" class="form-control" value="{{ device.model|default:'-' }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alt Satır: Kullanıcı Bilgileri ve Talep Notları -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h6 class="card-header bg-success text-white text-center mb-2">Arıza Kaydı Oluşturan</h6>
+                            <div class="row">
+                                <!-- Kayıt Numarası -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="registration_number" class="form-label">Sicil Numarası</label>
+                                    <input type="text" id="registration_number" class="form-control" value="{{ user_data.registration_number }}" readonly>
+                                </div>
+
+                                <!-- Adı -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="first_name" class="form-label">Adı</label>
+                                    <input type="text" id="first_name" class="form-control" value="{{ user_data.first_name }}" readonly>
+                                </div>
+
+                                <!-- Soyadı -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="last_name" class="form-label">Soyadı</label>
+                                    <input type="text" id="last_name" class="form-control" value="{{ user_data.last_name }}" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Talep Notları -->
+                            <div class="mb-3">
+                                <div class="alert alert-warning" role="alert">
+                                    Cihazla ilgili arıza bilgisini ve taleplerinizi detaylı bir şekilde <strong>aşağıdaki alana yazınız.</strong>
+                                  </div>
+                                <textarea name="requester_notes" id="requester_notes" class="form-control" rows="3">{{ requester_notes }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kaydet/Güncelle Butonu -->
+                    <div class="row">
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary">
+                                {% if existing_fault_action %}
+                                    Kaydı Güncelle
+                                {% else %}
+                                    Arıza Kaydı Oluştur
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-danger">Cihaz bilgisine ulaşılamadı.</p>
+    {% endif %}
+</div>
+{% endblock %}

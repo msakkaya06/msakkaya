@@ -29,6 +29,10 @@
                             <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.computer.serial_number }}" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="serialNumber">IP Numarası</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.computer.ip_address }}" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="manufacturer">Üretici</label>
                             <input type="text" class="form-control-plaintext font-weight-light" id="manufacturer" value="{{ fault_detail.computer.manufacturer }}" readonly>
                         </div>
@@ -129,12 +133,17 @@
             </form>
             <div id="modal-error-msg" class="alert alert-danger mt-2" role="alert" style="display: none;"></div>
             <div id="modal-success-msg" class="alert alert-success mt-2" role="alert" style="display: none;"></div>
+            <form method="GET" action="{% url 'import_computer_info' %}">
+                <button class="btn btn-warning mt-3" type="submit">Bilgileri Güncelle</button>
+            </form>
     </div>
+
+    
         </div>
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-md-12">
+        <div class="col-md-12"> 
             <div class="card border-dark mb-3">
                 <div class="card-header bg-info text-white">
                     Önceki İşlemler
@@ -150,7 +159,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for action in fault_detail.computer.actions.all %}
+                            {% for action in fault_detail.computer.fault_actions.all %}
                             <tr>
                                 <td>{{ action.requester_date }}</td>
                                 <td>

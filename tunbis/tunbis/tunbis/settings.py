@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'account',
     'personel',
     'idariburo',
-    'bilisim_envanter'
+    'bilisim_envanter',
+    'ariza_takip',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'tunbis.middleware.Custom405Middleware',
-    'tunbis.middleware.PersonelPermissionMiddleware',
+    'tunbis.middleware.RoleBasedPermissionMiddleware',
+
+
 
 ]
 
