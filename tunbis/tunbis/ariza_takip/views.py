@@ -116,3 +116,137 @@ def fault_create(request, pk):
 
 def fault_create_save(request):
     pass
+
+@login_required
+def fault_tracking(request):
+    # Kullanıcının birim bilgisi
+    user_unit = request.user.unit if hasattr(request.user, 'unit') else None
+
+    # Eğer kullanıcı birime bağlı değilse tüm arızaları göster
+    if not user_unit:
+        return render(request, 'ariza_takip/fault_tracking.html', {'error': 'Birime bağlı değilsiniz.'})
+
+    # Aktif arızalar
+    active_faults = []
+    active_actions = FaultAction.objects.filter(is_active=True)
+
+    for action in active_actions:
+        requester = action.requester
+        device_info = {
+            'id': None,
+            'image_url': None,
+            'name': None,
+            'manufacturer': None,
+            'model': None,
+            'unit_name': None,
+            'network_used': None
+        }
+
+        # Cihazın birimi kontrol edilerek filtreleme yapılır
+        if action.device_type == 'computer' and action.computer and action.computer.unit == user_unit:
+            device = action.computer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.computer_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
+        elif action.device_type == 'printer' and action.printer and action.printer.unit == user_unit:
+            device = action.printer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.device_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
+        # Eğer cihaz kullanıcının birimine ait değilse ekleme yapılmaz
+        if device_info['id']:
+            fault_dto = {
+                'device_type': action.device_type,
+                'device_id': device_info['id'],
+                'requester_username': requester.username if requester else None,
+                'requester_notes': action.requester_notes,
+                'requester_first_name': requester.first_name if requester else None,
+                'requester_last_name': requester.last_name if requester else None,
+                'device_image': device_info['image_url'],
+                'device_name': device_info['name'],
+                'manufacturer': device_info['manufacturer'],
+                'model': device_info['model'],
+                'unit_name': device_info['unit_name'],
+                'network_used': device_info['network_used'],
+                'action_pk': action.pk,
+            }
+            active_faults.append(fault_dto)
+
+    # Geçmiş arızalar
+    completed_faults = []
+    completed_actions = FaultAction.objects.filter(is_active=False).order_by('-completed_date')[:10]
+
+    for action in completed_actions:
+        requester = action.requester
+        performer = action.performer
+        device_info = {
+            'id': None,
+            'image_url': None,
+            'name': None,
+            'manufacturer': None,
+            'model': None,
+            'unit_name': None,
+            'network_used': None
+        }
+
+        if action.device_type == 'computer' and action.computer and action.computer.unit == user_unit:
+            device = action.computer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.computer_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
+        elif action.device_type == 'printer' and action.printer and action.printer.unit == user_unit:
+            device = action.printer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.device_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
+        if device_info['id']:
+            fault_dto = {
+                'device_type': action.device_type,
+                'device_id': device_info['id'],
+                'performer_username': performer.username if performer else None,
+                'action_notes': action.action_notes,
+                'performer_first_name': performer.first_name if performer else None,
+                'performer_last_name': performer.last_name if performer else None,
+                'device_image': device_info['image_url'],
+                'device_name': device_info['name'],
+                'manufacturer': device_info['manufacturer'],
+                'model': device_info['model'],
+                'unit_name': device_info['unit_name'],
+                'network_used': device_info['network_used'],
+                'action_pk': action.pk,
+            }
+            completed_faults.append(fault_dto)
+
+    context = {
+        'active_faults': active_faults,
+        'completed_faults': completed_faults
+    }
+    return render(request, 'ariza_takip/fault_tracking.html', context)

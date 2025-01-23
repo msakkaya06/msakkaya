@@ -198,6 +198,10 @@ class FaultAction(models.Model):
     # Yazıcı için özel alanlar
     ink_replaced = models.BooleanField(default=False,null=True, verbose_name="Kartuş Değiştirildi")
     paper_jam_fixed = models.BooleanField(default=False,null=True, verbose_name="Kağıt Sıkışması Giderildi")
+    hardware_fixed = models.BooleanField(default=False,null=True, verbose_name="Donanım Sorunu Giderildi")
+    software_fixed = models.BooleanField(default=False,null=True, verbose_name="Yazılım Sorunu Giderildi")
+
+
 
     # Ortak işlemler
     other = models.BooleanField(default=False, verbose_name="Diğer İşlemler",null=True)
@@ -222,10 +226,10 @@ class FaultAction(models.Model):
 
 class PrinterScannerInformation(models.Model):
     DEVICE_TYPE_CHOICES = (
-        ('Yazıcı', 'Printer'),
-        ('Tarayıcı', 'Scanner'),
-        ('Yazıcı-Tarayıcı', 'Printer-Scanner'),
-        ('Çok Fonksiyonlu Yazıcı Tarayıcı', 'All-In-One Printers'),
+        ('Printer', 'Printer'),
+        ('Scanner', 'Scanner'),
+        ('Printer-Scanner', 'Printer-Scanner'),
+        ('All-In-One Printers', 'All-In-One Printers'),
 
 
     )

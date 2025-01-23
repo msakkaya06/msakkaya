@@ -11,64 +11,64 @@
         <div class="col-md-6">
             <div class="card border-warning mb-3">
                 <div class="card-header bg-warning text-dark">
-                    Bilgisayar Bilgileri
+                    Cihaz Bilgileri
                 </div>
                 <div class="card-body">
-                    {% if fault_detail.computer.image %}
-                        <img src="{{ fault_detail.computer.image.url }}" alt="{{ fault_detail.computer.computer_name }}" class="img-fluid" style="max-width: 100px;" />
+                    {% if fault_detail.device_image %}
+                        <img src="{{ fault_detail.device_image }}" alt="{{ fault_detail.device_name }}" class="img-fluid" style="max-width: 100px;" />
                     {% else %}
                         <img src="{% static 'img/gorsel-bulunamadi.jpg' %}" alt="Görsel Bulunamadı" class="img-fluid" style="max-width: 100px;" />
                     {% endif %}
                     <form>
                         <div class="form-group mt-3">
-                            <label for="computerName">Bilgisayar Adı</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="computerName" value="{{ fault_detail.computer.computer_name }}" readonly>
+                            <label for="computerName">Cihaz Adı</label>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="computerName" value="{{ fault_detail.device_name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="serialNumber">Seri Numarası</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.computer.serial_number }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.device_serial_number }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="serialNumber">IP Numarası</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.computer.ip_address }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="serialNumber" value="{{ fault_detail.device_ip_address }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="manufacturer">Üretici</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="manufacturer" value="{{ fault_detail.computer.manufacturer }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="manufacturer" value="{{ fault_detail.device_manufacturer }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="model">Model</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="model" value="{{ fault_detail.computer.model }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="model" value="{{ fault_detail.device_model }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="processor">İşlemci</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="processor" value="{{ fault_detail.computer.processor_name }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="processor" value="{{ fault_detail.device_processor_name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="ramInfo">RAM(GB)</label>
-                            <input type="text" class="form-control-plaintext font-weight-light" id="ramInfo" value="{{ fault_detail.computer.total_ram_gb }}" readonly>
+                            <input type="text" class="form-control-plaintext font-weight-light" id="ramInfo" value="{{ fault_detail.device_total_ram_gb }}" readonly>
                         </div>
                
                         <div class="form-group">
                             <label for="diskModel">Hard Disk Modeli</label>
-                            <input type="text" class="form-control-plaintext" id="diskModel" value="{{ fault_detail.computer.disk_drive_model }}" readonly>
+                            <input type="text" class="form-control-plaintext" id="diskModel" value="{{ fault_detail.device_media_type }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="diskSize">Hard Disk Boyutu</label>
-                            <input type="text" class="form-control-plaintext" id="diskSize" value="{{ fault_detail.computer.disk_size_gb }}" readonly>
+                            <input type="text" class="form-control-plaintext" id="diskSize" value="{{ fault_detail.device_disk_size_gb }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="unitName">Birim Adı</label>
-                            <input type="text" class="form-control-plaintext" id="unitName" value="{{ fault_detail.computer.unit.name }}" readonly>
+                            <input type="text" class="form-control-plaintext" id="unitName" value="{{ fault_detail.device_unit_name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="networkUsed">Kullanılan Ağ</label>
-                            <input type="text" class="form-control-plaintext" id="networkUsed" value="{{ fault_detail.computer.network_used }}" readonly>
+                            <input type="text" class="form-control-plaintext" id="networkUsed" value="{{ fault_detail.device_network_used }}" readonly>
                         </div>
             
                         <div class="form-group">
                             <label for="requester">Talep Açan Kişi</label>
-                            <input type="text" class="form-control-plaintext" id="requester" value="{{ fault_detail.requester.registration_number }} - {{ fault_detail.requester.first_name }} {{ fault_detail.requester.last_name }}" readonly>
+                            <input type="text" class="form-control-plaintext" id="requester" value="{{ fault_detail.requester_registration_number }} - {{ fault_detail.requester_first_name }} {{ fault_detail.requester_last_name }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="requesterNotes">Talep Notu</label>
@@ -86,9 +86,9 @@
                 </div>
                 <div class="card-body">
 
-            <form id="faultForm" method="post" action="{% url "finalize_computer_action" %}">
+            <form id="faultForm" method="post" action="{% url "finalize_fault_action" %}">
                 {% csrf_token %}
-                <input type="hidden" name="computer_id" value="{{ fault_detail.computer.id }}" />
+                <input type="hidden" name="action_id" value="{{ fault_detail.action_id}}" />
                 <div class="form-group">
                     <label for="performerSearch">İşlem Yapan Personel</label>
                     <div class="input-group">
@@ -117,13 +117,35 @@
                     <label for="actionNotes">Talep Sonucu İşlem Notları</label>
                     <textarea id="actionNotes" name="action_notes" rows="10"  {% if fault_detail.is_active == False %}disabled{% endif %} class="form-control">{{fault_detail.action_notes}}</textarea>
                   </div>
-                  <div class="form-check">
+                  <div class="form-check {% if fault_detail.device_type == 'printer' %}d-none{% endif %}">
                     <input type="checkbox" class="form-check-input"  {% if fault_detail.is_active == False %}disabled{% endif %} name="partInstalled" {% if fault_detail.part_installed %}checked{% endif %}>
                     <label class="form-check-label" for="partInstalled">Parça Takıldı</label>
                 </div>
-                <div class="form-check">
+                <div class="form-check {% if fault_detail.device_type == 'printer' %}d-none{% endif %}">
                     <input type="checkbox" class="form-check-input" name="osInstalled" id="osInstalled" {% if fault_detail.is_active == False %}disabled{% endif %}  {% if fault_detail.os_installed %}checked{% endif %}>
                     <label class="form-check-label" for="osInstalled">İşletim Sistemi Kuruldu</label>
+                </div>
+                <div class="form-check {% if fault_detail.device_type == 'computer' %}d-none{% endif %}">
+                    <input type="checkbox" class="form-check-input"  {% if fault_detail.is_active == False %}disabled{% endif %} name="paper_jam_fixed" {% if fault_detail.paper_jam_fixed%}checked{% endif %}>
+                    <label class="form-check-label" for="paper_jam_fixed">Kağıt Sıkışması</label>
+                </div>
+                <div class="form-check {% if fault_detail.device_type == 'computer' %}d-none{% endif %}">
+                    <input type="checkbox" 
+                           class="form-check-input" 
+                           name="ink_replaced" 
+                           id="ink_replaced" 
+                           {% if fault_detail.is_active == False %}disabled{% endif %}  
+                           {% if fault_detail.ink_replaced %}checked{% endif %}>
+                    <label class="form-check-label" for="ink_replaced">Toner veya Kartuş Sorunu</label>
+                </div>
+                
+                <div class="form-check {% if fault_detail.device_type == 'computer' %}d-none{% endif %}">
+                    <input type="checkbox" class="form-check-input" name="hardware" id="hardware_fixed" {% if fault_detail.is_active == False %}disabled{% endif %} {% if fault_detail.hardware_fixed %}checked{% endif %}>
+                    <label class="form-check-label" for="hardware_fixed">Donanım Sorunu</label>
+                </div>
+                <div class="form-check {% if fault_detail.device_type == 'computer' %}d-none{% endif %}">
+                    <input type="checkbox" class="form-check-input"  {% if fault_detail.is_active == False %}disabled{% endif %} name="software_fixed" {% if fault_detail.software_fixed%}checked{% endif %}>
+                    <label class="form-check-label" for="software_fixed">Yazılım Sorunu</label>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="other" id="other" {% if fault_detail.is_active == False %}disabled{% endif %} {% if fault_detail.other %}checked{% endif %}>
@@ -159,12 +181,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for action in fault_detail.computer.fault_actions.all %}
+                            {% for action in last_actions %}
                             <tr>
                                 <td>{{ action.requester_date }}</td>
                                 <td>
                                     {% if action.part_installed %}Parça Takıldı{% endif %}
                                     {% if action.os_installed %}İşletim Sistemi Kuruldu{% endif %}
+                                    {% if action.paper_jam_fixed %}Kağıt Sıkışması{% endif %}
+                                    {% if action.ink_replaced %}Kartuş Değiştirildi{% endif %}
+                                    {% if action.hardware_fixed %}Donanım Sorunu{% endif %}
+                                    {% if action.software_fixed %}Yazılım Sorunu{% endif %}
                                     {% if action.other %}Diğer İşlemler{% endif %}
                                 </td>
                                 <td>{{ action.performer.first_name }} {{ action.performer.last_name }}</td>

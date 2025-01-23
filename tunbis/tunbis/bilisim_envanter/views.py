@@ -71,53 +71,118 @@ def computer_detail_for_unit(request, pk):
 
 
 def fault_tracking(request):
-    # Aktif arızaları çekiyoruz
+    # Aktif arızalar
     active_faults = []
-    active_actions = FaultAction.objects.filter(is_active=True,device_type='computer')
+    active_actions = FaultAction.objects.filter(is_active=True)
 
     for action in active_actions:
         requester = action.requester
-        computer = action.computer
+        device_info = {
+            'id': None,
+            'image_url': None,
+            'name': None,
+            'manufacturer': None,
+            'model': None,
+            'unit_name': None,
+            'network_used': None
+        }
         
+        if action.device_type == 'computer' and action.computer:
+            device = action.computer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.computer_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+        
+        elif action.device_type == 'printer' and action.printer:
+            device = action.printer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.device_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
         fault_dto = {
-            'computer_id': computer.id,
+            'device_type': action.device_type,
+            'device_id': device_info['id'],
             'requester_username': requester.username if requester else None,
             'requester_notes': action.requester_notes,
             'requester_first_name': requester.first_name if requester else None,
             'requester_last_name': requester.last_name if requester else None,
-            'computer_image': computer.image.url if computer.image else None,
-            'computer_name': computer.computer_name,
-            'computer_manufacturer': computer.manufacturer,
-            'computer_model': computer.model,
-            'computer_unit_name': computer.unit.name if computer.unit else None,
-            'computer_network_used': computer.network_used,
-            'action_pk': action.pk
+            'device_image': device_info['image_url'],
+            'device_name': device_info['name'],
+            'manufacturer': device_info['manufacturer'],
+            'model': device_info['model'],
+            'unit_name': device_info['unit_name'],
+            'network_used': device_info['network_used'],
+            'action_pk': action.pk,
         }
         active_faults.append(fault_dto)
 
-    # Geçmiş arızaları (tamamlanmış son 10 arıza) çekiyoruz
+    # Geçmiş arızalar
     completed_faults = []
-    completed_actions = FaultAction.objects.filter(is_active=False,device_type='computer').order_by('-completed_date')[:10]
+    completed_actions = FaultAction.objects.filter(is_active=False).order_by('-completed_date')[:10]
 
     for action in completed_actions:
         requester = action.requester
         performer = action.performer
-        computer = action.computer
+        device_info = {
+            'id': None,
+            'image_url': None,
+            'name': None,
+            'manufacturer': None,
+            'model': None,
+            'unit_name': None,
+            'network_used': None
+        }
 
-        
+        if action.device_type == 'computer' and action.computer:
+            device = action.computer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.computer_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
+        elif action.device_type == 'printer' and action.printer:
+            device = action.printer
+            device_info.update({
+                'id': device.id,
+                'image_url': device.image.url if device.image else None,
+                'name': device.device_name,
+                'manufacturer': device.manufacturer,
+                'model': device.model,
+                'unit_name': device.unit.name if device.unit else None,
+                'network_used': device.network_used,
+            })
+
         fault_dto = {
-            'computer_id': computer.id,
+            'device_type': action.device_type,
+            'device_id': device_info['id'],
             'performer_username': performer.username if performer else None,
             'action_notes': action.action_notes,
             'performer_first_name': performer.first_name if performer else None,
             'performer_last_name': performer.last_name if performer else None,
-            'computer_image': computer.image.url if computer.image else None,
-            'computer_name': computer.computer_name,
-            'computer_manufacturer': computer.manufacturer,
-            'computer_model': computer.model,
-            'computer_unit_name': computer.unit.name if computer.unit else None,
-            'computer_network_used': computer.network_used,
-            'action_pk': action.pk
+            'device_image': device_info['image_url'],
+            'device_name': device_info['name'],
+            'manufacturer': device_info['manufacturer'],
+            'model': device_info['model'],
+            'unit_name': device_info['unit_name'],
+            'network_used': device_info['network_used'],
+            'action_pk': action.pk,
         }
         completed_faults.append(fault_dto)
 
@@ -126,6 +191,7 @@ def fault_tracking(request):
         'completed_faults': completed_faults
     }
     return render(request, 'bilisim_envanter/fault_tracking.html', context)
+
 def fault_summary(request):
     # Bilgisayar arızaları ve tamamlanmış arıza sayısı
     total_computer_faults = FaultAction.objects.all().count()
@@ -162,10 +228,97 @@ def fault_summary(request):
 
     return render(request, 'bilisim_envanter/fault_summary.html', {'stats': stats})
 
+
 def fault_tracking_detail(request, pk):
-    fault_detail=FaultAction.objects.get(pk=pk)
-    print(fault_detail.computer.id)
-    return render(request, 'bilisim_envanter/fault_detail.html', {'fault_detail': fault_detail})
+    action = get_object_or_404(FaultAction, pk=pk)
+    requester = action.requester
+    performer = action.performer
+    device_info = {
+        'id': None,
+        'image_url': None,
+        'name': None,
+        'manufacturer': None,
+        'model': None,
+        'unit_name': None,
+        'network_used': None
+    }
+
+    if action.device_type == 'computer' and action.computer:
+        device = action.computer
+        last_actions=FaultAction.objects.filter(computer=action.computer)
+        device_info.update({
+            'id': device.id,
+            'image_url': device.image.url if device.image else None,
+            'name': device.computer_name,
+            'serial_number': device.serial_number,
+            'id_address': device.ip_address,
+            'manufacturer': device.manufacturer,
+            'model': device.model,
+            'processor_name': device.processor_name,
+            'total_ram_gb': device.total_ram_gb,
+            'disk_size_gb': device.disk_size_gb,
+            'media_type': device.media_type,
+            'unit_name': device.unit.name,
+            'network_used': device.network_used,
+            
+        })
+
+    elif action.device_type == 'printer' and action.printer:
+        device = action.printer
+        last_actions=FaultAction.objects.filter(printer=action.printer)
+        device_info.update({
+            'id': device.id,
+            'image_url': device.image.url if device.image else None,
+            'name': device.device_name,
+            'manufacturer': device.manufacturer,
+            'model': device.model,
+            'unit_name': device.unit.name if device.unit else None,
+            'network_used': device.network_used,
+        })
+  
+
+    fault_dto = {
+        'device_id':device_info['id'],
+        'action_id':action.pk,
+        'device_type': action.device_type,
+        'requester_username': requester.username if requester else None,
+        'performer_username': performer.username if performer else None,
+        'requester_notes': action.requester_notes,
+        'action_notes': action.action_notes,
+        'part_installed':action.part_installed,
+        'os_installed':action.os_installed,
+        'ink_replaced' : action.ink_replaced,
+        'paper_jam_fixed' : action.paper_jam_fixed,
+        'hardware_fixed' : action.hardware_fixed,
+        'software_fixed' : action.software_fixed,
+        'is_active':action.is_active,
+        'requester_registration_number': requester.registration_number if requester else None,
+        'requester_first_name': requester.first_name if requester else None,
+        'requester_last_name': requester.last_name if requester else None,
+        'performer_first_name': performer.first_name if performer else None,
+        'performer_last_name': performer.last_name if performer else None,
+        'device_image': device_info['image_url'],
+        'device_name': device_info['name'],
+        'device_manufacturer': device_info['manufacturer'],
+        'device_model': device_info['model'],
+        'device_unit_name': device_info['unit_name'],
+        'device_serial_number': device_info['serial_number'] if action.device_type == "computer" else None,
+        'device_ip_address': device_info['id_address'] if action.device_type == "computer" else None,
+        'device_manufacturer': device_info['manufacturer'],
+        'device_model': device_info['model'],
+        'device_processor_name': device_info['processor_name'] if action.device_type == "computer" else None,
+        'device_total_ram_gb': device_info['total_ram_gb'] if action.device_type == "computer" else None,
+        'device_disk_size_gb': device_info['disk_size_gb'] if action.device_type == "computer" else None,
+        'device_media_type': device_info['media_type'] if action.device_type == "computer" else None,
+        'device_network_used': device_info['network_used'],
+        'device_requester_date': action.requester_date,
+    }
+    context = {
+        'fault_detail': fault_dto,
+        'last_actions':last_actions
+    }
+
+    return render(request, 'bilisim_envanter/fault_detail.html', context)
 
 def computer(request):
     computers = Computer_Informations.objects.filter(is_active=True)
@@ -329,28 +482,36 @@ def save_computer_action(request):
 
 
 
-def finalize_computer_action(request):
+def finalize_fault_action(request):
     if request.method == "POST":
-        computer_id = request.POST.get("computer_id")
+        action_id = request.POST.get("action_id")
         part_installed = request.POST.get("partInstalled") == 'on'
         os_installed = request.POST.get("osInstalled") == 'on'
         other = request.POST.get("other") == 'on'
+        ink_replaced = request.POST.get("ink_replaced") == 'on'
+        paper_jam_fixed = request.POST.get("paper_jam_fixed") == 'on'
+        hardware_fixed = request.POST.get("hardware_fixed") == 'on'
+        software_fixed = request.POST.get("software_fixed") == 'on'
         action_username = request.POST.get("action_username")
         action_notes = request.POST.get("action_notes")
-        print(computer_id,action_notes,action_username)
+        print(action_id,action_notes,action_username)
         # Check if all required fields are filled
-        if not all([computer_id, action_username, action_notes]):
+        if not all([action_id, action_username, action_notes]):
             return JsonResponse({'error': 'Lütfen tüm alanları doldurun.'}, status=200)
 
-        computer = Computer_Informations.objects.get(pk=computer_id)
+       
         performer = TebsUser.objects.get(username=action_username)
-        existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
+        existing_action = FaultAction.objects.filter(pk=action_id, is_active=True).first()
         
         if existing_action is None:
             return JsonResponse({'error': 'Aktif arıza kaydı bulunamadı.'}, status=200)
         
         existing_action.part_installed = part_installed
         existing_action.os_installed = os_installed
+        existing_action.paper_jam_fixed=paper_jam_fixed
+        existing_action.ink_replaced=ink_replaced
+        existing_action.hardware_fixed=hardware_fixed
+        existing_action.software_fixed=software_fixed
         existing_action.other = other
         existing_action.performer = performer
         existing_action.action_notes = action_notes

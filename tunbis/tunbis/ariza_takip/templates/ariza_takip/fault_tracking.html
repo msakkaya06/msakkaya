@@ -1,7 +1,7 @@
 {% extends 'module/layout.html' %}
 {% load static %}
 {% block sidebar %}
-  {% include 'bilisim_envanter/_partials/_nav.html' %}
+  {% include 'ariza_takip/_partials/_nav.html' %}
 {% endblock %}
 {% block content %}
   <style>
@@ -12,7 +12,11 @@
 
   <div class="row mb-3">
     <!-- Aktif Arızalar Başlığı -->
-    <h4 class="text-primary font-weight-bold">Aktif Arızalar</h4>
+    <div class="card-header bg-white border-success border-4 text-success text-bold">
+      <h3 class="m-1 p-2 text-center text-uppercase font-weight-bold">Açık Arıza Kayıtları</h3>
+      <h6 class="m-1 p-2 text-center text-uppercase text-secondary font-weight-bold">{{request.user.unit.name}}</h6>
+  </div>
+
     
     <!-- Aktif Arızalar Tablosu -->
     <div class="table-responsive mt-3">
@@ -27,7 +31,7 @@
             <th class="text-center">Ağ</th>
             <th class="text-center">Arıza Talep Notları</th>
             <th class="text-center">Talepte Bulunan</th>
-            <th class="text-center">İşlemler</th>
+            <th class="text-center">Detay</th>
           </tr>
         </thead>
         <tbody>
@@ -58,7 +62,10 @@
     </div>
 
     <!-- Geçmiş Arızalar Başlığı -->
-    <h5 class="text-muted font-weight-bold mt-5">Geçmiş Arızalar (Son 10)</h5>
+   
+    <div class="card-header bg-white border-secondary mt-5 border-4 text-danger text-bold">
+      <h6 class="m-1 p-2 text-secondary font-weight-bold">Geçmiş Arıza Kayıtları</h6>
+  </div>
 
     <!-- Geçmiş Arızalar Tablosu -->
     <div class="table-responsive mt-3">
@@ -72,9 +79,9 @@
               <th class="text-center">Model</th>
               <th class="text-center">Birim</th>
               <th class="text-center">Ağ</th>
-              <th class="text-center">Arıza Talep Notları</th>
-              <th class="text-center">Talepte Bulunan</th>
-              <th class="text-center">İşlemler</th>
+              <th class="text-center">Yapılan İşlem Notları</th>
+              <th class="text-center">İşlemi Yapan</th>
+              <th class="text-center">Detay</th>
             </tr>
           </thead>
           <tbody>
@@ -92,10 +99,10 @@
                 <td class="text-center">{{ fault.model }}</td>
                 <td class="text-center">{{ fault.unit_name }}</td>
                 <td class="text-center">{{ fault.network_used }}</td>
-                <td class="text-center text-success">
+                <td class="text-center text-secondary">
                   <span style="word-wrap: break-word;">{{ fault.action_notes }}</span>
                 </td>
-                <td class="text-center text-success">{{ fault.performer_first_name }} {{ fault.performer_last_name }}</td>
+                <td class="text-center text-secondary">{{ fault.performer_first_name }} {{ fault.performer_last_name }}</td>
                 <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
               </tr>
             {% endfor %}

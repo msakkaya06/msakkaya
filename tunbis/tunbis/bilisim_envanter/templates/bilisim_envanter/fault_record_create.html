@@ -196,7 +196,7 @@
     
             $.ajax({
                 type: 'POST',
-                url: '{% url "finalize_computer_action" %}',
+                url: '{% url "finalize_fault_action" %}',
                 data: form.serialize(),
                 dataType: 'json',
                 success: function (response) {
