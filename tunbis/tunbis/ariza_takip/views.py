@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from tunbisapp.models import FaultAction, Computer_Informations, PrinterScannerInformation
 
-from tunbisapp.models import Computer_Informations, FaultAction,PrinterScannerInformation
 
 
 # Create your views here.
@@ -23,11 +26,7 @@ def index(request):
     
     }
     return render(request, "ariza_takip/fault_index.html", context)
-from django.contrib import messages
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from tunbisapp.models import FaultAction, Computer_Informations, PrinterScannerInformation
-from datetime import datetime
+
 
 @login_required
 def fault_create(request, pk):
@@ -111,7 +110,6 @@ def fault_create(request, pk):
     }
 
     return render(request, 'ariza_takip/fault_create.html', context)
-
 
 
 def fault_create_save(request):
