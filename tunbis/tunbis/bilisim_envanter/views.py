@@ -194,12 +194,12 @@ def fault_tracking(request):
 
 def fault_summary(request):
     # Bilgisayar arızaları ve tamamlanmış arıza sayısı
-    total_computer_faults = FaultAction.objects.all().count()
-    completed_computer_faults = FaultAction.objects.filter(is_active=False).count()
+    total_computer_faults = FaultAction.objects.filter(device_type = 'computer').count()
+    completed_computer_faults = FaultAction.objects.filter(device_type='computer',is_active=False).count()
 
     # Yazıcı-Tarayıcı verileri (örnek)
-    total_printer_faults = 5  # Örnek sayı
-    completed_printer_faults = 2  # Örnek sayı
+    total_printer_faults = FaultAction.objects.filter(device_type = 'printer').count()
+    completed_printer_faults = FaultAction.objects.filter(device_type='printer',is_active=False).count()
 
     # Son 12 ayda tamamlanmış arızaların istatistiği
     completed_faults_per_month = []
@@ -363,41 +363,43 @@ def search_name_fault_temp(request):
 
 
 def search_name_fault(request):
-    fault_dto = None
-    computer_id = request.GET.get('computer_id')
-    if not computer_id:
-        return JsonResponse({'error': 'Bilgisayar ID bulunamadı.'}, status=400)
+    device_id = request.GET.get('device_id')
+    device_type = request.GET.get('device_type')  # Cihaz türü bilgisi
+    print(device_id)
+    print(device_type)
+    if not device_id or not device_type:
+        return JsonResponse({'error': 'Cihaz ID veya türü eksik!'}, status=400)
     
-    try:
-        computer = Computer_Informations.objects.get(id=computer_id)
-    except Computer_Informations.DoesNotExist:
-        return JsonResponse({'error': 'Bilgisayar Bulunamadı. İsmi kontrol edin'}, status=404)
+    if device_type == 'computer':
+        try:
+            device = Computer_Informations.objects.get(id=device_id)
+            fault = None
+        except Computer_Informations.DoesNotExist:
+            return JsonResponse({'error': 'Bilgisayar bulunamadı!'}, status=404)
+    elif device_type == 'printer':
+        try:
+            device = PrinterScannerInformation.objects.get(id=device_id)
+            fault = None
+        except PrinterScannerInformation.DoesNotExist:
+            return JsonResponse({'error': 'Yazıcı bulunamadı!'}, status=404)
+    else:
+        return JsonResponse({'error': 'Geçersiz cihaz türü!'}, status=400)
 
-    existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
-    if existing_action:
-        requester = TebsUser.objects.get(username=existing_action.requester.username)
-        fault_dto = {
-            'requester_username': existing_action.requester.username,
-            'requester_notes': existing_action.requester_notes,
-            'requester_first_name': requester.first_name,
-            'requester_last_name': requester.last_name,
-        }
-    computer_data = {
-    'computer_name': computer.computer_name or "Belirtilmemiş",
-    'manufacturer': computer.manufacturer if computer.manufacturer else "Belirtilmemiş",
-    'model': computer.model or "Belirtilmemiş",
-    'unit': computer.unit.name if computer.unit else "Belirtilmemiş",
-    'network_used': computer.network_used or "Belirtilmemiş",
-    'disk_drive_model': computer.disk_drive_model or "Belirtilmemiş",
-    'disk_size_gb': computer.disk_size_gb or "Belirtilmemiş",
-    'processor_name': computer.processor_name or "Belirtilmemiş",
-    'total_ram_gb': computer.total_ram_gb or "Belirtilmemiş",
-    'id': computer.id,
-    'image': computer.image.url if computer.image else "Resim yok"
-}
+    # Geri döndürülen JSON verisi
+    return JsonResponse({
+        'device': {
+            'id': device.pk,
+            'type':device_type,
+            'name': device.device_name if device_type == 'printer' else device.computer_name,
+            'manufacturer': device.manufacturer,
+            'model': device.model,
+            'unit': device.unit.name if device.unit else "Belirtilmemiş",
+            'image':device.image.url,
+            'network_used': device.network_used
+        },
+        'fault': fault  # Örnek fault verisi (isteğe bağlı)
+    })
 
-
-    return JsonResponse({'computer': computer_data, 'fault': fault_dto}, status=200)
 
 def search_computer(request):
     computer_name = request.GET.get('computer_name', '')
@@ -419,6 +421,48 @@ def search_computer(request):
     ]
     return JsonResponse(computer_data, safe=False)
 
+def search_device(request):
+    device_name = request.GET.get('device_name', '')
+    if not device_name:
+        return JsonResponse({'error': 'Cihaz Adı Boş Olamaz'}, status=400)
+    
+    # Bilgisayarları ve yazıcıları isme göre filtreleme
+    computers = Computer_Informations.objects.filter(computer_name__icontains=device_name)
+    printers = PrinterScannerInformation.objects.filter(device_name__icontains=device_name)
+    
+    # Bilgisayar verileri
+    computer_data = [
+        {
+            'id': computer.id,
+            'type': 'computer',  # Tip bilgisini ekledik
+            'name': computer.computer_name or "Belirtilmemiş",
+            'manufacturer': computer.manufacturer or "Belirtilmemiş",
+            'model': computer.model or "Belirtilmemiş",
+            'unit': computer.unit.name if computer.unit else "Belirtilmemiş",
+            'network_used': computer.network_used or "Belirtilmemiş"
+        }
+        for computer in computers
+    ]
+    
+    # Yazıcı verileri
+    printer_data = [
+        {
+            'id': printer.id,
+            'type': 'printer',  # Tip bilgisini ekledik
+            'name': printer.device_name or "Belirtilmemiş",
+            'manufacturer': printer.manufacturer or "Belirtilmemiş",
+            'model': printer.model or "Belirtilmemiş",
+            'unit': printer.unit.name if printer.unit else "Belirtilmemiş",
+            'network_used': printer.network_used or "Belirtilmemiş"
+        }
+        for printer in printers
+    ]
+    
+    # Bilgisayar ve yazıcı verilerini birleştirme
+    device_data = computer_data + printer_data
+    
+    # JSON yanıtı
+    return JsonResponse(device_data, safe=False)
 
 
 def search_serial(request):
@@ -449,36 +493,54 @@ def search_network_used(request):
 def fault_record_create(request):
     return render(request,'bilisim_envanter/fault_record_create.html')
 
-
-
-def save_computer_action(request):
+def save_device_action(request):
     if request.method == "POST":
         # Form verilerini alın
-        computer_id = request.POST.get("computer_id")
+        device_id = request.POST.get("device_id")  # Hem bilgisayar hem de yazıcı için kullanılacak ID
+        device_type = request.POST.get("device_type")  # 'computer' veya 'printer'
         request_username = request.POST.get("request_username")
         requester_notes = request.POST.get("requester_notes")
-        computer=Computer_Informations.objects.get(pk=computer_id)      
+        print(device_id + device_type)
+        # Cihazı bulun
+        if device_type == "computer":
+            device = Computer_Informations.objects.get(pk=device_id)
+        elif device_type == "printer":
+            device = PrinterScannerInformation.objects.get(pk=device_id)
+        else:
+            return JsonResponse({'error': 'Geçersiz cihaz türü.'}, status=400)
+
         # Var olan arıza kaydını kontrol et
-        existing_action = FaultAction.objects.filter(computer=computer, is_active=True).first()
-        # Kullanıcıları bul
-        requester = TebsUser.objects.get(username=request_username)
+        existing_action = FaultAction.objects.filter(
+            device_type=device_type, 
+            **{f"{device_type}": device}, 
+            is_active=True
+        ).first()
+
+        # Kullanıcıyı bulun
+        try:
+            requester = TebsUser.objects.get(username=request_username)
+        except TebsUser.DoesNotExist:
+            return JsonResponse({'error': 'Geçersiz kullanıcı adı.'}, status=404)
+
         if existing_action is not None:
-            existing_action.device_type='computer'
+            # Açık arıza kaydını güncelle
             existing_action.requester = requester
             existing_action.requester_notes = requester_notes
             existing_action.save()
             return JsonResponse({'success': 'Açık arıza kaydı güncellendi.'}, status=200)
-        # Talep edilen işlemi kaydet
+
+        # Yeni bir arıza kaydı oluştur
         action = FaultAction.objects.create(
-            device_type='computer',
-            computer=computer,
+            device_type=device_type,
             requester=requester,
-            requester_notes=requester_notes
+            requester_notes=requester_notes,
+            **{f"{device_type}": device}  # 'computer' veya 'printer' ilişkisini dinamik olarak ayarla
         )
-        action.save() 
+        action.save()
+
         return JsonResponse({'success': 'İşlem başarıyla kaydedildi.'}, status=200)
-    else:
-        return JsonResponse({'error': 'Geçersiz istek.'}, status=400)
+
+    return JsonResponse({'error': 'Geçersiz istek.'}, status=400)
 
 
 

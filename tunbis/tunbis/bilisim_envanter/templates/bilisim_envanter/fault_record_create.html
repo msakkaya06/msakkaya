@@ -6,11 +6,11 @@
 {% block content %}
   <div class="row mb-3">
     <!-- Bilgisayar İsmi Arama Formu -->
-    <div class="col-md-4">
+    <div class="col-md-3">
       <form id="searchForm" method="GET" action="{% url 'search_computer' %}">
         <div class="input-group">
 
-          <input type="text" name="computer_name" class="form-control" placeholder="Bilgisayar Adı" />
+          <input type="text" name="device_name" class="form-control" placeholder="Bilgisayar ya da Yazıcı Adı" />
           <button type="submit" name="searchButton "class="btn btn-primary"><i class="fas fa-search"></i></button>
         </div>
         <ul id="computerResults" class="list-group mt-2" style="display: none;"></ul>
@@ -23,12 +23,9 @@
         <thead>
           <tr>
             <th>Resim</th>
-            <th>Bilgisayar Adı</th>
+            <th>Cihaz Adı</th>
             <th>Üretici</th>
             <th>Model</th>
-            <th>CPU</th>
-            <th>RAM</th>
-            <th>Sabit Disk</th>
             <th>Birim</th>
             <th>Ağ</th>
             <th>İşlemler</th>
@@ -44,7 +41,9 @@
         <div class="row">
           <div class="col-md-12">
             {% csrf_token %}
-            <input type="hidden" name="computer_id" value="{{ computer.id }}" />
+            <input type="hidden" id="device_id" name="device_id" />
+            <input type="hidden" id="device_type" name="device_type" />
+
             <div class="mb-3">
                 <div id="requestUserForm">
                   <div class="input-group">
@@ -66,7 +65,6 @@
               <textarea id="requestNotes" name="requester_notes" rows="10" class="form-control">{{fault.requester_notes}}</textarea>
             </div>
             <!-- Talepte bulunan personel için -->
-            <input type="hidden" id="computer_id" name="computer_id" value="{{ computer.id }}" />
           <div id="actionUserForm">
             <button type="submit" class="btn btn-primary">Kaydet</button>
             <button type="button" onclick="closeForm()" class="btn btn-secondary">Kapat</button>
@@ -224,10 +222,10 @@
 <script>
   document.getElementById('searchForm').onsubmit = function(event) {
   event.preventDefault(); // Formun sayfayı yenilemesini engelle
-  const computerName = document.querySelector('input[name="computer_name"]').value;  // Arama alanındaki değeri al
+  const deviceName = document.querySelector('input[name="device_name"]').value;  // Arama alanındaki değeri al
   console.log('search açılıyor');
 
-  fetch("{% url 'search_computer' %}?computer_name=" + computerName)
+  fetch("{% url 'search_device' %}?device_name=" + deviceName)
       .then(response => response.json()) 
       .then(data => {
           if (data.error) {
@@ -237,15 +235,19 @@
               tableBody.innerHTML = '';  // Eski veriyi temizle
 
               // Her bilgisayarı tabloya ekle
-              data.forEach(computer => {
+              data.forEach(device => {
                   const row = `
                       <tr>
-                          <td>${computer.computer_name}</td>
-                          <td>${computer.manufacturer}</td>
-                          <td>${computer.model}</td>
-                          <td>${computer.unit}</td>
-                          <td>${computer.network_used}</td>
-                          <td><button id="select-btn" onclick="selectComputer('${computer.id}')" class="btn btn-success" data-id="{{computer.id}}">Seç</button></td>
+                          <td>${device.name}</td>
+                          <td>${device.manufacturer}</td>
+                          <td>${device.model}</td>
+                          <td>${device.unit}</td>
+                          <td>${device.network_used}</td>
+                          <td>
+                          <button id="select-btn" onclick="selectComputer('${device.id}', '${device.type}')" 
+                          class="btn btn-success" data-id="${device.id}" 
+                          data-type="${device.type}">Seç</button>
+                          </td>
                       </tr>
                   `;
                   tableBody.insertAdjacentHTML('beforeend', row);
@@ -266,19 +268,20 @@
       .catch(error => {
           console.error('Error:', error);
       });
-};
-function selectComputer(computerId) {
+};function selectComputer(deviceId, deviceType) {
   $.ajax({
-      url: '{% url "search_name_fault" %}',  // view'in URL ismi
+      url: '{% url "search_name_fault" %}', // view'in URL ismi
       data: {
-          'computer_id': computerId
+          'device_id': deviceId,
+          'device_type': deviceType // Cihaz türünü gönder
       },
       success: function(data) {
           // Gelen veriler ile tabloyu güncelle
-          updateComputerTable(data.computer);
-          
-          // Hidden input alanına computerId değerini atama
-          document.getElementById("computer_id").value = computerId;
+          updateComputerTable(data.device);
+
+          // Hidden input alanlarına device_id ve device_type değerlerini atama
+          document.getElementById("device_id").value = deviceId;
+          document.getElementById("device_type").value = deviceType;
 
           // Form bilgilerini temizle
           document.getElementById("request_username").value = '';
@@ -290,8 +293,8 @@ function selectComputer(computerId) {
           if (data.fault) {
               document.getElementById("success-msg").style.display = "block";
               document.getElementById("faultFormdiv").style.display = "block";
-              
-              // Gelen arıza bilgilerini form alanlarına yerleştirtrt
+
+              // Gelen arıza bilgilerini form alanlarına yerleştir
               document.getElementById("request_username").value = data.fault.requester_username;
               document.getElementById("request_first_name").value = data.fault.requester_first_name;
               document.getElementById("request_last_name").value = data.fault.requester_last_name;
@@ -301,37 +304,43 @@ function selectComputer(computerId) {
               document.getElementById("success-msg").style.display = "none";
               document.getElementById("faultFormdiv").style.display = "none";
           }
-
-          // Bilgisayar seçimi tamamlandığında modalı kapat
           document.getElementById('computerModal').style.display = 'none';
+
       },
-      error: function(xhr) {
-          alert(xhr.responseJSON.error);
+      error: function(error) {
+          console.error("Error:", error);
       }
   });
-};
+}
+
+// "Seç" butonları için tıklama olayını tanımla
+document.querySelectorAll('.select-btn').forEach(button => {
+  button.addEventListener('click', function() {
+      const deviceId = this.getAttribute('data-id');
+      const deviceType = this.getAttribute('data-type'); // Cihaz türünü al
+      selectComputer(deviceId, deviceType);
+  });
+});
+
 
 // Tabloyu güncelleme fonksiyonu
-function updateComputerTable(computer) {
+function updateComputerTable(device) {
   const tableBody = document.getElementById('computerTableFault');
   tableBody.innerHTML = ''; // Önceki içerikleri temizle
 
   const row = document.createElement('tr');
   row.innerHTML = `
       <td>
-          <img src="${computer.image ? computer.image : '{% static 'img/gorsel-bulunamadi.jpg' %}'}" 
-               alt="${computer.computer_name}" 
+          <img src="${device.image ? device.image : '{% static 'img/gorsel-bulunamadi.jpg' %}'}" 
+               alt="${device.name}" 
                class="img-fluid text-center" 
                style="max-width: 75px; max-height:50px;" />
       </td>
-      <td>${computer.computer_name}</td>
-      <td>${computer.manufacturer}</td>
-      <td>${computer.model}</td>
-      <td>${computer.processor_name}</td>
-      <td>${computer.total_ram_gb}</td>
-      <td>${computer.disk_drive_model} - ${computer.disk_size_gb}</td>
-      <td>${computer.unit}</td>
-      <td>${computer.network_used}</td>
+      <td>${device.name}</td>
+      <td>${device.manufacturer}</td>
+      <td>${device.model}</td>
+      <td>${device.unit}</td>
+      <td>${device.network_used}</td>
       <td>
           <button type="button" class="btn btn-primary mb-3" onclick="openForm()">Arıza Kaydı Oluştur</button>
       </td>
@@ -362,15 +371,12 @@ window.onclick = function(event) {
       document.getElementById("computerModal").style.display = "none";
   }
 };
-
+function openForm() {
+  document.getElementById('faultFormdiv').style.display = 'block';
+}
+function closeForm() {
+  document.getElementById('faultFormdiv').style.display = 'none';
+}
 
 </script>
-      <script>
-        function openForm() {
-          document.getElementById('faultFormdiv').style.display = 'block';
-        }
-        function closeForm() {
-          document.getElementById('faultFormdiv').style.display = 'none';
-        }
-  </script>
 {% endblock %}

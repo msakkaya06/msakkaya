@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from tunbisapp.models import FaultAction, Computer_Informations, PrinterScannerInformation
 
 
-
 # Create your views here.
 @login_required
 def index(request):
@@ -17,13 +16,10 @@ def index(request):
     # Kullanıcının birimine göre cihazları al
     computers = Computer_Informations.objects.filter(unit=user_unit) if user_unit else []
     printers = PrinterScannerInformation.objects.filter(unit=user_unit) if user_unit else []
-
-
     context = {
         "unit": user_unit,
         "computers": computers,
         "printers": printers,
-    
     }
     return render(request, "ariza_takip/fault_index.html", context)
 
