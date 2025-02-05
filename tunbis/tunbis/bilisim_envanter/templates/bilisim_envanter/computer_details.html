@@ -19,6 +19,8 @@
     .left {
       flex: 1;
       padding-right: 20px;
+      
+  
     }
     
     .middle,
@@ -34,45 +36,46 @@
     
     .detail-input {
       width: 100%;
-      padding: 5px;
-      margin-bottom: 10px;
+      padding: 4px; /* Daha küçük padding */
+      font-size: 0.925rem; /* Daha küçük yazı boyutu */
+      margin-bottom: 10px; /* Daha dar boşluk */
       border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
+      border-radius: 8px;
     }
-    .small-input {
-      font-size: 0.875em; /* Küçük font boyutu */
-      height: 30px; /* Küçük yükseklik */
-      padding: 2px 5px; /* Az padding */
-      margin-bottom: 2px; /* Az margin */
+  
+    label {
+      font-size: 0.900rem; /* Daha küçük label yazı boyutu */
+      font-weight: bold;
+      display: block;
+      margin-bottom: 4px;
     }
   </style>
-  <div class="container mt-3">
-    <div class="left">
+  <div class="container mt-3 col-md-12">
+    <div class="left mt-2">
       {% if computer.image %}
     <img src="{{ computer.image.url }}" alt="{{ computer.computer_name }}" class="computer-image" />
 {% else %}
     <span>None</span>
 {% endif %}
+<div>
+  <label for="computer_name">Bilgisayar Adı:</label>
+  <input type="text" id="computer_name" class="detail-input" value="{{ computer.computer_name }}" placeholder="Computer Name" readonly />
+  <label for="network_used">Ağ Bilgisi:</label>
+  <input type="text" id="network_used" class="detail-input" value="{{ computer.network_used }}" placeholder="Network Used" readonly/>
+  <label for="manufacturer">Üretici:</label>
+  <input type="text" id="manufacturer" class="detail-input" value="{{ computer.manufacturer }}" placeholder="Manufacturer" readonly />
+  <label for="model">Model:</label>
+  <input type="text" id="model" class="detail-input" value="{{ computer.model }}" placeholder="Model" readonly />
+  <label for="serial_number">Seri Numarası:</label>
+  <input type="text" id="serial_number" class="detail-input" value="{{ computer.serial_number }}" placeholder="Serial Number" readonly/>
+  
+  <label for="processor_name">İşlemci(CPU):</label>
+  <input type="text" id="processor_name" class="detail-input" value="{{ computer.processor_name }}" placeholder="Processor Name" readonly/>
+</div>
 
     </div>
     <div class="middle">
-      <div>
-        <label for="computer_name">Bilgisayar Adı:</label>
-        <input type="text" id="computer_name" class="detail-input" value="{{ computer.computer_name }}" placeholder="Computer Name" readonly />
-        <label for="network_used">Ağ Bilgisi:</label>
-        <input type="text" id="network_used" class="detail-input" value="{{ computer.network_used }}" placeholder="Network Used" readonly/>
-        <label for="manufacturer">Üretici:</label>
-        <input type="text" id="manufacturer" class="detail-input" value="{{ computer.manufacturer }}" placeholder="Manufacturer" readonly />
-        <label for="model">Model:</label>
-        <input type="text" id="model" class="detail-input" value="{{ computer.model }}" placeholder="Model" readonly />
-        <label for="serial_number">Seri Numarası:</label>
-        <input type="text" id="serial_number" class="detail-input" value="{{ computer.serial_number }}" placeholder="Serial Number" readonly/>
-        <label for="number_of_processors">İşlemci Sayısı:</label>
-        <input type="text" id="number_of_processors" class="detail-input" value="{{ computer.number_of_processors }}" placeholder="Number of Processors" readonly/>
-        <label for="processor_name">İşlemci(CPU):</label>
-        <input type="text" id="processor_name" class="detail-input" value="{{ computer.processor_name }}" placeholder="Processor Name" readonly/>
-      </div>
+   
       <div>
         <label for="number_of_cores">İşlemci Çekirdek Sayısı:</label>
         <input type="text" id="number_of_cores" class="detail-input" value="{{ computer.number_of_cores }}" placeholder="Number of Cores" readonly/>
@@ -103,11 +106,10 @@
         <input type="text" id="os_build_number" class="detail-input" value="{{ computer.os_build_number }}" placeholder="OS Build Number" readonly/>
         <label for="office_version">Office Versiyon:</label>
         <input type="text" id="office_version" class="detail-input" value="{{ computer.office_version }}" placeholder="Office Version" readonly/>
+      
       </div>
-      <div>
-        <label for="office_license_status">Office Lisans Bilgisi:</label>
-        <input type="text" id="office_license_status" class="detail-input" value="{{ computer.office_license_status }}" placeholder="Office License Status" readonly/>
-      </div>
+       
+     
     </div>
     <div class="right">
       <div>
@@ -133,6 +135,8 @@
         <input type="text" id="graphics_card" class="detail-input" value="{{ computer.graphics_card }}" placeholder="Graphics Card" readonly/>
         <label for="system_type">Sistem Mimarisi:</label>
         <input type="text" id="system_type" class="detail-input" value="{{ computer.system_type }}" placeholder="System Type" readonly/>
+        <label for="office_license_status">Office Lisans Bilgisi:</label>
+        <input type="text" id="office_license_status" class="detail-input" value="{{ computer.office_license_status }}" placeholder="Office License Status" readonly/>
       </div>
     </div>
   </div>

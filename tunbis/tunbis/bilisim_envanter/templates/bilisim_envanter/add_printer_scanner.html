@@ -1,0 +1,106 @@
+{% extends 'module/layout.html' %}
+
+{% block sidebar %}
+  {% include 'bilisim_envanter/_partials/_nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="card-header bg-white border-secondary border-4 text-info text-bold position-relative mb-4">
+
+    <h4 class="m-1 pt-2 text-uppercase font-weight-bold">Yazıcı/Tarayıcı Ekle</h4>
+    <h1 style="position: absolute; top: 0; right: 0;"><i class="bx bx-plus-circle pt-3 px-2"></i></h1>
+  
+    </h6>
+  </div>
+
+<style>
+  .container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .column {
+    flex: 1;
+  }
+
+  .device-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .detail-input, .detail-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 0.9em;
+  }
+</style>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container mt-3 col-md-12">
+    <!-- Sol Sütun -->
+    <div class="column">
+      <label for="device_name">Cihaz Adı:</label>
+      <input type="text" id="device_name" name="device_name" class="detail-input" placeholder="Cihaz Adı" required/>
+
+      <label for="manufacturer">Üretici:</label>
+      <input type="text" id="manufacturer" name="manufacturer" class="detail-input" placeholder="Üretici"/>
+
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" class="detail-input" placeholder="Model"/>
+    </div>
+
+    <!-- Orta Sütun -->
+    <div class="column">
+      <label for="serial_number">Seri Numarası:</label>
+      <input type="text" id="serial_number" name="serial_number" class="detail-input" placeholder="Seri Numarası"/>
+
+      <label for="ip_address">IP Adresi:</label>
+      <input type="text" id="ip_address" name="ip_address" class="detail-input" placeholder="IP Adresi"/>
+
+      <label for="connection_interface">Bağlantı Tipi:</label>
+      <select id="connection_interface" name="connection_interface" class="detail-select">
+        <option value="LAN">LAN</option>
+        <option value="USB">USB</option>
+      </select>
+
+      
+    </div>
+
+    <!-- Sağ Sütun -->
+    <div class="column">
+      <label for="device_type">Cihaz Türü:</label>
+      <select id="device_type" name="device_type" class="detail-select">
+        <option value="Printer">Printer</option>
+        <option value="Scanner">Scanner</option>
+        <option value="Printer-Scanner">Printer-Scanner</option>
+        <option value="All-In-One Printers">All-In-One Printers</option>
+      </select>
+      <label for="unit">Birim:</label>
+      <select id="unit" name="unit" class="detail-select">
+        {% for unit in units %}
+          <option value="{{ unit.id }}">{{ unit.name }}</option>
+        {% endfor %}
+      </select>
+
+   
+
+      <label for="image">Görsel:</label>
+      <input type="file" id="image" name="image" class="detail-input"/>
+    </div>
+  </div>
+
+  <div class="text-end mx-3 my-3">
+    <button type="submit" class="btn btn-success " style="width: 150px;"><i class='bx bx-check'></i>Kaydet</button>
+</div>
+
+</form>
+{% endblock %}

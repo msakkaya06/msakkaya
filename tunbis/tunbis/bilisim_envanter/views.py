@@ -667,3 +667,40 @@ def import_computer_info(request):
         return JsonResponse({"status": "success", "message": "Bilgisayar bilgileri başarıyla içe aktarıldı."})
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)})
+    
+    
+def add_printer_scanner(request):
+    if request.method == "POST":
+        device_name = request.POST.get('device_name')
+        manufacturer = request.POST.get('manufacturer')
+        model = request.POST.get('model')
+        serial_number = request.POST.get('serial_number')
+        ip_address = request.POST.get('ip_address')
+        connection_interface = request.POST.get('connection_interface')
+        unit_id = request.POST.get('unit')
+        device_type = request.POST.get('device_type')
+        toner_level = request.POST.get('toner_level')
+        image = request.FILES.get('image')
+
+        # Unit doğrulama
+        unit = Unit.objects.get(pk=unit_id)
+
+        # Yeni cihaz kaydetme
+        PrinterScannerInformation.objects.create(
+            device_name=device_name,
+            manufacturer=manufacturer,
+            model=model,
+            serial_number=serial_number,
+            ip_address=ip_address,
+            connection_interface=connection_interface,
+            unit=unit,
+            device_type=device_type,
+            toner_level=toner_level,
+            image=image
+        )
+
+        messages.success(request, "Cihaz başarıyla eklendi!")
+        return redirect('printer_scanner_list')  # Liste sayfasına yönlendirin
+
+    units = Unit.objects.all()  # Birimlerin listesini alın
+    return render(request, 'bilisim_envanter/add_printer_scanner.html', {'units': units})

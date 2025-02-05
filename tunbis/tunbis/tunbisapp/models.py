@@ -224,14 +224,14 @@ class FaultAction(models.Model):
         verbose_name_plural = "Fault Actions"
 
 
+
+
 class PrinterScannerInformation(models.Model):
     DEVICE_TYPE_CHOICES = (
         ('Printer', 'Printer'),
         ('Scanner', 'Scanner'),
         ('Printer-Scanner', 'Printer-Scanner'),
         ('All-In-One Printers', 'All-In-One Printers'),
-
-
     )
     
     COLOR_MODE_CHOICES = (

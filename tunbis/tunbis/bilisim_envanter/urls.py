@@ -27,5 +27,6 @@ urlpatterns = [
     path('search-printer-unit/', views.search_printer_unit, name='search_printer_unit'),
     path('computer-detail-for-unit/<int:pk>/', views.computer_detail_for_unit, name='computer_detail_for_unit'),
     path('import-computer-info/', views.import_computer_info, name='import_computer_info'),
+    path('yazici-tarayici-ekle/', views.add_printer_scanner, name='add_printer_scanner'),
     
 ]
