@@ -38,6 +38,27 @@
     </a>
 </div>
 
+<a href="#assignMenu" id="assignMenuLink" class="nav_link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="assignMenu"> 
+    <i class="bx bxs-down-arrow ml-auto"></i>
+    <span class="nav_name">Planlama ve Tahsis İşlemleri</span> 
+
+</a>
+<div id="assignMenu" class="collapse">
+
+    <a href="{% url 'all_device_requests' %}" class="nav_link ms-2"> 
+        <i class='bx bx-clipboard' ></i>
+        <span class="nav_name">Talep Görüntüle</span>
+    </a>
+    <a href="{% url 'fault_summary' %}" class="nav_link ms-2"> 
+        <i class='bx bx-devices'></i>
+        <span class="nav_name">Tahsis</span>
+    </a>
+    <a href="{% url 'device_request_summary' %}" class="nav_link ms-2"> 
+        <i class='bx bx-chart'></i>
+        <span class="nav_name">Talep İstatistik</span>
+    </a>
+</div>
+
 <a href="{% url 'envanter_index' %}" class="nav_link {% if req.path == '/bilisim-envanter/stats/' %}active{% endif %}"> 
     <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
     <span class="nav_name">İstatistik</span> 
@@ -49,6 +70,14 @@
           $('#faultMenu').collapse('toggle');
         });
       });
+
+      $(document).ready(function() {
+        // Arıza Takip menüsünü tetiklemek için
+        $('#assignMenuLink').on('click', function() {
+          $('#assignMenu').collapse('toggle');
+        });
+      });
+      
       
 </script>
 {% endblock sidebar %}

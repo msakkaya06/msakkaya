@@ -1,0 +1,44 @@
+{% extends 'module/layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+            <h4 class="m-0">Arıza Detayları</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Cihaz Türü:</strong> {{ fault.get_device_type_display }}</p>
+            <p><strong>Talep Eden:</strong> {{ fault.requester.first_name }} {{ fault.requester.last_name }}</p>
+            <p><strong>Talep Tarihi:</strong> {{ fault.requester_date|date:"d.m.Y H:i" }}</p>
+            
+            {% if fault.completed_date %}
+                <p><strong>Tamamlanma Tarihi:</strong> {{ fault.completed_date|date:"d.m.Y H:i" }}</p>
+            {% else %}
+                <p><strong>Tamamlanma Tarihi:</strong> Henüz tamamlanmadı</p>
+            {% endif %}
+            
+            <p><strong>İşlemi Yapan:</strong> {{ fault.performer.first_name }} {{ fault.performer.last_name }}</p>
+            <p><strong>Talep Notları:</strong> {{ fault.requester_notes }}</p>
+            <p><strong>İşlem Notları:</strong> {{ fault.action_notes }}</p>
+
+            {% if computer_operations %}
+                <h5 class="mt-3">Bilgisayar İşlemleri</h5>
+                <ul>
+                    {% for key, value in computer_operations.items %}
+                        <li>{{ key }}: {{ value|yesno:"Evet,Hayır" }}</li>
+                    {% endfor %}
+                </ul>
+            {% elif printer_operations %}
+                <h5 class="mt-3">Yazıcı İşlemleri</h5>
+                <ul>
+                    {% for key, value in printer_operations.items %}
+                        <li>{{ key }}: {{ value|yesno:"Evet,Hayır" }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <a href="{% url 'ariza_takip_fault_tracking' %}" class="btn btn-secondary mt-3">Geri Dön</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

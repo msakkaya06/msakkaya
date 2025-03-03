@@ -19,7 +19,12 @@ urlpatterns = [
     path('mark_item_as_served/<int:order_item_id>/', views.mark_item_as_served, name='mark_item_as_served'),
     path('mark_all_items_as_served/<int:order_id>/', views.mark_all_items_as_served, name='mark_all_items_as_served'),
     path('checkout/<int:order_id>/', views.checkout, name='checkout'),
-    path('sales-management/', views.sales_management, name='sales_management')
+    path('sales-management/', views.sales_management, name='sales_management'),
+    path('sales/', views.sales_view, name='sales_view'),
+    path('finance/', views.finance_dashboard, name='finance_dashboard'),
+    path('payment-screen/', views.payment_screen, name='payment_screen'),
+    path('payment/<int:order_id>/', views.payment_view, name='payment_view'),
+    path('process_payment/<int:order_id>/', views.process_payment, name='process_payment'),
    
 
 ] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

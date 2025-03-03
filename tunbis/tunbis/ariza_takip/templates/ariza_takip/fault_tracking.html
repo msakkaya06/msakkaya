@@ -12,7 +12,7 @@
 
   <div class="row mb-3">
     <!-- Aktif Arızalar Başlığı -->
-    <div class="card-header bg-white border-success border-4 text-success text-bold">
+    <div class="card-header bg-white border-danger border-4 text-danger text-bold">
       <h3 class="m-1 p-2 text-center text-uppercase font-weight-bold">Açık Arıza Kayıtları</h3>
       <h6 class="m-1 p-2 text-center text-uppercase text-secondary font-weight-bold">{{request.user.unit.name}}</h6>
   </div>
@@ -53,7 +53,7 @@
                 <span style="word-wrap: break-word;">{{ fault.requester_notes }}</span>
               </td>
               <td class="text-center text-success">{{ fault.requester_first_name }} {{ fault.requester_last_name }}</td>
-              <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
+              <td><a href="{% url 'ariza_takip_fault_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -103,7 +103,8 @@
                   <span style="word-wrap: break-word;">{{ fault.action_notes }}</span>
                 </td>
                 <td class="text-center text-secondary">{{ fault.performer_first_name }} {{ fault.performer_last_name }}</td>
-                <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
+                <td><a href="{% url 'ariza_takip_fault_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
+
               </tr>
             {% endfor %}
           </tbody>

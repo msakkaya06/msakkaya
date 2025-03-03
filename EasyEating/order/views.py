@@ -214,9 +214,15 @@ def cart_to_order(req, cart_id):
         order = Order.objects.create(desk=cart.desk, total_price=cart.calculate_total_price())
     else:
         order = existing_order  # Mevcut siparişe devam et
-    
+        
+
+   
     # Onaylanmamış öğeleri siparişe ekleyen fonksiyon
     add_items_to_order(is_not_confirm, order)
+
+      # **Total Price Güncelle**
+    order.calculate_total_price()  # Order toplam fiyatını hesapla ve kaydet
+
     
     # Sipariş güncellemesini WebSocket aracılığıyla gönder
     

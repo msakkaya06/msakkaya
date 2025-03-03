@@ -78,7 +78,6 @@ class Desk(models.Model):
         if is_new_desk:
             # Eğer masa yeni oluşturuluyorsa veya 'update_fields' belirtilmemişse veya 'isReserve' güncellenmemişse
             password = "kolaymasa"
-            hashed_password=make_password(password)
             EEUser.objects.create(username=self.slug, password=password, is_desk=True, business=self.business)
     
 
@@ -150,21 +149,26 @@ class Order(models.Model):
     produces = models.ManyToManyField(Produce, through='OrderItem')
     created_at = models.DateTimeField(auto_now_add=True)
     isActive = models.BooleanField(default=True)
+
     STATUS_CHOICES = (
         ('preparing', 'Hazırlanıyor'),
         ('serving', 'Servis Edildi'),
         ('completed', 'Tamamlandı'),
     )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='preparing')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Toplam ödeme
+
+    payment_status = models.BooleanField(default=False)  # Ödeme yapıldı mı?
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def calculate_total_price(self):
+        """Order'ın total_price değerini günceller."""
+        self.total_price = sum([item.quantity * item.unit_price for item in self.orderitem_set.all()])
+        self.save(update_fields=['total_price'])  # Sadece total_price alanını güncelle
+
+    
 
     def __str__(self):
         return f"Sipariş {self.id} - Masa: {self.desk}"
-
-    def calculate_total_price(self):
-        # Her sipariş kaleminin fiyatını ve miktarını alarak toplam fiyatı hesaplar
-        self.total_price = sum([item.quantity * item.unit_price for item in self.orderitem_set.all()])
-        self.save()
 
 
 
@@ -206,17 +210,27 @@ class CartItem(models.Model):
     isConfirm=models.BooleanField(default=False)
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)  # O anki ürün fiyatı
 
-
-
     def __str__(self):
         return f"Cart: {self.cart.id}, Produce: {self.produce.name}, Quantity: {self.quantity}"
 
 
 class Payment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='payments')
-    amount = models.DecimalField(max_digits=11, decimal_places=2)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)  # Her ödeme bir siparişe bağlı
+    amount = models.DecimalField(max_digits=10, decimal_places=2)  # Ödeme tutarı
+    method = models.CharField(max_length=10, choices=[
+        ('cash', 'Nakit'),
+        ('card', 'Kredi/Banka Kartı'),
+        ('other', 'Diğer')
+    ],default='cash')
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)  # Kart ödemelerinde işlem ID
     payment_date = models.DateTimeField(auto_now_add=True)
-    is_successful = models.BooleanField(default=True)
+    is_successful=models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        # Ödeme kaydedildiğinde siparişin ödeme durumunu güncelle
+        self.order.payment_status = True
+        super().save(*args, **kwargs)
+        self.order.save()
 
     def __str__(self):
-        return f"Payment for Order {self.order.id} - Amount: {self.amount}"
+        return f"Ödeme: {self.amount} TL - {self.method} - Sipariş {self.order.id}"

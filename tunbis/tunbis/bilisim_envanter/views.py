@@ -1,14 +1,19 @@
 from django.utils import timezone
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from tunbisapp.models import Computer_Informations, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction
+from tunbisapp.models import Computer_Informations, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction,DeviceRequest
 from django.core.paginator import Paginator
 from django.contrib import messages
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum
+from django.template.loader import render_to_string
+from django.template.loader import get_template
+from weasyprint import HTML
+import tempfile
 
 def index(request):
     # Üretici firmaların bilgileri
@@ -704,3 +709,133 @@ def add_printer_scanner(request):
 
     units = Unit.objects.all()  # Birimlerin listesini alın
     return render(request, 'bilisim_envanter/add_printer_scanner.html', {'units': units})
+
+def all_device_requests(request):
+     # Bütün birimleri al
+    units = Unit.objects.all()
+
+    # Talepleri olan birimleri önce sıralayalım
+    sorted_units = sorted(units, key=lambda unit: DeviceRequest.objects.filter(unit=unit).count(), reverse=True)
+
+    # Her bir birime ait talepleri dictionary olarak toplayalım
+    unit_requests = {unit: DeviceRequest.objects.filter(unit=unit, is_active = True).order_by("-request_date") for unit in sorted_units}
+
+    # Sayfalama işlemi için bir liste oluşturalım (her birim taleplerini bir listeye koyacağız)
+    paginated_data = []
+    for unit, requests in unit_requests.items():
+        if requests.exists():  # Eğer birimde talep varsa listeye ekle
+            paginated_data.append((unit, requests))
+
+    # Sayfalama için Django Paginator kullan
+    page_number = request.GET.get("page", 1)  # URL'den sayfa numarasını al
+    paginator = Paginator(paginated_data, 5)  # Her sayfada 5 birim gösterelim
+
+    try:
+        page_obj = paginator.page(page_number)
+    except:
+        page_obj = paginator.page(1)  # Geçersiz sayfa olursa ilk sayfayı göster
+
+    return render(request, "bilisim_envanter/all_device_requests.html", {"page_obj": page_obj})
+
+def device_request(request):
+    if request.method == "POST":
+        unit_id = request.POST.get("unit")
+        device_type = request.POST.get("device_type")
+        quantity = request.POST.get("quantity")
+        description = request.POST.get("description")
+
+        # Birimi getir
+        try:
+            unit = Unit.objects.get(id=unit_id)
+        except Unit.DoesNotExist:
+            messages.error(request, "Seçilen birim bulunamadı.")
+            return redirect("device_request_create")
+        
+          # "Bilgi İşlem Yöneticisi" olan kullanıcıyı çek
+        try:
+            admin_user = TebsUser.objects.get(username="1")
+        except TebsUser.DoesNotExist:
+            messages.error(request, "Bilgi İşlem Yöneticisi bulunamadı.")
+            return redirect("device_request_create")
+
+        # Talebi oluştur
+        DeviceRequest.objects.create(
+            unit=unit,
+            requester=admin_user,  # Admin kendisi oluşturuyor
+            device_type=device_type,
+            quantity=quantity,
+            description=description,
+            status="Bekliyor",
+        )
+
+        messages.success(request, "Talep başarıyla oluşturuldu.")
+        return redirect("all_device_requests")
+
+    units = Unit.objects.all()
+    device_types = DeviceRequest.DEVICE_CHOICES  # Modelde tanımlı cihaz türlerini al
+
+    return render(request, "bilisim_envanter/device_request_create.html", {"units": units, "device_types": device_types})
+
+def device_request_summary(request):
+    # Tüm birimleri al
+    units = Unit.objects.all()
+
+    # Cihaz tiplerine göre talepleri gruplayarak say
+    device_types = dict(DeviceRequest.DEVICE_CHOICES)  # Cihaz türleri
+    requests_by_unit = DeviceRequest.objects.filter(is_active=True).values('unit__name', 'device_type')\
+        .annotate(total=Sum('quantity'))\
+        .order_by('unit__name')
+
+    # Verileri işleyerek bir sözlük yapısına dönüştür
+    unit_data = {unit.name: {device: 0 for device in device_types.values()} for unit in units}
+    
+    for entry in requests_by_unit:
+        unit_name = entry['unit__name']
+        device_name = device_types.get(entry['device_type'])
+        unit_data[unit_name][device_name] = entry['total']
+
+    context = {
+        'unit_data': unit_data,
+        'device_types': device_types.values()
+    }
+    return render(request, 'bilisim_envanter/device_request_summary.html', context)
+
+def device_request_pdf(request):
+    # Cihaz türleri ve birimler
+    units = Unit.objects.all()
+    device_types = dict(DeviceRequest.DEVICE_CHOICES)
+    
+    # Talepleri gruplandır
+    requests_by_unit = DeviceRequest.objects.filter(is_active=True).values('unit__name', 'device_type')\
+        .annotate(total=Sum('quantity'))\
+        .order_by('unit__name')
+
+    # Verileri işleyerek toplamları hesapla
+    unit_data = {unit.name: {device: 0 for device in device_types.values()} for unit in units}
+    total_per_device = {device: 0 for device in device_types.values()}  # Cihaz bazlı toplam
+    
+    for entry in requests_by_unit:
+        unit_name = entry['unit__name']
+        device_name = device_types.get(entry['device_type'])
+        unit_data[unit_name][device_name] = entry['total']
+        total_per_device[device_name] += entry['total']  # Toplamları hesapla
+
+    # Tüm satırların toplam değerini kontrol ederek 0 olanları filtrele
+    filtered_unit_data = {unit: devices for unit, devices in unit_data.items() if any(value > 0 for value in devices.values())}
+
+    context = {
+        'unit_data': filtered_unit_data,
+        'device_types': device_types.values(),
+        'total_per_device': total_per_device,  # PDF'de göstermek için toplamları gönder
+        'current_date': timezone.now()
+    }
+
+    # HTML to PDF
+    html_string = render_to_string("bilisim_envanter/_pdf/device_request_pdf.html", context)
+    pdf = HTML(string=html_string).write_pdf()
+
+    # HTTP Response
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = "inline; filename=request_summary.pdf"
+
+    return response

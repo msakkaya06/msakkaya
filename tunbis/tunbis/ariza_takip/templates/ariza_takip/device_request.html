@@ -1,0 +1,110 @@
+{% extends 'module/layout.html' %}
+{% load static %}
+{% block sidebar %}
+  {% include 'ariza_takip/_partials/_nav.html' %}
+{% endblock %}
+{% block content %}
+  <style>
+    .font-lighter {
+      font-weight: lighter;
+    }
+  </style>
+  <div class="container col-md-10 mt-5">
+
+    <div class="mt-5">
+      <div class="card-header bg-white border-secondary border-4 text-danger text-bold">
+        <h2 class="m-1 p-2 text-center text-uppercase font-weight-bold">Cihaz Talep Formu</h2>
+    </div>
+
+
+    <div class="card p-4 shadow-lg">
+        <form action="{% url 'ariza_takip_device_request' %}" method="POST">
+            {% csrf_token %}
+            
+            <!-- Kullanıcı Adı -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Adınız Soyadınız</label>
+                <input type="text" class="form-control" value="{{ request.user.get_full_name }}" readonly>
+            </div>
+
+            <!-- Birim -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Birim</label>
+                <input type="text" class="form-control" value="{{ request.user.unit }}" readonly>
+            </div>
+
+            <!-- Cihaz Türü Seçimi -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Talep Edilen Cihaz</label>
+                <select class="form-select" name="device_type" required>
+                    <option value="" selected disabled>Seçiniz...</option>
+                    <option value="printer">Yazıcı</option>
+                    <option value="scanner">Tarayıcı</option>
+                    <option value="computer">Bilgisayar</option>
+                    <option value="tablet">Tablet Bilgisayar</option>
+                </select>
+            </div>
+
+            <!-- Miktar -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Adet</label>
+                <input type="number" class="form-control" name="quantity" min="1" value="1" required>
+            </div>
+
+            <!-- Açıklama -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Açıklama</label>
+                <textarea class="form-control" name="description" rows="3" placeholder="Talebinizle ilgili ek bilgi ekleyebilirsiniz..."></textarea>
+            </div>
+
+            <!-- Gönder Butonu -->
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Talebi Gönder</button>
+            </div>
+        </form>
+    </div>
+
+     <div class="mt-5">
+        <div class="card-header bg-white border-secondary border-4 text-danger text-bold">
+          <h4 class="m-1 p-2 text-center text-uppercase font-weight-bold">{{request.user.unit}} Talepler</h4>
+      </div><!-- Birime Ait Talepler Tablosu -->
+   
+        
+        {% if unit_requests %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Talep Eden</th>
+                            <th>Cihaz Türü</th>
+                            <th>Adet</th>
+                            <th>Açıklama</th>
+                            <th>Durum</th>
+                            <th>Talep Tarihi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in unit_requests %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ request.requester.get_full_name }}</td>
+                            <td>{{ request.get_device_type_display }}</td>
+                            <td>{{ request.quantity }}</td>
+                            <td>{{ request.description|default:"-" }}</td>
+                            <td>{{ request.status }}</td>
+
+                            <td>{{ request.request_date|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">Bu birimde henüz bir talep oluşturulmamış.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

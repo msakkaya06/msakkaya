@@ -10,9 +10,14 @@ from django.views.decorators.http import require_POST
 
 from logging_helper.performance_logger import log_performance
 from .forms import CreateProductForm, DeskCreateForm
-from .models import Business, Cart,Desk, Order, OrderItem,Produce,EEUser, ProduceType
+from .models import Business, Cart,Desk, Order, OrderItem,Produce,EEUser, ProduceType, Payment
 from django.contrib import messages
 from django.core.paginator import Paginator
+
+from easymanagement.services.sales_services import get_sales_for_business
+from django.utils.timezone import now
+from django.db.models import Sum
+from datetime import timedelta
 
 
 
@@ -408,3 +413,99 @@ def order_details(req,desk_id):
 def checkout(req,order_id):
     pass
 
+
+
+@login_required
+@user_passes_test(isManager)
+@log_performance('Sales_List')
+def sales_view(request):
+    orders = get_sales_for_business(request.user.business.id) # Siparişleri al ve tarih sırasına göre sırala
+    paginator = Paginator(orders, 10)  # Her sayfada 10 sipariş gösterilecek
+    page_number = request.GET.get('page')  # Sayfa numarasını al
+    page_obj = paginator.get_page(page_number)  # Sayfa objesini oluştur
+    return render(request, 'easymanagement/sales_list.html', {'orders': page_obj})
+
+
+@login_required
+@user_passes_test(isManager)
+@log_performance('Finance_Dashboard')
+def finance_dashboard(request):
+    business=request.user.business
+    today = now().date()
+    start_of_month = today.replace(day=1)
+    start_of_year = today.replace(month=1, day=1)
+
+    daily_revenue = Order.objects.filter(created_at__date=today,desk__business=business,payment_status=True).aggregate(total=Sum('total_price'))['total'] or 0
+    monthly_revenue = Order.objects.filter(created_at__date__gte=start_of_month,desk__business=business,payment_status=True).aggregate(total=Sum('total_price'))['total'] or 0
+    yearly_revenue = Order.objects.filter(created_at__date__gte=start_of_year,desk__business=business,payment_status=True).aggregate(total=Sum('total_price'))['total'] or 0
+
+    context = {
+        'daily_revenue': daily_revenue,
+        'monthly_revenue': monthly_revenue,
+        'yearly_revenue': yearly_revenue,
+    }
+    return render(request, 'easymanagement/finance_dashboard.html',context)
+
+
+
+
+def payment_screen(request):
+    """Boş ve rezerve edilmiş masaları listeleyen view."""
+    reserved_desks = Desk.objects.filter(isReserve=True, business=request.user.business)  # Rezerve masalar
+    empty_desks = Desk.objects.filter(isReserve=False, business=request.user.business)  # Boş masalar
+    
+    # Sipariş bilgilerini içeren bir sözlük oluştur
+    reserved_desk_data = []
+    for desk in reserved_desks:
+        order = Order.objects.filter(isActive=True, desk=desk).first()  # Sipariş olup olmadığını kontrol et
+        if order:
+            order_items = order.orderitem_set.all()  # Siparişe bağlı ürünleri al
+            reserved_desk_data.append({
+                'desk': desk,
+                'order': order,
+                'order_items': order_items,
+                'total_price': order.total_price
+            })
+
+    context = {
+        'reserved_desk_data': reserved_desk_data,
+        'empty_desks': empty_desks,
+    }
+    return render(request, 'easymanagement/payment_view.html', context)
+
+
+
+def payment_view(request, order_id):
+    """Ödeme ekranını gösteren view."""
+    order = get_object_or_404(Order, id=order_id)
+    
+    context = {
+        'order': order,
+        'total_price': order.total_price,
+    }
+    return render(request, 'easymanagement/payment.html', context)
+
+def process_payment(request, order_id):
+    """Ödeme işlemini gerçekleştiren view."""
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == 'POST':
+        payment_method = request.POST.get('payment_method')
+        transaction_id = request.POST.get('transaction_id', None)  # Sadece kart ödemelerinde dolacak
+        
+        # Ödeme kaydı oluştur
+        payment = Payment.objects.create(
+            order=order,
+            amount=order.total_price,
+            method=payment_method,
+            transaction_id=transaction_id,
+            is_successful=True
+        )
+        order.isActive=False
+        order.payment_status = True  # Siparişin ödeme durumunu güncelle
+        order.status = 'completed'  # Sipariş tamamlandı
+        order.save()
+        
+        return redirect('payment_screen')  # Ödeme tamamlandıktan sonra geri yönlendirme
+    
+    return redirect('payment_view', order_id=order.id)

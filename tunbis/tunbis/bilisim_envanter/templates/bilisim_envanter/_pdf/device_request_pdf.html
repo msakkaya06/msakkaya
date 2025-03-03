@@ -1,0 +1,86 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+        @page {
+            size: A4; /* Kağıt boyutunu A4 olarak belirle */
+            margin: 20mm; /* Kenar boşluklarını artırarak sağ taraftaki yapışmayı önle */
+        }
+      
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt; /* Yazı boyutunu biraz küçülttük */
+            text-align: center; /* Metinleri ortala */
+        }
+      
+        table {
+            width: 90%; /* Tabloyu sayfada biraz küçült */
+            margin: auto; /* Ortalamak için margin ayarla */
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+      
+        th, td {
+            border: 1px solid black;
+            padding: 6px; /* Hücre içi boşluk */
+            text-align: center;
+        }
+      
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 8pt;
+            font-weight: normal;
+            text-align: center;
+        }
+        .title {
+            font-weight: bold;
+        }
+    </style>
+
+  </head>
+  <body>
+    <div class="title">T.C. Tunceli Emniyet Müdürlüğü</div>
+    <div class="title">Bilgi Teknolojileri ve Haberleşme Şube Müdürlüğü</div>
+    <div class="title">Sistem ve Güvenlik Büro Amirliği</div>
+    <div class="title">Bilişim Cihazları Talepleri</div>
+
+    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Birim</th>
+                {% for device_type in device_types %}
+                    <th>{{ device_type }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for unit_name, devices in unit_data.items %}
+                <tr>
+                    <td>{{ unit_name }}</td>
+                    {% for device_type in device_types %}
+                        <td>{{ devices|get:device_type|default:"0" }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            <tr style="font-weight: bold;">
+                <td>Toplam</td>
+                {% for device_type in device_types %}
+                    <td>{{ total_per_device|get:device_type|default:"0" }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Footer Added -->
+    <div class="footer">
+      <strong> © Tunceli Emniyet Müdürlüğü Bilgi Sistemi </strong>- Bu döküman {{ current_date }} tarihinde oluşturulmuştur.
+    </div>
+  </body>
+</html>

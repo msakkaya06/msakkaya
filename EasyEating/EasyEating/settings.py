@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize',
      'daphne',
     'django.contrib.staticfiles',
     'channels',
@@ -94,14 +95,24 @@ ASGI_APPLICATION = 'EasyEating.asgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'dbEasyEating',
-		'USER': 'root',
-		'PASSWORD': 'Ms1806730971',
-		'HOST':'localhost',
+		'NAME': 'EasyEating',
+		'USER': 'admin',
+		'PASSWORD': 'Ms.1806730971',
+		'HOST':'database-1.cj868o8228rt.eu-north-1.rds.amazonaws.com',
 		'PORT':'3306',
 	}
 }
 
+#DATABASES = {
+#	'default': {
+#		'ENGINE': 'django.db.backends.mysql',
+#		'NAME': 'dbEasyEating',
+#		'USER': 'root',
+#		'PASSWORD': 'Ms1806730971',
+#		'HOST':'localhost',
+#		'PORT':'3306',
+#	}
+#}
 
 
 # Password validation

@@ -28,5 +28,12 @@ urlpatterns = [
     path('computer-detail-for-unit/<int:pk>/', views.computer_detail_for_unit, name='computer_detail_for_unit'),
     path('import-computer-info/', views.import_computer_info, name='import_computer_info'),
     path('yazici-tarayici-ekle/', views.add_printer_scanner, name='add_printer_scanner'),
+    path('talepler/', views.all_device_requests, name="all_device_requests"),
+    path('talep-ekle/', views.device_request, name="device_request_create"),
+    path('talep-istatistik/', views.device_request_summary, name="device_request_summary"),
+    path('talep-istatistik/pdf/', views.device_request_pdf, name="device_request_pdf"),
+
+
+
     
 ]

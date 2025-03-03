@@ -23,14 +23,14 @@ def userLogin(req):
             user=authenticate(req,username=username,password=password)
             if user is not None:
                 login(req,user)
-                messages.add_message(req,messages.SUCCESS,"Giriş Başarılı, Hoşgeldiniz " + username)
+                messages.success(req,"Giriş Başarılı, Hoşgeldiniz " + username)
                 nextUrl=req.GET.get("next",None)
                 if nextUrl is None:
                     return redirect("index")
                 else:
                     return redirect(nextUrl)
             else:
-                messages.add_message(req,messages.ERROR,"Kullanıcı Adı ya da Şifre Hatalı")
+                messages.error(req,"Kullanıcı Adı ya da Şifre Hatalı")
                 return render (req,"account/login.html")
     
     form=LoginUserForm()

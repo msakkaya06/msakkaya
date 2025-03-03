@@ -34,6 +34,8 @@ class TebsGroup(models.Model):
 
     def __str__(self):
         return self.display_name or self.original_group.name
+    
+
 class Unit(models.Model):
     name=models.TextField()
     parent_unit=models.IntegerField(null=True)
@@ -44,7 +46,6 @@ class Unit(models.Model):
     def __str__(self):
         return self.name
     #uniqidentifier eklenecek
-
 
 
 class TebsUser(AbstractUser):
@@ -324,3 +325,44 @@ class PrinterAction(models.Model):
 
     class Meta:
         verbose_name_plural = "Printer Actions"
+
+
+
+class DeviceRequest(models.Model):
+    """Birimlerin yaptığı cihaz taleplerini yönetir"""
+
+    # Cihaz Türleri (DeviceType yerine)
+    DEVICE_CHOICES = [
+        ('printer', 'Siyah-Beyaz Yazıcı'),
+        ('color_printer', 'Renkli Yazıcı'),
+        ('printer_scanner', 'Çok Fonksiyonlu Yazıcı / Tarayıcı'),
+        ('color_printer_scanner', 'Çok Fonksiyonlu Renkli Yazıcı / Tarayıcı'),
+
+
+
+        ('scanner', 'Tarayıcı'),
+        ('computer', 'Bilgisayar'),
+        ('tablet', 'Tablet Bilgisayar'),
+    ]
+
+    # Talep Durumları (RequestStatus yerine)
+    STATUS_CHOICES = [
+        ('pending', 'Beklemede'),
+        ('approved', 'Onaylandı'),
+        ('rejected', 'Reddedildi'),
+        ('delivered', 'Teslim Edildi'),
+    ]
+
+    requester = models.ForeignKey('TebsUser', on_delete=models.CASCADE)  # Talebi yapan kullanıcı
+    unit = models.ForeignKey('Unit', on_delete=models.CASCADE)  # Talep hangi birim tarafından yapıldı?
+    device_type = models.CharField(max_length=40, choices=DEVICE_CHOICES)  # Talep edilen cihaz türü
+    quantity = models.PositiveIntegerField(default=1)  # Talep edilen cihaz adedi
+    description = models.TextField(blank=True, null=True)  # Açıklama (Opsiyonel)
+    request_date = models.DateTimeField(default=timezone.now)  # Talep oluşturulma zamanı
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Beklemede')  # Talep durumu
+    response_note = models.TextField(blank=True, null=True)  # Talep onay/red notu
+    is_active = models.BooleanField(default=True, verbose_name="Aktif")
+
+
+    def __str__(self):
+        return f"{self.unit} - {self.get_device_type_display()} ({self.quantity})"

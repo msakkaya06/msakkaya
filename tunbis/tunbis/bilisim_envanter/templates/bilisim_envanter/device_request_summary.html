@@ -1,0 +1,40 @@
+
+{% extends "module/layout.html" %}
+{% load custom_filters %}
+
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<div class="container mt-4 col-md-10">
+
+
+    <!-- Cihaz Türlerine Göre Toplamlar -->
+    <div class="card p-3 mb-4">
+        <h4 class="text-center text-info text-uppercase font-weight-bold  p-1 ">Cihaz Türlerine Göre Talepler</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Birim</th>
+                    {% for device in device_types %}
+                        <th>{{ device }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for unit, requests in unit_data.items %}
+                <tr>
+                    <td>{{ unit }}</td>
+                    {% for device in device_types %}
+                        <td>{{ requests|get:device }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'device_request_pdf' %}" class="btn btn-danger mb-3">📄 PDF Dökümü Al</a>
+
+    </div>
+</div>
+{% endblock content %}

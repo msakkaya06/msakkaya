@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from tunbisapp.models import FaultAction, Computer_Informations, PrinterScannerInformation
+from tunbisapp.models import FaultAction, Computer_Informations, PrinterScannerInformation, DeviceRequest
 
 
 # Create your views here.
@@ -244,3 +244,56 @@ def fault_tracking(request):
         'completed_faults': completed_faults
     }
     return render(request, 'ariza_takip/fault_tracking.html', context)
+
+@login_required
+def device_request(request):
+    if request.method == "POST":
+        device_type = request.POST.get("device_type")
+        quantity = request.POST.get("quantity")
+        description = request.POST.get("description")
+
+        # Kullanıcının bağlı olduğu birimi al
+        unit = request.user.unit if request.user.unit else None
+
+        # Talep kaydı oluştur
+        DeviceRequest.objects.create(
+            requester=request.user,
+            unit=unit,
+            device_type=device_type,
+            quantity=quantity,
+            description=description
+        )
+
+        messages.success(request, "Cihaz talebiniz başarıyla oluşturuldu.")
+        return redirect("ariza_takip_device_request")
+
+    # Kullanıcının birimine ait tüm talepleri getir
+    unit_requests = DeviceRequest.objects.filter(unit=request.user.unit, is_active=True).order_by("-request_date")
+    print(unit_requests)
+
+    return render(request, "ariza_takip/device_request.html", {"unit_requests": unit_requests})
+
+def fault_detail(request,pk):
+    fault = get_object_or_404(FaultAction, pk=pk)
+
+    # Bilgisayar için özel işlemler
+    computer_operations = {
+        "Parça Takıldı": fault.part_installed if hasattr(fault, 'part_installed') else None,
+        "İşletim Sistemi Kuruldu": fault.os_installed if hasattr(fault, 'os_installed') else None,
+    }
+
+    # Yazıcı için özel işlemler
+    printer_operations = {
+        "Kartuş Değiştirildi": fault.ink_replaced if hasattr(fault, 'ink_replaced') else None,
+        "Kağıt Sıkışması Giderildi": fault.paper_jam_fixed if hasattr(fault, 'paper_jam_fixed') else None,
+        "Donanım Sorunu Giderildi": fault.hardware_fixed if hasattr(fault, 'hardware_fixed') else None,
+        "Yazılım Sorunu Giderildi": fault.software_fixed if hasattr(fault, 'software_fixed') else None,
+    }
+
+    context = {
+        "fault": fault,
+        "computer_operations": computer_operations if fault.device_type == "computer" else None,
+        "printer_operations": printer_operations if fault.device_type == "printer" else None,
+    }
+    
+    return render(request, "ariza_takip/fault_detail.html", context)

@@ -14,7 +14,7 @@
           <img src="{% if user.image.url %}{{user.image.url}} {% else %} {%static 'ms-admin/dist/img/user2-160x160.jpg'%} {% endif %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{user.username}}</a>
+          <a href="{% url "dashboard" %}"  class="d-block">{{user.business.name}}</a>
         </div>
       </div>
 
@@ -75,6 +75,14 @@
           <i class="nav-icon fas fa-columns"></i>
           <p>
             Ürün Yönetimi
+          </p>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{% url "finance_dashboard" %}" class="nav-link">
+          <i class="nav-icon fas fa-coins"></i>
+          <p>
+            Finans İşlemleri
           </p>
         </a>
       </li>

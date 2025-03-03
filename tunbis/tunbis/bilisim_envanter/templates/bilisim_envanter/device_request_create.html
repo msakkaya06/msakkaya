@@ -1,0 +1,52 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<div class="container col-md-10 mt-4">
+    <div class="card-header bg-white border-primary border-4 text-info text-bold">
+        <h2 class="m-1 p-2 text-center text-uppercase font-weight-bold">TALEP OLUŞTUR</h2>
+    </div>
+
+  
+    <form method="POST" class="card p-4 mt-3 shadow-lg border rounded">
+        {% csrf_token %}
+        
+        <!-- Birim Seçimi -->
+        <div class="mb-3">
+            <label for="unit" class="form-label">Birim Seç</label>
+            <select class="form-control" id="unit" name="unit" required>
+                <option value="" disabled selected>Birim seçiniz</option>
+                {% for unit in units %}
+                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Cihaz Türü Seçimi -->
+        <div class="mb-3">
+            <label for="device_type" class="form-label">Cihaz Türü</label>
+            <select class="form-control" id="device_type" name="device_type" required>
+                <option value="" disabled selected>Cihaz türü seçiniz</option>
+                {% for code, name in device_types %}
+                    <option value="{{ code }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Adet -->
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Adet</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+        </div>
+
+        <!-- Açıklama -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Açıklama</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Talep Oluştur</button>
+    </form>
+</div>
+{% endblock content %}
