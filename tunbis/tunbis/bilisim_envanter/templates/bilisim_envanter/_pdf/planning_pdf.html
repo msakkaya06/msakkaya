@@ -49,35 +49,49 @@
     <div class="title">T.C. Tunceli Emniyet Müdürlüğü</div>
     <div class="title">Bilgi Teknolojileri ve Haberleşme Şube Müdürlüğü</div>
     <div class="title">Sistem ve Güvenlik Büro Amirliği</div>
-    <div class="title">Bilişim Cihazları Talepleri</div>
+    <div class="title">Bilişim Cihazları Planlama</div>
 
-    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+
+    <table>
         <thead>
             <tr>
-                <th>Birim</th>
-                {% for device_type in device_types %}
-                    <th>{{ device_type }}</th>
+                <th rowspan="2">Birim</th>
+                {% for dtype in device_types %}
+                    <th colspan="2">{{ device_type_labels|get_item:dtype }}</th>  <!-- Cihaz türü başlıkları -->
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for dtype in device_types %}
+                    <th>Talep</th>  
+                    <th>Tahsis</th>  
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for unit_name, devices in unit_data.items %}
-                <tr>
-                    <td>{{ unit_name }}</td>
-                    {% for device_type in device_types %}
-                        <td>{{ devices|get:device_type|default:"0" }}</td>
-                    {% endfor %}
-                </tr>
+            <tr>
+                <td>{{ unit_name }}</td>
+                {% for dtype in device_types %}
+                    <td>{{ devices|get_item:dtype|get_item:'requested'|default:0 }}</td>  
+                    <td>{{ devices|get_item:dtype|get_item:'allocated'|default:0 }}</td>  
+                {% endfor %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{{ device_types|length|add:1 }}">Henüz planlanmış tahsis yok.</td>
+            </tr>
             {% endfor %}
-            <tr style="font-weight: bold;">
+
+            <!-- Toplam Satırı -->
+            <tr class="total-row">
                 <td>Toplam</td>
-                {% for device_type in device_types %}
-                    <td>{{ total_per_device|get:device_type|default:"0" }}</td>
+                {% for dtype in device_types %}
+                    <td></td>  <!-- Talep edilen için boş bırakabiliriz -->
+                    <td>{{ total_allocations|get_item:dtype|default:0 }}</td>
                 {% endfor %}
             </tr>
         </tbody>
     </table>
-
     <!-- Footer Added -->
     <div class="footer">
       <strong> © Tunceli Emniyet Müdürlüğü Bilgi Sistemi </strong>- Bu döküman {{ current_date }} tarihinde oluşturulmuştur.

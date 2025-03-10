@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Excel dosyasını oku
-        df = pd.read_excel('z_computer_info_i.xlsx', dtype=str).fillna('')
+        df = pd.read_excel('computer_info.xlsx', dtype=str).fillna('')
 
 
         # Her bir satırı işle

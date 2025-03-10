@@ -2,7 +2,8 @@ from django.utils import timezone
 from django.http import JsonResponse,HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from tunbisapp.models import Computer_Informations, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction,DeviceRequest
+from bilisim_envanter.forms import ReservationForm
+from tunbisapp.models import Computer_Informations, DevicePlan, DeviceType, Reservation, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction,DeviceRequest
 from django.core.paginator import Paginator
 from django.contrib import messages
 from datetime import datetime, timedelta
@@ -14,8 +15,26 @@ from django.template.loader import render_to_string
 from django.template.loader import get_template
 from weasyprint import HTML
 import tempfile
+from collections import defaultdict
+from io import BytesIO
 
 def index(request):
+    context = {
+        "total_computers": Computer_Informations.objects.count(),
+        "polnet_computers": Computer_Informations.objects.filter(network_used="polnet").count(),
+        "internet_computers": Computer_Informations.objects.filter(network_used="internet").count(),
+
+        "total_printers": PrinterScannerInformation.objects.count(),
+        "black_white_printers": PrinterScannerInformation.objects.filter(color_mode="black_white").count(),
+        "color_printers": PrinterScannerInformation.objects.filter(color_mode="color").count(),
+
+        "total_faults": FaultAction.objects.count(),
+        "pending_faults": FaultAction.objects.filter(is_active=True).count(),
+    }
+    return render(request, "bilisim_envanter/dashboard.html", context)
+
+
+def computer_statistics(request):
     # Üretici firmaların bilgileri
     manufacturers = Computer_Informations.objects.values('manufacturer').annotate(total=Count('manufacturer')).order_by('-total')
     network_computer_counts = Computer_Informations.objects.values('network_used').annotate(total=Count('network_used')).order_by('-total')
@@ -58,8 +77,6 @@ def index(request):
         'unit_data': unit_data
     }
     return render(request, 'bilisim_envanter/envanter_index.html', context)
-
-
 
 
 def computer_detail_for_unit(request, pk):
@@ -728,7 +745,7 @@ def all_device_requests(request):
 
     # Sayfalama için Django Paginator kullan
     page_number = request.GET.get("page", 1)  # URL'den sayfa numarasını al
-    paginator = Paginator(paginated_data, 5)  # Her sayfada 5 birim gösterelim
+    paginator = Paginator(paginated_data, 30)  # Her sayfada 5 birim gösterelim
 
     try:
         page_obj = paginator.page(page_number)
@@ -772,7 +789,7 @@ def device_request(request):
         return redirect("all_device_requests")
 
     units = Unit.objects.all()
-    device_types = DeviceRequest.DEVICE_CHOICES  # Modelde tanımlı cihaz türlerini al
+    device_types = DeviceType.choices  # Modelde tanımlı cihaz türlerini al
 
     return render(request, "bilisim_envanter/device_request_create.html", {"units": units, "device_types": device_types})
 
@@ -781,7 +798,7 @@ def device_request_summary(request):
     units = Unit.objects.all()
 
     # Cihaz tiplerine göre talepleri gruplayarak say
-    device_types = dict(DeviceRequest.DEVICE_CHOICES)  # Cihaz türleri
+    device_types = dict(DeviceType.choices)  # Cihaz türleri
     requests_by_unit = DeviceRequest.objects.filter(is_active=True).values('unit__name', 'device_type')\
         .annotate(total=Sum('quantity'))\
         .order_by('unit__name')
@@ -803,7 +820,7 @@ def device_request_summary(request):
 def device_request_pdf(request):
     # Cihaz türleri ve birimler
     units = Unit.objects.all()
-    device_types = dict(DeviceRequest.DEVICE_CHOICES)
+    device_types = dict(DeviceType.choices)
     
     # Talepleri gruplandır
     requests_by_unit = DeviceRequest.objects.filter(is_active=True).values('unit__name', 'device_type')\
@@ -838,4 +855,236 @@ def device_request_pdf(request):
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = "inline; filename=request_summary.pdf"
 
+    return response
+
+
+
+def add_reservation(request):
+    if request.method == "POST":
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('add_reservation')  # Başarılı ekleme sonrası aynı sayfaya dön
+    else:
+        form = ReservationForm()
+
+    reservations = Reservation.objects.all().order_by('-received_date')  # Son eklenenler üstte
+    return render(request, 'bilisim_envanter/add_reserv_device.html', {'form': form, 'reservations': reservations})
+
+def warehouse_inventory(request):
+# Depodaki aktif cihazları listele (adet > 0)
+    inventory = Reservation.objects.filter(quantity__gt=0).order_by('device_type', 'brand')
+
+    return render(request, 'bilisim_envanter/warehouse_inventory.html', {'inventory': inventory})
+
+def edit_reservation(request):
+    pass
+def delete_reservation(request):
+    pass
+
+def planning_list(request):
+    """Planlama geçmişini listeler"""
+    plans = DevicePlan.objects.filter(is_active=True).order_by('-created_at')  # Sadece aktif planları getir
+    return render(request, 'bilisim_envanter/planning_list.html', {'plans': plans})
+
+def delivered(request, plan_id):
+    """Planı tamamlanmış olarak işaretler"""
+    plan = get_object_or_404(DevicePlan, id=plan_id)
+    plan.is_active = False
+    plan.save()
+    return redirect('planlama_list')
+
+
+def allocation_screen(request):
+    """Tahsis ekranını gösterir"""
+    units = Unit.objects.all()
+    selected_unit = None
+    existing_computers = []
+    existing_printers = []
+    unit_requests = []
+    
+    if request.method == "POST":
+        unit_id = request.POST.get("unit_id")
+        device_type = request.POST.get("device_type")
+        quantity = int(request.POST.get("tahsis_adedi", 0))
+
+        if unit_id and device_type and quantity > 0:
+            unit = get_object_or_404(Unit, id=unit_id)
+            
+    # Talebi kontrol et, yoksa 0 döndür
+            requested = DeviceRequest.objects.filter(device_type=device_type, unit=unit_id).first()
+    
+    # Eğer talep bulunmazsa, requested.quantity 0 olarak ayarlanır
+            requested_quantity = requested.quantity if requested else 0
+            
+            # Yeni DevicePlan kaydı oluştur
+            device_plan = DevicePlan.objects.create(
+                unit=unit,
+                device_type=device_type,
+                requested_quantity=requested_quantity,
+                allocated_quantity=quantity
+            )
+
+            # Depodaki rezervleri düş
+            available_reservations = Reservation.objects.filter(device_type=device_plan.device_type, is_allocated=False)
+            for reservation in available_reservations:
+                if quantity <= 0:
+                    break
+                if reservation.quantity <= quantity:
+                    quantity -= reservation.quantity
+                    reservation.is_allocated = True
+                    reservation.save()
+                else:
+                    reservation.quantity -= quantity
+                    reservation.save()
+                    quantity = 0
+
+            return redirect('planning_list')
+
+    return render(request, 'bilisim_envanter/allocation_screen.html', {
+        "units": units,
+        "selected_unit": selected_unit,
+        "existing_computers": existing_computers,
+        "existing_printers": existing_printers,
+        "unit_requests": unit_requests
+    })
+
+
+def get_unit_data(request, unit_id):
+    """AJAX ile birim seçildiğinde ilgili verileri döner"""
+    unit = get_object_or_404(Unit, id=unit_id)
+    
+    existing_computers = list(Computer_Informations.objects.filter(unit=unit, is_active=True).values(
+        "computer_name", "model", "number_of_cores", "manufacturer", "serial_number","total_ram_gb","network_used"
+    ))
+    
+    existing_printers = list(PrinterScannerInformation.objects.filter(unit=unit, is_active=True).values(
+        "device_name", "model", "manufacturer", "serial_number"
+    ))
+
+    # DeviceRequest içindeki device_type stringini Türkçe label ile eşleştir
+    unit_requests = list(DeviceRequest.objects.filter(unit=unit).values("device_type", "quantity"))
+
+      # Depodaki cihazları çek (Dropdown için)
+    stock_devices = Reservation.objects.filter(is_allocated=False).values("device_type", "brand", "model", "quantity")
+    
+
+    for request in unit_requests:
+        request["device_type_name"] = DeviceType(request["device_type"]).label if request["device_type"] in DeviceType.values else "Bilinmeyen Cihaz"
+    print(stock_devices)
+    return JsonResponse({
+        "computers": list(existing_computers),
+        "printers": list(existing_printers),
+        "requests": list(unit_requests),
+        "stock_devices": list(stock_devices)
+    })
+
+
+def edit_plan(request, plan_id):
+    plan = get_object_or_404(DevicePlan, id=plan_id)
+    
+    if request.method == 'POST':
+        new_allocated_quantity = int(request.POST.get('allocated_quantity'))
+        
+        # Depodaki mevcut rezervasyonları geri al
+        available_reservations = Reservation.objects.filter(device_type=plan.device_type)
+        quantity_to_return = plan.allocated_quantity - new_allocated_quantity
+        
+        # Rezervasyonları geri al (tersine işlemler)
+        for reservation in available_reservations:
+            if quantity_to_return <= 0:
+                break
+            if reservation.quantity <= quantity_to_return:
+                quantity_to_return -= reservation.quantity
+                reservation.is_allocated = False
+                reservation.save()
+            else:
+                reservation.quantity += quantity_to_return
+                reservation.save()
+                quantity_to_return = 0
+
+        # Plan'ı güncelle
+        plan.allocated_quantity = new_allocated_quantity
+        plan.save()
+
+        # Yeni rezervasyonları ekle
+        available_reservations = Reservation.objects.filter(device_type=plan.device_type)
+        quantity_to_allocate = new_allocated_quantity
+        for reservation in available_reservations:
+            if quantity_to_allocate <= 0:
+                break
+            if reservation.quantity <= quantity_to_allocate:
+                quantity_to_allocate -= reservation.quantity
+                reservation.is_allocated = True
+                reservation.save()
+            else:
+                reservation.quantity -= quantity_to_allocate
+                reservation.is_allocated = True
+                reservation.save()
+                quantity_to_allocate = 0
+
+        return redirect('planning_list')  # Gerçekten geri gitmek istediğiniz sayfayı buraya yazabilirsiniz.
+
+    return render(request, 'bilisim_envanter/edit_plan.html', {'plan': plan})
+from collections import defaultdict
+def cancel_plan(request, plan_id):
+    plan = get_object_or_404(DevicePlan, id=plan_id)
+    
+    # Depodaki mevcut rezervasyonları geri ekle
+    reservation = Reservation.objects.filter(device_type=plan.device_type).first()
+
+    # Plan'dan tahsis edilen tüm cihazları geri ekle
+    reservation.quantity += plan.allocated_quantity
+    reservation.save()
+    plan.is_active=False    
+    plan.save()
+    return redirect('planning_list')
+
+
+def planning_pdf(request):
+    # Monitör (display) hariç tüm planları getir
+    plans = DevicePlan.objects.filter(
+    Q(device_type='computer') | Q(device_type='color_printer_scanner'),
+    is_active=True
+)
+    
+    # DeviceType choices değerlerini al (MODEL ÜZERİNDE TANIMLI OLAN)
+    DEVICE_TYPE_CHOICES = dict(DeviceType.choices)  # Örneğin: {'laptop': 'Laptop', 'printer': 'Yazıcı'}
+    
+    # Cihaz türlerini choices üzerinden al ve liste olarak oluştur
+    device_types = [key for key in DEVICE_TYPE_CHOICES.keys() if key in ['computer', 'color_printer_scanner']]
+
+
+    # Cihaz türüne göre toplam tahsis miktarlarını hesapla
+    total_allocations = defaultdict(int)
+    unit_data = {}
+
+    for plan in plans:
+        unit_name = plan.unit.name  # Birim adı
+        device_type = plan.device_type  # Cihaz türü (örneğin 'laptop', 'printer')
+
+        if unit_name not in unit_data:
+            unit_data[unit_name] = {dtype: {'requested': 0, 'allocated': 0} for dtype in device_types}
+
+        unit_data[unit_name][device_type]['requested'] += plan.requested_quantity
+        unit_data[unit_name][device_type]['allocated'] += plan.allocated_quantity
+        total_allocations[device_type] += plan.allocated_quantity
+
+    # PDF şablonuna veri gönder
+    html_template = 'bilisim_envanter/_pdf/planning_pdf.html'
+    html_content = render(request, html_template, {
+        'unit_data': unit_data,
+        'device_types': device_types,
+        'device_type_labels': DEVICE_TYPE_CHOICES,
+        'current_date': timezone.now(),
+        'total_allocations': total_allocations
+    })
+
+    # WeasyPrint ile PDF oluştur
+    pdf_file = BytesIO()
+    HTML(string=html_content.content.decode()).write_pdf(pdf_file)
+
+    # PDF'yi HttpResponse ile döndür
+    response = HttpResponse(pdf_file.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="planlama_gecmisi.pdf"'
     return response

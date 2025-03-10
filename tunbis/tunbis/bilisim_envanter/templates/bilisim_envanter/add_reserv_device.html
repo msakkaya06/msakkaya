@@ -1,0 +1,57 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<div class="container col-md-10">
+    <div class="card-header bg-white border-primary border-4 text-info text-bold mb-3">
+        <h4 class="m-1 p-2 text-center text-uppercase font-weight-bold">📌 REZERV CİHAZ EKLE</h4>
+    </div>
+  
+    
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="row">
+            {% for field in form %}
+            <div class="col-md-4">
+                <label>{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'warehouse_inventory' %}" class="btn btn-warning mt-3 text-dark"><i class='bx bx-arrow-back'></i> Geri Dön</a>
+        <button type="submit" class="btn btn-success mt-3 text-dark">💾 Kaydet</button>
+      
+    </form>
+   
+
+
+    <div class="card-header bg-white border-secondary border-4 text-success text-dark bold mb-3">
+        <h4 class="m-1 p-2 text-center text-uppercase font-weight-bold">📋 Mevcut Rezervler</h4>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Cihaz Türü</th>
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Seri No</th>
+                <th>Adet</th>
+                <th>Depo Giriş Tarihi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rezerv in reservations %}
+            <tr>
+                <td>{{ rezerv.get_device_type_display }}</td>
+                <td>{{ rezerv.brand }}</td>
+                <td>{{ rezerv.model }}</td>
+                <td>{{ rezerv.serial_number }}</td>
+                <td>{{ rezerv.quantity }}</td>
+                <td>{{ rezerv.received_date|date:"d.m.Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

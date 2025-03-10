@@ -4,7 +4,9 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="envanter_index"),
-    path('istatistik', views.index, name="envanter_index"),
+    path('dashboard', views.index, name="envanter_index"),
+    path('bilgisayar-istatistik', views.computer_statistics, name="computer_statistics"),
+
     path('ariza-takip/', views.fault_tracking, name="fault_tracking"),
     path('ariza-takip/icmal', views.fault_summary, name="fault_summary"),
     path('ariza-takip/<int:pk>/', views.fault_tracking_detail, name="fault_tracking_detail"),
@@ -32,6 +34,18 @@ urlpatterns = [
     path('talep-ekle/', views.device_request, name="device_request_create"),
     path('talep-istatistik/', views.device_request_summary, name="device_request_summary"),
     path('talep-istatistik/pdf/', views.device_request_pdf, name="device_request_pdf"),
+    path('rezerv-ekle/', views.add_reservation, name='add_reservation'),
+    path('rezerv-düzenle/<int:pk>/', views.edit_reservation, name='edit_inventory'),
+    path('rezerv-sil/<int:pk>/', views.delete_reservation, name='delete_inventory'),
+    path('depo/', views.warehouse_inventory, name='warehouse_inventory'),
+    path('planlama/', views.planning_list, name='planning_list'),
+    path('planlama/teslim/<int:plan_id>/', views.delivered, name='delivered'),
+    path('planlama/tahsis/', views.allocation_screen, name='allocation'),
+    path('get_unit_data/<int:unit_id>/', views.get_unit_data, name='get_unit_data'),
+    path('planlama/tahsis/duzenle/<int:plan_id>/', views.edit_plan, name='edit_plan'),
+    path('planlama/tahsis/iptal/<int:plan_id>/', views.cancel_plan, name='cancel_plan'),
+    path('bilisim-envanter/planlama/pdf/', views.planning_pdf, name='planning_pdf'),
+
 
 
 

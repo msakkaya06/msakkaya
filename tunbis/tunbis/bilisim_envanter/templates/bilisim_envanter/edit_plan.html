@@ -1,0 +1,43 @@
+
+
+{% extends "module/layout.html" %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Planı Düzenle</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <!-- Bilgiler -->
+        <div class="form-group">
+            <label for="unit_name">Birim Adı</label>
+            <input type="text" class="form-control" id="unit_name" value="{{ plan.unit.name }}" disabled>
+        </div>
+        
+        <div class="form-group">
+            <label for="requested_quantity">Talep Edilen Miktar</label>
+            <input type="number" class="form-control" id="requested_quantity" value="{{ plan.requested_quantity }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="device_type">Cihaz Tipi</label>
+            <input type="text" class="form-control" id="device_type" value="{{ plan.device_type }}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="current_quantity">Depodaki Son Durum</label>
+            <input type="number" class="form-control" id="current_quantity" value="{{ plan.device_type|get_device_type_current_stock }}" disabled>
+        </div>
+
+        <!-- Düzenleme Alanı -->
+        <div class="form-group">
+            <label for="allocated_quantity">Tahsis Edilen Miktar</label>
+            <input type="number" name="allocated_quantity" id="allocated_quantity" class="form-control" value="{{ plan.allocated_quantity }}">
+        </div>
+        
+        <button type="submit" class="btn btn-success">Düzenle</button>
+    </form>
+
+    <a href="{% url 'planning_list' %}" class="btn btn-secondary mt-2">Geri</a>
+</div>
+{% endblock content %}

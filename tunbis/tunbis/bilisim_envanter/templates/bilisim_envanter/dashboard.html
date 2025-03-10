@@ -1,0 +1,82 @@
+{% extends "module/layout.html" %}
+
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="container mt-4 col-md-12">
+    <div class="row">
+        <!-- Bilgisayar Sayıları Kartı -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg bg-light border-left-primary h-100 hover-effect">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bx bx-desktop bx-lg text-primary mr-3"></i>
+                        <h5 class="card-title text-primary font-weight-bold mb-0">Bilgisayarlar</h5>
+                    </div>
+                    <p class="card-text display-4 font-weight-bold text-dark mb-2">Toplam: {{ total_computers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-info mb-1">PolNet: {{ polnet_computers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-success mb-4">İnternet: {{ internet_computers }}</p>
+                    <a href="{% url 'computer_statistics' %}" class="btn btn-primary btn-lg btn-block">
+                        Detaylar <i class="bx bx-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yazıcı Sayıları Kartı -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg bg-light border-left-success h-100 hover-effect">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bx bx-printer bx-lg text-success mr-3"></i>
+                        <h5 class="card-title text-success font-weight-bold mb-0">Yazıcılar</h5>
+                    </div>
+                    <p class="card-text display-4 font-weight-bold text-dark mb-2">Toplam: {{ total_printers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-secondary mb-1">Siyah Beyaz: {{ black_white_printers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-warning mb-4">Renkli: {{ color_printers }}</p>
+                    <a href="{% url 'printer_scanner_list' %}" class="btn btn-success btn-lg btn-block">
+                        Detaylar <i class="bx bx-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arıza Sayıları Kartı -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg bg-light border-left-danger h-100 hover-effect">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bx bx-error bx-lg text-danger mr-3"></i>
+                        <h5 class="card-title text-danger font-weight-bold mb-0">Arızalar</h5>
+                    </div>
+                    <p class="card-text display-5 font-weight-bold text-warning mb-2">Bekleyen: {{ pending_faults }}</p>
+                    <p class="card-text display-4 font-weight-bold text-dark mb-5">Toplam: {{ total_faults }}</p>
+                    <a href="{% url 'fault_tracking' %}" class="btn btn-danger btn-lg btn-block">
+                        Detaylar <i class="bx bx-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<style>
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .card-title {
+        font-size: 1.5rem;
+    }
+    .card-text {
+        font-size: 1.2rem;
+    }
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>
+{% endblock content %}

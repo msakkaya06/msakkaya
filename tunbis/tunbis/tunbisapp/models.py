@@ -45,7 +45,7 @@ class Unit(models.Model):
         super().save(*args,**kwargs)
     def __str__(self):
         return self.name
-    #uniqidentifier eklenecek
+
 
 
 class TebsUser(AbstractUser):
@@ -150,7 +150,7 @@ class Computer_Informations(models.Model):
     ))
 
     def __str__(self):
-        return self.computer_name
+        return self.computer_name + self.manufacturer
 
     def save(self, *args, **kwargs):
         self.updated_date = timezone.now()
@@ -327,23 +327,21 @@ class PrinterAction(models.Model):
         verbose_name_plural = "Printer Actions"
 
 
+class DeviceType(models.TextChoices):
+    COMPUTER = "computer", "Bilgisayar"
+    DISPLAY = "display", "Monitör"
+    PRINTER = "printer", "Yazıcı"
+    COLOR_PRINTER = "color_printer", "Renkli Yazıcı"
+    SCANNER = "scanner", "Tarayıcı"
+    COLOR_PRINTER_SCANNER = 'color_printer_scanner', 'Çok Fonksiyonlu Renkli Yazıcı / Tarayıcı'
+    PRINTER_SCANNER = "printer_scanner",'Çok Fonksiyonlu Siyah Beyaz Yazıcı / Tarayıcı'
+    TABLET = 'tablet', 'Tablet Bilgisayar'
+    SWITCH = 'switch',"Network Switch Cihazı"
+
+
 
 class DeviceRequest(models.Model):
     """Birimlerin yaptığı cihaz taleplerini yönetir"""
-
-    # Cihaz Türleri (DeviceType yerine)
-    DEVICE_CHOICES = [
-        ('printer', 'Siyah-Beyaz Yazıcı'),
-        ('color_printer', 'Renkli Yazıcı'),
-        ('printer_scanner', 'Çok Fonksiyonlu Yazıcı / Tarayıcı'),
-        ('color_printer_scanner', 'Çok Fonksiyonlu Renkli Yazıcı / Tarayıcı'),
-
-
-
-        ('scanner', 'Tarayıcı'),
-        ('computer', 'Bilgisayar'),
-        ('tablet', 'Tablet Bilgisayar'),
-    ]
 
     # Talep Durumları (RequestStatus yerine)
     STATUS_CHOICES = [
@@ -355,14 +353,50 @@ class DeviceRequest(models.Model):
 
     requester = models.ForeignKey('TebsUser', on_delete=models.CASCADE)  # Talebi yapan kullanıcı
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE)  # Talep hangi birim tarafından yapıldı?
-    device_type = models.CharField(max_length=40, choices=DEVICE_CHOICES)  # Talep edilen cihaz türü
+    device_type = models.CharField(max_length=50, choices=DeviceType.choices)  # **GÜNCELLENDİ**
     quantity = models.PositiveIntegerField(default=1)  # Talep edilen cihaz adedi
     description = models.TextField(blank=True, null=True)  # Açıklama (Opsiyonel)
     request_date = models.DateTimeField(default=timezone.now)  # Talep oluşturulma zamanı
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Beklemede')  # Talep durumu
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')  # Talep durumu
     response_note = models.TextField(blank=True, null=True)  # Talep onay/red notu
     is_active = models.BooleanField(default=True, verbose_name="Aktif")
 
-
     def __str__(self):
         return f"{self.unit} - {self.get_device_type_display()} ({self.quantity})"
+
+class Reservation(models.Model):
+    device_type = models.CharField(max_length=50, choices=DeviceType.choices)
+    brand = models.CharField(max_length=100,null=True)  # Marka
+    model = models.CharField(max_length=100, null=True)  # Model
+    serial_number = models.CharField(max_length=100, null=True)  # Seri numarası
+    quantity = models.PositiveIntegerField()
+    received_date = models.DateTimeField(auto_now_add=True)  # Depoya giriş tarihi
+    is_allocated = models.BooleanField(default=False)  # Tahsis edildi mi?
+
+    def __str__(self):
+        return f"{self.brand} {self.model} ({self.get_device_type_display()}) - {self.quantity} adet (Depoda)"
+
+class Inventory(models.Model):
+    device_type = models.CharField(max_length=50, choices=DeviceType.choices)
+    brand = models.CharField(max_length=100,null=True)  # Marka
+    model = models.CharField(max_length=100, null=True)  # Model
+    serial_number = models.CharField(max_length=100, null=True)  # Seri numarası
+    quantity = models.PositiveIntegerField()
+    allocated_to = models.ForeignKey("Unit", on_delete=models.CASCADE)  # Hangi birime tahsis edildi?
+    allocated_date = models.DateTimeField(auto_now_add=True)  # Tahsis tarihi
+
+    def __str__(self):
+        return f"{self.allocated_to} - {self.brand} {self.model} ({self.get_device_type_display()}) ({self.quantity} adet)"
+
+
+class DevicePlan(models.Model):
+    """Planlanan tahsisleri yönetir"""
+    unit = models.ForeignKey('Unit', on_delete=models.CASCADE)  # Hangi birime tahsis yapıldı?
+    device_type = models.CharField(max_length=50, choices=DeviceType.choices)  # Cihaz türü
+    requested_quantity = models.PositiveIntegerField()  # Talep edilen adet
+    allocated_quantity = models.PositiveIntegerField(default=0)  # Tahsis edilen adet
+    is_active = models.BooleanField(default=True)  # Planın tamamlanıp tamamlanmadığını kontrol eder
+    created_at = models.DateTimeField(auto_now_add=True)  # Planlama tarihi
+
+    def __str__(self):
+        return f"{self.unit} - {self.get_device_type_display()} ({self.allocated_quantity}/{self.requested_quantity})"

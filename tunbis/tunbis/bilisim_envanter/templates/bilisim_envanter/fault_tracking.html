@@ -49,7 +49,7 @@
                 <span style="word-wrap: break-word;">{{ fault.requester_notes }}</span>
               </td>
               <td class="text-center text-success">{{ fault.requester_first_name }} {{ fault.requester_last_name }}</td>
-              <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
+              <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm text-dark">Detay</a></td>
             </tr>
           {% endfor %}
         </tbody>
@@ -96,7 +96,7 @@
                   <span style="word-wrap: break-word;">{{ fault.action_notes }}</span>
                 </td>
                 <td class="text-center text-success">{{ fault.performer_first_name }} {{ fault.performer_last_name }}</td>
-                <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm">Detay</a></td>
+                <td><a href="{% url 'fault_tracking_detail' fault.action_pk %}" class="btn btn-warning btn-sm text-dark">Detay</a></td>
               </tr>
             {% endfor %}
           </tbody>

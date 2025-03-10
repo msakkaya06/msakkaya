@@ -1,0 +1,51 @@
+{% extends "module/layout.html" %}
+{% load static %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<div class="container mt-4 col-md-10">
+
+    <div class="card-header bg-white border-primary border-4 text-info text-bold">
+        <h2 class="m-1 p-2 text-center text-uppercase font-weight-bold">Planlama Geçmişi</h2>
+    </div>
+    <div class="mt-2 mb-2">
+        <a href="{% url 'allocation' %}" class="btn btn-success">Tahsis Planı Ekle</a> 
+        <a href="{% url 'planning_pdf' %}" class="btn btn-danger">
+            <i class="bx bxs-file-pdf"></i> PDF Dökümü Al
+        </a>
+    </div>
+
+    
+     <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Birim</th>
+                <th>Cihaz Türü</th>
+                <th>Talep Edilen</th>
+                <th>Tahsis Edilen</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plan in plans %}
+            <tr>
+                <td>{{ plan.unit.name }}</td>
+                <td>{{ plan.get_device_type_display }}</td>
+                <td>{{ plan.requested_quantity }}</td>
+                <td>{{ plan.allocated_quantity }}</td>
+                <td class="text-center">
+                    <a href="{% url 'edit_plan' plan.id %}" class="btn btn-warning btn-sm text-dark"><i class='bx bxs-edit-alt' ></i></a>
+                    <a href="{% url 'cancel_plan' plan.id %}" class="btn btn-sm btn-danger "><i class='bx bxs-trash-alt'></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">Henüz planlanmış tahsis yok.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+ 
+</div>
+{% endblock content %}

@@ -1,0 +1,150 @@
+{% extends "module/layout.html" %}
+{% load static %}
+
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="container col-md-10 mt-4">
+    <h2 class="mb-4">Tahsis Ekranı</h2>
+
+    <!-- Birim Seçimi -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">Birim Seç</div>
+        <div class="card-body">
+            <select id="unitSelect" class="form-select">
+                <option value="">Birim Seçiniz...</option>
+                {% for unit in units %}
+                    <option value="{{ unit.id }}">{{ unit.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div id="unitData" style="display: none;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Mevcut Bilgisayarlar
+                    </div>
+                    <ul id="computerList" class="list-group list-group-flush"></ul>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        Mevcut Yazıcılar / Tarayıcılar
+                    </div>
+                    <ul id="printerList" class="list-group list-group-flush"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Talepler -->
+        <div class="card mt-4">
+            <div class="card-header bg-warning text-white">
+                Talep Edilen Cihazlar
+            </div>
+            <div class="card-body">
+                <ul id="requestList" class="list-group list-group-flush">
+                    <!-- Talepler burada listelenecek -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tahsis İşlemi -->
+        <div class="card mt-4">
+            <div class="card-header bg-danger text-white">Tahsis Et</div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" id="selectedUnit" name="unit_id">
+
+                    <div class="mb-3">
+                        <label for="device_type" class="form-label">Cihaz Türü:</label>
+                        <select id="deviceDropdown" class="form-select" name="device_type" required>
+                            <option value="">Cihaz Seçiniz...</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tahsis_adedi" class="form-label">Tahsis Edilecek Adet:</label>
+                        <input type="number" class="form-control" name="tahsis_adedi" min="1" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Tahsis Et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("unitSelect").addEventListener("change", function() {
+        var unitId = this.value;
+        if (unitId) {
+            fetch(`/bilisim-envanter/get_unit_data/${unitId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("selectedUnit").value = unitId;
+                document.getElementById("unitData").style.display = "block";
+    
+                // Mevcut listeleri temizle
+                document.getElementById("computerList").innerHTML = "";
+                document.getElementById("printerList").innerHTML = "";
+                document.getElementById("requestList").innerHTML = "";
+                document.getElementById("deviceDropdown").innerHTML = '<option value="">Cihaz Seçiniz...</option>';
+    
+                // ✅ Bilgisayarları ekleyelim (Gruplama)
+                data.computers.forEach(comp => {
+                    document.getElementById("computerList").innerHTML += `
+                        <li class="list-group-item">
+                            <strong>${comp.computer_name}</strong> - ${comp.model} (${comp.manufacturer})<br>
+                            <strong>Çekirdek:</strong> ${comp.number_of_cores} | <strong>RAM:</strong> ${comp.total_ram_gb} GB
+                        </li>
+                    `;
+                });
+    
+                // ✅ Yazıcıları ekleyelim
+                data.printers.forEach(print => {
+                    document.getElementById("printerList").innerHTML += `
+                        <li class="list-group-item">${print.device_name} - ${print.model} (${print.manufacturer})</li>
+                    `;
+                });
+    
+                // ✅ Talepleri ekleyelim
+                data.requests.forEach(req => {
+                    let statusClass = '';
+                    if (req.status === 'approved') {
+                        statusClass = 'text-success';
+                    } else if (req.status === 'rejected') {
+                        statusClass = 'text-danger';
+                    } else if (req.status === 'pending') {
+                        statusClass = 'text-warning';
+                    }
+
+                    document.getElementById("requestList").innerHTML += `
+                        <li class="list-group-item ${statusClass}">
+                            ${req.device_type_name} - Talep: ${req.quantity} <br>
+                            Durum: <strong>${req.status}</strong>
+                        </li>
+                    `;
+                });
+    
+                // ✅ Depodaki cihazları Dropdown'a ekleyelim
+                data.stock_devices.forEach(device => {
+                    let option = document.createElement("option");
+                    option.value = device.device_type;
+                    option.innerHTML = `${device.brand} ${device.model} - <span class="badge bg-warning">${device.quantity}</span>`;
+                    document.getElementById("deviceDropdown").appendChild(option);
+                });
+            });
+        } else {
+            document.getElementById("unitData").style.display = "none";
+        }
+    });
+</script>
+
+{% endblock %}

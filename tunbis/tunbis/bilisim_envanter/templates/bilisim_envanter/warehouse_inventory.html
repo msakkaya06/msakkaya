@@ -1,0 +1,53 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "bilisim_envanter/_partials/_nav.html" %}
+{% endblock sidebar %}
+{% block content %}
+<div class="container mt-4 col-md-10">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary"><i class="bi bi-box-seam"></i> Depodaki Cihazlar</h2>
+        
+        <a href="{% url 'add_reservation' %}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Yeni Cihaz Ekle</a>
+    </div>
+
+    {% if inventory %}
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Cihaz Türü</th>
+                    <th>Marka</th>
+                    <th>Model</th>
+                    <th>Seri No</th>
+                    <th>Adet</th>
+                    <th>Giriş Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventory %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.get_device_type_display }}</td>
+                    <td>{{ item.brand }}</td>
+                    <td>{{ item.model }}</td>
+                    <td>{{ item.serial_number }}</td>
+                    <td><span class="badge bg-primary">{{ item.quantity }}</span></td>
+                    <td>{{ item.received_date|date:"d.m.Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'edit_inventory' item.id %}" class="btn btn-warning btn-sm text-dark"><i class='bx bxs-edit-alt' ></i></a>
+                        <a href="{% url 'delete_inventory' item.id %}" class="btn btn-danger btn-sm"><i class='bx bxs-trash-alt' ></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        📭 Depoda kayıtlı cihaz bulunmamaktadır.
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
