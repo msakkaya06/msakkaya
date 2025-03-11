@@ -27,7 +27,7 @@ urlpatterns = [
     path('search-printer-name/', views.search_printer_name, name='search_printer_name'),
     path('search-printer-serial/', views.search_printer_serial, name='search_printer_serial'),
     path('search-printer-unit/', views.search_printer_unit, name='search_printer_unit'),
-    path('computer-detail-for-unit/<int:pk>/', views.computer_detail_for_unit, name='computer_detail_for_unit'),
+    path('birim-bilgisayar-liste/<int:pk>/', views.computer_detail_for_unit, name='computer_detail_for_unit'),
     path('import-computer-info/', views.import_computer_info, name='import_computer_info'),
     path('yazici-tarayici-ekle/', views.add_printer_scanner, name='add_printer_scanner'),
     path('talepler/', views.all_device_requests, name="all_device_requests"),
@@ -45,6 +45,8 @@ urlpatterns = [
     path('planlama/tahsis/duzenle/<int:plan_id>/', views.edit_plan, name='edit_plan'),
     path('planlama/tahsis/iptal/<int:plan_id>/', views.cancel_plan, name='cancel_plan'),
     path('bilisim-envanter/planlama/pdf/', views.planning_pdf, name='planning_pdf'),
+    path("update_device_request/", views.update_device_request, name="update_device_request"),
+
 
 
 

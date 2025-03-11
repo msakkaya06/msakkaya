@@ -52,10 +52,12 @@
                 <th>Bilgisayar Adı</th>
                 <th>Üretici</th>
                 <th>Model</th>
+                <th>Seri Numarası</th>
                 <th>İşlemci</th>
                 <th>RAM</th>
                 <th>Sabit Disk</th>
                 <th>Birim</th>
+                <th>IP Adresi</th>
                 <th>Ağ</th>
                 <th>Detaylar</th>
             </tr>
@@ -73,10 +75,14 @@
                     <td>{{ computer.computer_name }}</td>
                     <td>{{ computer.manufacturer }}</td>
                     <td>{{ computer.model }}</td>
+                    <td>{{ computer.serial_number }}</td>
                     <td>{{ computer.processor_name }}</td>
+
                     <td>{{ computer.total_ram_gb }}</td>
                     <td>{{ computer.disk_drive_model }}</td>
                     <td>{{ computer.unit.name }}</td>
+                    <td>{{ computer.ip_address }}</td>
+
                     <td>{{ computer.network_used }}</td>
                     <td><a href="{% url 'envanter_computer_detail' computer.pk %}" class="btn btn-warning btn-sm text-dark">Detaylar</a></td>
                 </tr>

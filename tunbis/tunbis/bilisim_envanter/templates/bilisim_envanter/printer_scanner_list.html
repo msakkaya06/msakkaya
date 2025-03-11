@@ -57,7 +57,7 @@
                 <th>Üretici</th>
                 <th>Model</th>
                 <th>Birim</th>
-                <th>Ağ</th>
+                <th>Özellik</th>
                 <th>Detaylar</th>
             </tr>
         </thead>
@@ -75,7 +75,7 @@
                     <td>{{ device.manufacturer }}</td>
                     <td>{{ device.model }}</td>
                     <td>{{ device.unit.name }}</td>
-                    <td>{{ device.network_used }}</td>
+                    <td>{{ device.color_mode }}</td>
                     <td><a href="{% url 'printer_scanner_detail' device.pk %}" class="btn btn-warning btn-sm text-dark">Detaylar</a></td>
                 </tr>
             {% endfor %}

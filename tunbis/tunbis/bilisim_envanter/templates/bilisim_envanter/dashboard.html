@@ -16,7 +16,7 @@
                         <h5 class="card-title text-primary font-weight-bold mb-0">Bilgisayarlar</h5>
                     </div>
                     <p class="card-text display-4 font-weight-bold text-dark mb-2">Toplam: {{ total_computers }}</p>
-                    <p class="card-text display-5 font-weight-bold text-info mb-1">PolNet: {{ polnet_computers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-primary mb-1">PolNet: {{ polnet_computers }}</p>
                     <p class="card-text display-5 font-weight-bold text-success mb-4">İnternet: {{ internet_computers }}</p>
                     <a href="{% url 'computer_statistics' %}" class="btn btn-primary btn-lg btn-block">
                         Detaylar <i class="bx bx-chevron-right"></i>
@@ -35,7 +35,7 @@
                     </div>
                     <p class="card-text display-4 font-weight-bold text-dark mb-2">Toplam: {{ total_printers }}</p>
                     <p class="card-text display-5 font-weight-bold text-secondary mb-1">Siyah Beyaz: {{ black_white_printers }}</p>
-                    <p class="card-text display-5 font-weight-bold text-warning mb-4">Renkli: {{ color_printers }}</p>
+                    <p class="card-text display-5 font-weight-bold text-primary mb-4">Renkli: {{ color_printers }}</p>
                     <a href="{% url 'printer_scanner_list' %}" class="btn btn-success btn-lg btn-block">
                         Detaylar <i class="bx bx-chevron-right"></i>
                     </a>
@@ -51,7 +51,7 @@
                         <i class="bx bx-error bx-lg text-danger mr-3"></i>
                         <h5 class="card-title text-danger font-weight-bold mb-0">Arızalar</h5>
                     </div>
-                    <p class="card-text display-5 font-weight-bold text-warning mb-2">Bekleyen: {{ pending_faults }}</p>
+                    <p class="card-text display-5 font-weight-bold text-danger mb-2">Bekleyen: {{ pending_faults }}</p>
                     <p class="card-text display-4 font-weight-bold text-dark mb-5">Toplam: {{ total_faults }}</p>
                     <a href="{% url 'fault_tracking' %}" class="btn btn-danger btn-lg btn-block">
                         Detaylar <i class="bx bx-chevron-right"></i>

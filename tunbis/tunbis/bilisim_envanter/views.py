@@ -2,6 +2,7 @@ from django.utils import timezone
 from django.http import JsonResponse,HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
+from api.services import run_powershell_and_import_data
 from bilisim_envanter.forms import ReservationForm
 from tunbisapp.models import Computer_Informations, DevicePlan, DeviceType, Reservation, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction,DeviceRequest
 from django.core.paginator import Paginator
@@ -17,6 +18,10 @@ from weasyprint import HTML
 import tempfile
 from collections import defaultdict
 from io import BytesIO
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 def index(request):
     context = {
@@ -25,8 +30,8 @@ def index(request):
         "internet_computers": Computer_Informations.objects.filter(network_used="internet").count(),
 
         "total_printers": PrinterScannerInformation.objects.count(),
-        "black_white_printers": PrinterScannerInformation.objects.filter(color_mode="black_white").count(),
-        "color_printers": PrinterScannerInformation.objects.filter(color_mode="color").count(),
+        "black_white_printers": PrinterScannerInformation.objects.filter(color_mode="Siyah-Beyaz").count(),
+        "color_printers": PrinterScannerInformation.objects.filter(color_mode="Renkli").count(),
 
         "total_faults": FaultAction.objects.count(),
         "pending_faults": FaultAction.objects.filter(is_active=True).count(),
@@ -727,6 +732,7 @@ def add_printer_scanner(request):
     units = Unit.objects.all()  # Birimlerin listesini alın
     return render(request, 'bilisim_envanter/add_printer_scanner.html', {'units': units})
 
+
 def all_device_requests(request):
      # Bütün birimleri al
     units = Unit.objects.all()
@@ -792,6 +798,25 @@ def device_request(request):
     device_types = DeviceType.choices  # Modelde tanımlı cihaz türlerini al
 
     return render(request, "bilisim_envanter/device_request_create.html", {"units": units, "device_types": device_types})
+
+
+
+@csrf_exempt
+def update_device_request(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            request_id = data.get("request_id")
+            new_status = data.get("new_status")
+
+            device_request = get_object_or_404(DeviceRequest, id=request_id)
+            device_request.status = new_status
+            device_request.save()
+
+            return JsonResponse({"success": True})
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)}, status=400)
+    return JsonResponse({"success": False, "error": "Geçersiz istek"}, status=400)
 
 def device_request_summary(request):
     # Tüm birimleri al
