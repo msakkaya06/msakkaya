@@ -1,0 +1,129 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "tebs_bulut/_partials/_nav.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+
+<h1>{{ folder.name }} Klasörü</h1>
+
+<div>
+    <h3>Alt Klasörler</h3>
+    <ul id="subfolder-list">
+        {% for subfolder in subfolders %}
+            <li id="folder-{{ subfolder.id }}">
+                {{ subfolder.name }}
+                <button onclick="deleteFolder({{ subfolder.id }})">Sil</button>
+                <a href="{% url 'tebs_bulut:folder_detail' subfolder.id %}">Bu Klasöre Git</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <button onclick="createFolder()">Yeni Klasör Oluştur</button>
+</div>
+
+<div>
+    <h3>Belgeler</h3>
+    <ul id="document-list">
+        {% for document in documents %}
+            <li id="document-{{ document.id }}">
+                {{ document.title }} ({{ document.document_type }})
+                <button onclick="deleteDocument({{ document.id }})">Sil</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <button onclick="createDocument()">Yeni Belge Oluştur</button>
+</div>
+
+<script>
+    // Yeni Klasör oluşturma
+    function createFolder() {
+        const folderName = prompt("Yeni Klasör Adı:");
+        if (folderName) {
+            $.ajax({
+                url: '{% url "tebs_bulut:create_folder" parent_folder_id=folder.id %}',  // Klasörü şu anki klasöre oluşturma
+                method: 'POST',
+                data: {
+                    'folder_name': folderName,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        const newFolder = `<li id="folder-${response.folder_id}">
+                            ${folderName}
+                            <button onclick="deleteFolder(${response.folder_id})">Sil</button>
+                            <a href="{% url 'tebs_bulut:folder_detail' response.folder_id %}">Bu Klasöre Git</a>
+                        </li>`;
+                        $('#subfolder-list').append(newFolder);
+                    }
+                }
+            });
+        }
+    }
+
+    // Klasör silme
+    function deleteFolder(folderId) {
+        if (confirm("Bu klasörü silmek istediğinizden emin misiniz?")) {
+            $.ajax({
+                url: '{% url "tebs_bulut:delete_folder" folder_id=folderId %}',
+                method: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $(`#folder-${folderId}`).remove();
+                    }
+                }
+            });
+        }
+    }
+
+    // Yeni Belge oluşturma
+    function createDocument() {
+        const title = prompt("Belge Başlığı:");
+        const docType = prompt("Belge Türü (word, excel, pdf):");
+        if (title && docType) {
+            $.ajax({
+                url: '{% url "tebs_bulut:create_document" folder_id=folder.id %}',  // Belgeyi şu anki klasöre oluşturma
+                method: 'POST',
+                data: {
+                    'title': title,
+                    'doc_type': docType,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert('Belge başarıyla oluşturuldu!');
+                        const newDocument = `<li id="document-${response.document_id}">
+                            ${title} (${docType})
+                            <button onclick="deleteDocument(${response.document_id})">Sil</button>
+                        </li>`;
+                        $('#document-list').append(newDocument);
+                    }
+                }
+            });
+        }
+    }
+
+    // Belge silme
+    function deleteDocument(documentId) {
+        if (confirm("Bu belgeyi silmek istediğinizden emin misiniz?")) {
+            $.ajax({
+                url: '{% url "tebs_bulut:delete_document" document_id=documentId %}',
+                method: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $(`#document-${documentId}`).remove();
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+
+{% endblock content %}

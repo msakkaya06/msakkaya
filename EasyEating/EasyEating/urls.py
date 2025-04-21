@@ -24,6 +24,8 @@ urlpatterns = [
     path('management/', include("easymanagement.urls")),
     path('',include('pages.urls')),
     path('account/',include('account.urls')),
-    path('order/',include('order.urls')),
+    path('order/',include('order.urls.web_urls')),
     path('payment/',include('payment.urls')),
+    path('order/api/', include('order.urls.api_urls')),  # ya da 'order/api/' ile prefix de verebilirsin
+
 ] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

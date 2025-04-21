@@ -7,17 +7,20 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import user_passes_test,login_required
 from django.views.decorators.http import require_POST
-
+from django.db.models import Sum, Count
+from django.db.models.functions import TruncMonth
+from collections import defaultdict
 from logging_helper.performance_logger import log_performance
 from .forms import CreateProductForm, DeskCreateForm
-from .models import Business, Cart,Desk, Order, OrderItem,Produce,EEUser, ProduceType, Payment
+from .models import Business, Cart,Desk, Order, OrderItem,Produce,EEUser, ProduceType,Desk, Order, Payment
 from django.contrib import messages
 from django.core.paginator import Paginator
-
 from easymanagement.services.sales_services import get_sales_for_business
 from django.utils.timezone import now
 from django.db.models import Sum
 from datetime import timedelta
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 
@@ -39,9 +42,13 @@ def index(req):
     for desk in desk_list_queryset:
         all_items_served = True 
         order_items = []
-        order=None
-        sum_order_count=0
-        sum_price=0
+        order = None
+        order_id = None
+        order_item_count = None
+        sum_order_count = 0
+        sum_price = 0
+        status_text = "Sipariş Bekleniyor"
+        status=0
         cart_exists = Cart.objects.filter(desk=desk, isActive=True).exists()
         order_exists = Order.objects.filter(desk=desk, isActive=True).exists()
         if desk.isReserve:
@@ -72,7 +79,7 @@ def index(req):
                                 'is_service':item.is_service
                                              }
                             sum_order_count +=order_item["quantity"]
-                            sum_price += order_item["price"]*order_item["quantity"]
+                            sum_price =order.total_price
                             order_items.append(order_item)
                             if not order_item['is_service']:
                                 all_items_served = False  # Eğer bir öğe bile servis edilmemişse, global değişkeni False yap
@@ -94,7 +101,7 @@ def index(req):
             'order_item_count': sum_order_count if order_exists else None,  # Siparişin varsa ürün sayısı, yoksa None
             'order_items': order_items if order_exists else None,  # Sipariş varsa ürünler, yoksa None
             'order': order if order_exists else None,  # Sipariş varsa ürünler, yoksa None
-            'sum_price':sum_price * sum_order_count,
+            'sum_price':sum_price,
             'all_items_served':all_items_served
      
              }
@@ -123,9 +130,7 @@ def orderList(req):
     pass
 
 
-from django.db.models import Sum, Count
-from django.db.models.functions import TruncMonth
-from collections import defaultdict
+
 
 @login_required
 @user_passes_test(isManager)
@@ -205,8 +210,6 @@ def management(req):
         popular_item_names = [item['name'] for item in popular_items_data]
         popular_item_percentages = [item['percentage'] for item in popular_items_data]
         popular_item_count = [item['count'] for item in popular_items_data]
-
-
 
     dashboard_dto = {
         'orders': orders,
@@ -400,6 +403,8 @@ def sales_management(request):
 
     return render(request, 'easymanagement/sales_management.html', context)
 
+
+
 def create_desk(req):
     pass
 
@@ -485,27 +490,48 @@ def payment_view(request, order_id):
     }
     return render(request, 'easymanagement/payment.html', context)
 
+
 def process_payment(request, order_id):
-    """Ödeme işlemini gerçekleştiren view."""
     order = get_object_or_404(Order, id=order_id)
 
     if request.method == 'POST':
         payment_method = request.POST.get('payment_method')
-        transaction_id = request.POST.get('transaction_id', None)  # Sadece kart ödemelerinde dolacak
-        
-        # Ödeme kaydı oluştur
-        payment = Payment.objects.create(
+        transaction_id = request.POST.get('transaction_id', None)
+
+        # Ödeme kaydı
+        Payment.objects.create(
             order=order,
             amount=order.total_price,
             method=payment_method,
             transaction_id=transaction_id,
             is_successful=True
         )
-        order.isActive=False
-        order.payment_status = True  # Siparişin ödeme durumunu güncelle
-        order.status = 'completed'  # Sipariş tamamlandı
+
+        # Sipariş güncellemesi
+        order.isActive = False
+        order.payment_status = True
+        order.status = 'completed'
         order.save()
-        
-        return redirect('payment_screen')  # Ödeme tamamlandıktan sonra geri yönlendirme
-    
+
+        # Aktif cart'ı pasif hale getir
+        active_cart = Cart.objects.filter(desk=order.desk, isActive=True).first()
+        if active_cart:
+            active_cart.isActive = False
+            active_cart.save()
+
+        # Masayı boşa çıkar
+        order.desk.isReserve = False
+        order.desk.save()
+
+        # ✅ WebSocket logout tetiklemesi
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f'desk_{order.desk.slug}',  # desk slug kullanılıyor
+            {
+                'type': 'logout_customer',  # consumer içinde handle edilecek
+            }
+        )
+
+        return redirect('payment_screen')  # Admin tarafı için ekran
+
     return redirect('payment_view', order_id=order.id)

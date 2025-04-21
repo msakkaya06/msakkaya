@@ -262,3 +262,49 @@ input[type="password"] {
     font-size: 15px;
     margin-top: 14px;
 }
+
+
+
+/***** TEBS Bulut ******/
+
+
+
+/* Treeview için stil */
+#folder-treeview ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+#folder-treeview li {
+    margin-bottom: 5px;
+}
+
+#folder-treeview a {
+    text-decoration: none;
+    color: #007bff;
+    cursor: pointer;
+}
+
+#folder-treeview a:hover {
+    text-decoration: underline;
+}
+
+/* Butonlar için stil */
+.button-group {
+    margin-top: 20px;
+}
+
+.button-group .btn {
+    margin-right: 10px;
+}
+
+/* Klasör adı ve form için stil */
+form input[type="text"] {
+    padding: 8px;
+    margin-right: 10px;
+    width: 300px;
+}
+
+form button {
+    padding: 8px 15px;
+}

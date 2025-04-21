@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_xx0r3&!5j3h#g@5_6n^s#k4%s7bbv-a$3eu1@fm-*9*!93#dn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1"]
+ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1","195.175.92.34"]
 
 
 
@@ -41,17 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
      'daphne',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',  # ← bu satırı ekle
     'channels',
     'pages',
     'easymanagement',
     'account',
     'order',
     'payment',
-    'debug_toolbar',
    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,9 +62,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'logging_helper.middleware.UserActivityMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
   
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://192.168.137.1:3000",  # React'ın çalıştığı yer
+]
+
+
 
 ROOT_URLCONF = 'EasyEating.urls'
 
@@ -115,8 +127,7 @@ DATABASES = {
 #}
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -143,7 +154,7 @@ TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

@@ -28,6 +28,8 @@ urlpatterns = [
     path('bilisim-envanter/',include('bilisim_envanter.urls')),
     path('bilisim-ariza-takip/',include('ariza_takip.urls')),
     path('api/',include('api.urls')),
+    path('tebs-bulut/',include('tebs_bulut.urls')),
+
 
 
 

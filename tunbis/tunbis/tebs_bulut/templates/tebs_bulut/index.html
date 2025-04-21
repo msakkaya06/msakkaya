@@ -1,0 +1,121 @@
+{% extends "module/layout.html" %}
+{% block sidebar %}
+    {% include "tebs_bulut/_partials/_nav.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        margin: 5px 0;
+    }
+    
+    button {
+        margin-left: 10px;
+        padding: 5px 10px;
+    }
+    
+    a {
+        margin-left: 10px;
+        text-decoration: none;
+        color: #007BFF;
+    }
+    
+</style>
+
+
+
+
+<h1>Klasörler</h1>
+<ul id="folder-list">
+    {% for folder in folders %}
+        <li id="folder-{{ folder.id }}">
+            {{ folder.name }}
+            <button onclick="deleteFolder({{ folder.id }})">Sil</button>
+            <a href="{% url 'folder_detail' folder.id %}">Alt Klasörler ve Belgeler</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<button onclick="createFolder()">Yeni Klasör Oluştur</button>
+<button onclick="createDocument()">Yeni Belge Oluştur</button>
+
+<script>
+    // Yeni Klasör oluşturma
+    function createFolder(parentFolderId) {
+        const folderName = prompt("Yeni Klasör Adı:");
+        if (folderName) {
+            $.ajax({
+                url: '{% url "create_folder" parent_folder_id="' + parentFolderId + '" %}',  // parentFolderId'yi burada dinamik olarak ekliyoruz
+                method: 'POST',
+                data: {
+                    'folder_name': folderName,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        const newFolder = `<li id="folder-${response.folder_id}">
+                            ${folderName}
+                            <button onclick="deleteFolder(${response.folder_id})">Sil</button>
+                            <a href="{% url 'folder_detail' response.folder_id %}">Bu Klasöre Git</a>
+                        </li>`;
+                        $('#subfolder-list').append(newFolder);
+                    }
+                }
+            });
+        }
+    }
+    
+    
+
+    // Klasör silme
+    function deleteFolder(folderId) {
+        if (confirm("Bu klasörü silmek istediğinizden emin misiniz?")) {
+            $.ajax({
+                url: '{% url "delete_folder" folder_id=folderId %}',
+                method: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $(`#folder-${folderId}`).remove();
+                    }
+                }
+            });
+        }
+    }
+
+    // Yeni Belge oluşturma
+    function createDocument() {
+        const title = prompt("Belge Başlığı:");
+        const docType = prompt("Belge Türü (word, excel, pdf):");
+        if (title && docType) {
+            $.ajax({
+                url: '{% url "create_document" folder_id=0 %}',  // Belgeyi ana klasöre oluşturma
+                method: 'POST',
+                data: {
+                    'title': title,
+                    'doc_type': docType,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        alert('Belge başarıyla oluşturuldu!');
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+{% endblock content %}

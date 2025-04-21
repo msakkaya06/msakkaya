@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-wg20%q07sll#gwi)*xe#7klij)#t(kj%7$zx78*e)i#j!(h^vv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1","10.62.112.111","tuncelipaylasim"]
+ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1","10.62.112.111","tuncelipaylasim","tebs.fgt.intra"]
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'idariburo',
     'bilisim_envanter',
     'ariza_takip',
-    'api'
+    'api',
+    'tebs_bulut'
 ]
 
 MIDDLEWARE = [

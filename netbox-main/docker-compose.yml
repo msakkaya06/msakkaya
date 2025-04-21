@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: netbox-db
+    restart: always
+    environment:
+      POSTGRES_DB: netbox
+      POSTGRES_USER: netbox
+      POSTGRES_PASSWORD: netbox_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:alpine
+    container_name: netbox-redis
+    restart: always
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
+  netbox:
+    image: netboxcommunity/netbox:v3.6
+    container_name: netbox
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DB_NAME: netbox
+      DB_USER: netbox
+      DB_PASSWORD: netbox_pass
+      DB_HOST: postgres
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "8000:8080"
+
+volumes:
+  postgres_data:
+  redis_data:

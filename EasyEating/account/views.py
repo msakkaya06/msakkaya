@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from easymanagement.models import EEUser  # Kullanıcı modelinizin doğru adı
 
-from order.views import desk_is_logout
+from order.views.web_views import desk_is_logout
 from .forms import LoginUserForm, RegisterUserForm
 
 
@@ -54,7 +54,7 @@ def desk_login(request):
         if username and token:
             try:
                 # Kullanıcıyı bul
-                user = EEUser.objects.get(username=username, token=token)
+                user = EEUser.objects.get(username=username)
                 print(user.token)
                 if user:
                     login(request, user)

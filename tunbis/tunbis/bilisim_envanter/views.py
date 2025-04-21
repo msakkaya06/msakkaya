@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.http import JsonResponse,HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Count
-from api.services import run_powershell_and_import_data
+
 from bilisim_envanter.forms import ReservationForm
 from tunbisapp.models import Computer_Informations, DevicePlan, DeviceType, Reservation, TebsUser, Unit, computer_action, PrinterScannerInformation,FaultAction,DeviceRequest
 from django.core.paginator import Paginator

@@ -57,7 +57,7 @@
               <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9 text-center">
                 <p class="lead fw-bold mb-0" style="color: #dc3545;">{{ desk.sum_price }} TL</p>
                 {% if desk.order %}
-                <a href="{% url 'payment' desk.order.id %}" class="btn btn-success btn-sm">Ödeme Ekranı</a>
+                <a href="{% url 'process_payment' desk.order.id %}" class="btn btn-success btn-sm">Ödeme Ekranı</a>
             {% else %}
                 <p>Ödeme yapılacak bir sipariş bulunamadı.</p>
             {% endif %}

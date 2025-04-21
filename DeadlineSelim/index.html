@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Selim'in Geri Sayımı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('selim.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.9) 100%);
+      opacity: 0;
+      transition: opacity 8s ease-in-out;
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 64px;
+      margin-top: 80px;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    #countdown {
+      font-size: 100px;
+      margin: 20px 0;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    #startButton {
+      font-size: 26px;
+      padding: 15px 40px;
+      cursor: pointer;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    #startButton:hover {
+      background-color: gray;
+    }
+
+    audio {
+      display: none;
+    }
+
+    .circle-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 40px auto;
+    }
+
+    .circle-bg,
+    .circle-progress {
+      fill: none;
+      stroke-width: 15;
+    }
+
+    .circle-bg {
+      stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    .circle-progress {
+      stroke: rgb(255, 255, 255);
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    #progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      color: white;
+      text-shadow: 2px 2px 8px black;
+    }
+  </style>
+</head>
+<body>
+
+<div class="background" id="bgImage"></div>
+<div class="vignette" id="vignette"></div>
+
+<h1>Selim'in Geri Sayımı</h1>
+<div id="countdown">Hazır...</div>
+
+<div class="circle-wrapper">
+  <svg width="200" height="200">
+    <circle class="circle-bg" cx="100" cy="100" r="85"/>
+    <circle class="circle-progress" id="progress-circle" cx="100" cy="100" r="85"/>
+  </svg>
+  <div id="progress-text">0%</div>
+</div>
+
+<button id="startButton">Geri Sayımı Gör 🎵</button>
+
+<audio id="bgm" loop>
+  <source src="requiem.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const countdownElement = document.getElementById('countdown');
+  const button = document.getElementById('startButton');
+  const music = document.getElementById('bgm');
+  const bgImage = document.getElementById('bgImage');
+  const vignette = document.getElementById('vignette');
+  const circle = document.getElementById('progress-circle');
+  const progressText = document.getElementById('progress-text');
+
+  // Gerçek tarih aralığı
+  const startDate = new Date('2025-04-14T10:00:00+03:00').getTime(); // BAŞLANGIÇ TARİHİNİ SEN BELİRLE
+  const targetDate = new Date('2025-04-17T22:00:00+03:00').getTime();
+
+  const radius = 85;
+  const circumference = 2 * Math.PI * radius;
+  circle.style.strokeDasharray = `${circumference}`;
+
+  function updateProgress() {
+    const now = new Date().getTime();
+
+    const total = targetDate - startDate;
+    const elapsed = now - startDate;
+
+    let percentPassed = elapsed / total;
+    if (percentPassed > 1) percentPassed = 1;
+    if (percentPassed < 0) percentPassed = 0;
+
+    const offset = circumference - (percentPassed * circumference);
+    circle.style.strokeDashoffset = offset;
+    progressText.innerText = `${Math.floor(percentPassed * 100)}%`;
+
+    const remaining = targetDate - now;
+
+    if (remaining <= 0) {
+      countdownElement.innerText = "ZAMAN DOLDU!";
+    } else {
+      const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+      countdownElement.innerHTML = `${days}g ${hours}s ${minutes}d ${seconds}s`;
+    }
+  }
+
+  button.addEventListener('click', () => {
+    music.play();
+    button.style.display = 'none';
+
+    setInterval(updateProgress, 1000);
+    updateProgress();
+
+    bgImage.style.opacity = 1;
+    setTimeout(() => {
+      vignette.style.opacity = 1;
+    }, 5000);
+  });
+</script>
+
+</body>
+</html>

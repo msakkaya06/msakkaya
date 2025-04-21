@@ -1,0 +1,16 @@
+{% block sidebar %}
+<a href="#" class="nav_link"> 
+    <i class='bx bxs-dashboard nav_icon'></i> 
+    <span class="nav_name">Yeni Döküman</span> 
+</a>
+
+<script>
+    $(document).ready(function() {
+        // Arıza Takip menüsünü tetiklemek için
+        $('#faultMenuLink').on('click', function() {
+          $('#faultMenu').collapse('toggle');
+        });
+      });
+      
+</script>
+{% endblock sidebar %}

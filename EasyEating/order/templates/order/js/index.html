@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+  Masa Listesi
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Ürünler</h2>
+    <div id="produce-list" class="row">
+        <!-- Ürünler buraya yüklenecek -->
+    </div>
+
+    <h3 class="mt-4">Sepet</h3>
+    <div id="cart-summary">
+        <!-- Sepet burada görüntülenecek -->
+    </div>
+
+    <button id="orderButton" class="btn btn-primary mt-3" disabled>Sepeti Siparişe Çevir</button>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Ürünleri API'den çek
+        $.ajax({
+            url: '/api/',
+            method: 'GET',
+            success: function(data) {
+                if (data.success) {
+                    const produceDict = data.produce_dict;
+                    let htmlContent = '';
+                    Object.keys(produceDict).forEach(typeId => {
+                        const produceList = produceDict[typeId];
+                        produceList.forEach(produce => {
+                            htmlContent += `
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img src="${produce.image}" class="card-img-top" alt="${produce.name}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${produce.name}</h5>
+                                            <p class="card-text">${produce.price}₺</p>
+                                            <button class="btn btn-success add-to-cart" data-id="${produce.id}">Sepete Ekle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    });
+                    $('#produce-list').html(htmlContent);
+                } else {
+                    alert('Ürünler yüklenemedi.');
+                }
+            }
+        });
+
+        // Sepete ürün ekleme
+        $(document).on('click', '.add-to-cart', function() {
+            const productId = $(this).data('id');
+            const quantity = 1; // Varsayılan miktar
+            $.ajax({
+                url: '/api/add_to_cart',
+                method: 'POST',
+                data: {
+                    produce_id: productId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    if (response.success) {
+                        loadCart();
+                    } else {
+                        alert('Ürün eklenemedi.');
+                    }
+                }
+            });
+        });
+
+        // Sepeti yükle
+        function loadCart() {
+            $.ajax({
+                url: '/api/cart',
+                method: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        let cartHtml = '';
+                        let cartSum = 0;
+                        response.cart_items.forEach(item => {
+                            cartHtml += `
+                                <div class="cart-item">
+                                    <p>${item.name} (${item.quantity} x ${item.price}₺) = ${item.sum_price}₺</p>
+                                </div>
+                            `;
+                            cartSum += parseFloat(item.sum_price);
+                        });
+                        cartHtml += `<p><strong>Toplam: ${cartSum}₺</strong></p>`;
+                        $('#cart-summary').html(cartHtml);
+                        $('#orderButton').prop('disabled', false);
+                    }
+                }
+            });
+        }
+
+        // Sepeti siparişe çevirme
+        $('#orderButton').click(function() {
+            $.ajax({
+                url: '/api/cart_to_order/1',  // Sepet ID'sini buraya dinamik olarak ekleyin
+                method: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        alert('Sipariş başarıyla oluşturuldu.');
+                    } else {
+                        alert('Sipariş oluşturulamadı.');
+                    }
+                }
+            });
+        });
+
+        loadCart(); // Sayfa yüklendiğinde sepete dair bilgiyi göster
+    });
+</script>
+    
+{% endblock %}
