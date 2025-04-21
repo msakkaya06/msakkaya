@@ -1,0 +1,75 @@
+
+{% load static %}
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Ürünleri Yönetin</h3>
+        </div>
+        <!-- ./card-header -->
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead>
+              
+                <th class="border-0 ">Ürün Kategorilerim</th>
+             
+            </thead>
+            <tbody>
+                {% for produce_type, produces in produce_dict.items %}
+                <tr data-toggle="collapse" data-target="#{{ produce_type.name|slugify }}" aria-expanded="false">
+                    <td class="border-0  cursor-pointer">{{ produce_type.name }}</td>
+                    <td class=" border-0 "><span class="accordion-toggle float-right"><i class="fas fa-plus"></i></span></td>
+
+                </tr>
+                
+                <tr id="{{ produce_type.name|slugify }}" class="collapse">
+                    <td colspan="4">
+                        <table class="table border-success">
+                            <thead>
+                                <tr class="border-success">
+                                    <th>Ürün Adı</th>
+                                    <th>Fiyat</th>
+                                    <th>Fotoğraf</th>
+                                    <th>İşlemler</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for produce in produces %}
+                                <tr>
+                                    <td>{{ produce.name }}</td>
+                                    <td>{{ produce.price }} TL</td>
+                                    <td class="text-center" ><img src="{{ produce.image.url }}" alt="{{ produce.name }}" style="max-width: 100px;"></td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group">
+                                            <a href="{% url 'produce_update' produce.id %}" class="btn btn-info" data-toggle="modal"  data-target="#produceModal{{ produce.id }}"><i class="fas fa-eye"></i></a>
+                                        </div>
+                                    </td>
+                                    
+                                </tr>
+                                
+                              
+                                
+                                {% include "easymanagement/_partials/_produce_modal.html" %}
+                                {% endfor %}
+                            </tbody>
+                           
+                    </td>
+                   
+                </tr>
+               
+              </table>
+              <div class="col-12"> <a href="{% url "create_produce" produce_type.id %}" class="btn btn-success btn-sm btn-block" data-toggle="modal"  data-target="#produceCreateModal{{ produce_type.id }}">Yeni {{ produce_type.name }} Ekle</a></tr></div>
+        
+          
+                {% include "easymanagement/_partials/_produce_create_modal.html" %}
+                {% endfor %}
+                
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>

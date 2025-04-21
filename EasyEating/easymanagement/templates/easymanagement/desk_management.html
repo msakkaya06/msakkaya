@@ -1,0 +1,171 @@
+{% extends 'ms-admin/layout.html' %}
+{% load static %}
+{% block content %}
+  <div class="card card-secondary">
+    <div class="card-header">
+      <h3 class="card-title">{{ business }} Masa Durumu</h3>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title text-warning font-weight-bold" style="font-family: 'Roboto', sans-serif;">Rezerve Masalar</h3>
+            </div>
+            <div class="card-body text-danger">
+              <ul class="list-group">
+                {% for desk in chart_data.reserved_desks %}
+                  <li class="list-group-item">
+                    <span class="badge bg-warning">{{ desk.name }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <canvas id="pieChart" style="min-height: 400px; height: 400px; max-height: 400px; max-width: 175%;"></canvas>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title text-success font-weight-bold" style="font-family: 'Roboto', sans-serif;">Müsait Masalar</h3>
+
+            </div>
+            <div class="card-body text-success">
+              <ul class="list-group">
+                {% for desk in chart_data.available_desks %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="badge bg-success">{{ desk.name }}</span>
+                    <div class="btn-group">
+                      <a href="" class="btn btn-info" data-toggle="modal" data-target="#deskModal{{ desk.id }}"><i class="fas fa-eye fa-sm"></i></a>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.card -->
+  <!-- /.card-header -->
+  <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap">
+      <thead>
+        <tr>
+          <th>Masa Adı</th>
+          <th>Durumu</th>
+          <th>Son Aktif Tarihi</th>
+          <th>Detaylar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for desk in page_obj %}
+          <tr>
+            <td>{{ desk.name }}</td>
+            <td>
+              {% if desk.isReserve %}
+                <span class="badge bg-warning">Rezerve</span>
+              {% else %}
+                <span class="badge bg-success">Müsait</span>
+              {% endif %}
+            </td>
+            <td>
+              <span class="tag tag-success">{{ desk.last_login }}</span>
+            </td>
+            <td>
+              <div class="btn-group btn-group">
+                <a href="" class="btn btn-info" data-toggle="modal" data-target="#deskModal{{ desk.id }}"><i class="fas fa-eye"></i></a>
+              </div>
+            </td>
+          </tr>
+          <div class="modal fade" id="deskModal{{ desk.id }}" tabindex="-1" role="dialog" aria-labelledby="deskModal{{ desk.id }}Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deskModal{{ desk.id }}Label">Masa Detayları: {{ desk.name }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Masa detayları buraya gelecek -->
+                  <!-- Örneğin: Siparişler, önceki siparişler, aktif siparişler vb. -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- Modal -->
+  </div>
+  {% if page_obj.paginator.num_pages > 1 %}
+    {% include 'partials/_pagination.html' %}
+  {% endif %}
+
+  <hr class="bg-success border-4 border-top border-success" />
+  <div class="alert alert-success text-center text-secondary text-bold">Yeni Masa Ekleyin</div>
+  <div class="container col-8 mt-4 border border-success rounded p-3">
+    <div class="card-body">
+      <div class="form-group">
+        <form action="{% url 'management_desk' %}" method="POST" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="row">
+            <div class="col-12">
+              <input type="submit" value="Yeni Masa Ekle" class="btn btn-success float-right m-3" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <div style="Height: 150px;"></div>
+  <!-- /.card -->
+
+  <script>
+    $(function (){
+        //-------------
+        //- PIE CHART -
+        //-------------_
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+        var pieData        = {
+            labels: ['Rezerve Edilen', 'Müsait'],
+            datasets: [{
+                data: [{{ chart_data.reserve_count }}, {{ chart_data.available_count }}],
+                backgroundColor: ['#f56954', '#00a65a'],
+            }]
+        };
+        var pieOptions     = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    formatter: function(value, context) {
+                        var sum = context.dataset.data.reduce((a, b) => a + b, 0);
+                        var percentage = Math.round(value / sum * 100) + '%';
+                        return percentage;
+                    }
+                }
+            }
+        };
+        
+        //Create pie chart
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        });
+    });
+</script>
+{% endblock %}

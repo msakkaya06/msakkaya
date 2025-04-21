@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+Ödemeyi Tamamla
+{% endblock title %}
+{% block content %}
+<h2>Ödeme İşlemi</h2>
+<p>Masa: {{ order.desk.name }}</p>
+<p>Toplam Tutar: {{ order.total_amount }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Ödemeyi Tamamla</button>
+</form>
+{% endblock content %}

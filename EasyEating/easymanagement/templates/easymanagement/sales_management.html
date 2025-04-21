@@ -1,0 +1,73 @@
+{% extends "ms-admin/layout.html" %} {% load static %} {% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Satış Yönetimi</h2>
+
+  <div class="row">
+    <!-- Genel Bilgiler -->
+    <div class="col-md-12">
+      <div class="card mb-8">
+        <div class="card-header bg-success text-white">Genel Bilgiler</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              Toplam Ciro: <strong>{{ total_revenue }} TL</strong>
+            </li>
+            <li class="list-group-item">
+              Toplam Sipariş: <strong>{{ total_orders }}</strong>
+            </li>
+            <li class="list-group-item">
+              Toplam Sipariş Ürün Adedi:
+              <strong>{{ total_product_count }}</strong>
+            </li>
+            <li class="list-group-item">
+              En Çok Satan Ürün:
+              <strong
+                >{{ most_sold_item.produce__name }} ({{ most_sold_item.total_quantity }} adet)</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- En Çok Satılan Ürünler -->
+  <div class="row">
+    <h4 class="text-center mb-4">En Çok Satılan Ürünler</h4>
+    {% for item in popular_items %}
+    <div class="col-md-4">
+      <div class="card mb-5">
+        <img
+          src="../media/{{ item.produce__image }}"
+          class="card-img-top"
+          alt="{{ item.produce__name }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.produce__name }}</h5>
+          <p class="card-text">{{ item.produce__description }}</p>
+          <p class="card-text">
+            <strong>Satış Adedi:</strong> {{ item.total_quantity }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+<style>
+  .card {
+    height: 350px; /* Kart yüksekliğini sabitleyin */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-img-top {
+    max-height: 200px; /* Resim yüksekliğini sınırlayın */
+    object-fit: cover; /* Resim oranını koruyarak kapsayacak şekilde yerleştirin */
+  }
+
+  .card-body {
+    flex-grow: 1; /* Kart içeriği esnesin ama kart boyutunu sabit tutsun */
+  }
+</style>
