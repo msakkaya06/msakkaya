@@ -21,7 +21,7 @@ class Command(BaseCommand):
             token, created = Token.objects.get_or_create(user=user)
 
             # React tabanlı login redirect URL’si
-            login_url = f"http://192.168.137.1:3000/login-redirect?username={user.username}&token={token.key}"
+            login_url = f"http://192.168.1.100:3000/login-redirect?username={user.username}&token={token.key}"
 
             # QR kod oluştur
             qr_image = qrcode.make(login_url)
@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
             # Dosya ismi ve yol
             file_name = f"{user.username}_qr.png"
-            qr_code_directory = os.path.join(settings.MEDIA_ROOT, 'qr_codes')
+            qr_code_directory = os.path.join(settings.MEDIA_ROOT, 'qr_codes_home')
             if not os.path.exists(qr_code_directory):
                 os.makedirs(qr_code_directory)
 

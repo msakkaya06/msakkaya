@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_xx0r3&!5j3h#g@5_6n^s#k4%s7bbv-a$3eu1@fm-*9*!93#dn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1","195.175.92.34"]
+ALLOWED_HOSTS = ["162.162.5.11","127.0.0.1","localhost","192.168.137.1","195.175.92.34","192.168.1.100"]
 
 
 
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'logging_helper.middleware.UserActivityMiddleware',
+    #'logging_helper.middleware.UserActivityMiddleware',
   
 ]
 REST_FRAMEWORK = {
@@ -72,6 +72,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://192.168.137.1:3000",  # React'ın çalıştığı yer
+    "http://192.168.1.100:3000",  # React'ın çalıştığı yer
+
 ]
 
 
