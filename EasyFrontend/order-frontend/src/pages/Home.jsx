@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { FiShoppingCart } from "react-icons/fi";
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function OrderPage() {
   const [products, setProducts] = useState({});
@@ -62,6 +64,7 @@ function OrderPage() {
         console.log("Zaten aktif sepet mevcut.");
       } else {
         console.error("Cart oluşturulurken hata:", err);
+        toast.error("Cart oluşturulamadı!");
       }
     }
   };
@@ -74,17 +77,24 @@ function OrderPage() {
       setProducts(res.data.produce_dict);
     } catch (error) {
       console.error("Ürünler alınamadı:", error);
+      toast.error("Ürünler yüklenemedi!");
     }
   };
 
   const addToCart = async (item) => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/order/api/add-to-cart/`, {
-        produce_id: item.id,
-        quantity: 1,
-      }, {
-        headers: { Authorization: `Token ${token}` },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/order/api/add-to-cart/`,
+        {
+          produce_id: item.id,
+          quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
 
       setCart((prev) => {
         const existing = prev.find((p) => p.id === item.id);
@@ -96,67 +106,57 @@ function OrderPage() {
           return [...prev, { ...item, quantity: 1 }];
         }
       });
+
+      toast.success(`${item.name} sepete eklendi! 🎉`);
     } catch (error) {
       console.error("Sepete ekleme hatası:", error);
-      alert("Sepete eklenemedi.");
+      toast.error("Sepete eklenemedi ❌ Sayfayı Yenileyin veya QR Kod Yeniden Okutun ");
     }
   };
 
   return (
-    <div className="p-4 font-amatic text-black">
-      {/* Başlık */}
+    <div className="p-4 relative font-montserrat">
+      {/* Toast Container */}
+      <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} />
+
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl text-center items-center font-bold tracking-wider">{`KOLAY MENÜ -  ${deskName}`}</h1>
+        <h1 className="text-5xl font-bold">{businessName}</h1>
         <Link
           to="/cart"
-          className="flex gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full shadow-md"
+          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
         >
-          <FiShoppingCart size={24} />
+          <FiShoppingCart size={20} />
           Sepetim
         </Link>
       </div>
 
-      {/* Ürünler */}
+      <h2 className="text-3xl mb-6">Masa: {deskName}</h2>
+
       {Object.keys(products).map((type) => (
-        <div key={type} className="mb-10">
-          <h2 className="text-3xl font-semibold mb-4">{type}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div key={type} className="mb-8">
+          <h2 className="text-4xl font-semibold mb-4">{type}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {products[type].map((p) => (
-              <div key={p.id} className="border rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
+              <div key={p.id} className="border p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
                 <img
                   src={`${process.env.REACT_APP_API_BASE_URL}${p.image}`}
                   alt={p.name}
+                  className="h-40 w-full object-cover mb-4 rounded-md"
                   loading="lazy"
-                  className="h-40 w-full object-cover"
                 />
-                <div className="p-4">
-                  <h3 className="text-2xl font-bold">{p.name}</h3>
-                  <p className="text-lg mt-1 mb-3">{p.price} ₺</p>
-                  <button
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-full"
-                    onClick={() => addToCart(p)}
-                  >
-                    Sepete Ekle
-                  </button>
-                </div>
+                <h3 className="text-2xl font-medium">{p.name}</h3>
+                <p className="text-xl mb-2">{p.price} ₺</p>
+                <button
+                  className="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-xl"
+                  onClick={() => addToCart(p)}
+                >
+                  Sepete Ekle
+                </button>
               </div>
             ))}
           </div>
         </div>
       ))}
-
-      {/* Sepet */}
-      {cart.length > 0 && (
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-4">Sepetiniz</h2>
-          {cart.map((item) => (
-            <div key={item.id} className="flex justify-between py-2 border-b">
-              <span>{item.name} x {item.quantity}</span>
-              <span>{(item.price * item.quantity).toFixed(2)} ₺</span>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
