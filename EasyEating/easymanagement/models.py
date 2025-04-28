@@ -54,8 +54,7 @@ class EEUser(AbstractUser):
     token = models.CharField(max_length=255, null=True, blank=True)  # unique=True kullanmayın
 
     def save(self, *args, **kwargs):
-        if not self.pk or self.password:# Şifre düz metin olarak mı?
-                self.password=make_password(self.password)
+        print(self.password)
         super().save(*args, **kwargs)
 
         
@@ -73,10 +72,9 @@ class Desk(models.Model):
         if self.pk is None:
             is_new_desk = True # Masa yeni mi oluşturuluyor?
 
-
         super().save(*args, **kwargs)  # Masa nesnesini önce kaydet
         if is_new_desk:
-            # Eğer masa yeni oluşturuluyorsa veya 'update_fields' belirtilmemişse veya 'isReserve' güncellenmemişse
+            # Eğer masa yeni oluşturuluyorsa
             password = "kolaymasa"
             EEUser.objects.create(username=self.slug, password=password, is_desk=True, business=self.business)
     

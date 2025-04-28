@@ -81,13 +81,21 @@ const Cart = () => {
       </div>
 
       {pendingItems.length > 0 && (
-        <button
-          onClick={handleConfirmOrder}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-        >
-          Siparişi Onayla
-        </button>
-      )}
+  <button
+    onClick={handleConfirmOrder}
+    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+  >
+    Siparişi Onayla
+  </button>
+)}
+
+<button
+  onClick={() => navigate("/")}
+  className="bg-red-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4"
+>
+  Menüye Dön
+</button>
+
     </div>
   );
 };

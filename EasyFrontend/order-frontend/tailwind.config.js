@@ -7,4 +7,12 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  theme: {
+    extend: {
+      fontFamily: {
+        amatic: ['"Amatic SC"', 'cursive'],
+      },
+    },
+  },
+  plugins: [],
 }

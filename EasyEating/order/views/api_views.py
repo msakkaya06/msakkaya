@@ -47,16 +47,17 @@ class CreateCartView(APIView):
         try:
             with transaction.atomic():  # Tüm işlem tek bir DB transaction içinde yapılır
                 desk = Desk.objects.select_for_update().get(slug=request.user.username)
-                print("TOKEN KULLANICI:", request.user.username)
+                print("TOKEN KULLANICI:", request.user.username," İşlem: CreateCartView")
+                         # Masa rezerve ediliyor
+                desk.isReserve = True
+                desk.save(update_fields=['isReserve'])
+
 
 
                 if Cart.objects.filter(desk=desk, isActive=True).exists():
                     return Response({'success': False, 'message': 'Cart already exists'}, status=status.HTTP_200_OK)
 
-                # Masa rezerve ediliyor
-                desk.isReserve = True
-                desk.save(update_fields=['isReserve'])
-
+       
                 # Sepet oluşturuluyor
                 cart = Cart.objects.create(desk=desk)
 
@@ -82,27 +83,26 @@ class CreateCartView(APIView):
         except Exception as e:
             return Response({'success': False, 'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
 class AddToCartView(APIView):
     permission_classes = [IsAuthenticated]
 
-    
     def post(self, request):
         cart = Cart.objects.get(desk__slug=request.user.username, isActive=True)
         product_id = request.data.get('produce_id')
         quantity = int(request.data.get('quantity'))
+        print("TOKEN KULLANICI:", request.user.username," İşlem: AddToCartView")
 
-        produce = Produce.objects.get(id=product_id)  # ürün fiyatını alıyoruz
+        produce = Produce.objects.get(id=product_id)
 
         cart_item = CartItem.objects.filter(cart=cart, produce_id=product_id, isConfirm=False).first()
 
         if cart_item:
-        # Eğer ürün varsa miktarı artır ve fiyatı güncelle
+            # Eğer ürün varsa miktarı artır ve fiyatı güncelle
             cart_item.quantity += quantity
-            cart_item.unit_price = produce.price  # ürün fiyatı güncellenmeli!
+            cart_item.unit_price = produce.price
             cart_item.save()
         else:
-        # Yeni ürün için hem fiyat hem miktar set edilmeli
+            # Yeni ürün için hem fiyat hem miktar set edilmeli
             cart_item = CartItem.objects.create(
                 cart=cart,
                 produce=produce,
@@ -110,7 +110,11 @@ class AddToCartView(APIView):
                 unit_price=produce.price
             )
 
+        # 🔥 Ürün eklendikten SONRA sepetin toplam fiyatını güncelleyelim
+        cart.calculate_total_price()
+
         return Response({'success': True}, status=status.HTTP_200_OK)
+
 
 class CartToOrderView(APIView):
     permission_classes = [IsAuthenticated]
@@ -118,6 +122,8 @@ class CartToOrderView(APIView):
     def post(self, request, cart_id):
         cart = get_object_or_404(Cart, id=cart_id)
         desk = cart.desk
+        print("TOKEN KULLANICI:", request.user.username," İşlem: CartToOrder")
+
 
         # Mevcut sipariş var mı kontrol et
         order = Order.objects.filter(desk=desk, isActive=True).first()
@@ -161,6 +167,8 @@ class CartDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        print("TOKEN KULLANICI:", request.user.username," İşlem: CartDetailView")
+
         desk_slug = request.user.username
         try:
             cart = Cart.objects.get(desk__slug=desk_slug, isActive=True)
@@ -192,7 +200,10 @@ class DeskReleaseView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        print("TOKEN KULLANICI:", request.user.username," İşlem: DeskReleaseView")
+
         try:
+            
             desk = Desk.objects.get(slug=request.user.username)
             user = request.user
 
