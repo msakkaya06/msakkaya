@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 
 class WebSocketAllowedHostsMiddleware(BaseMiddleware):
     async def __call__(self, scope, receive, send):
-        allowed_hosts = ['162.162.5.11', '127.0.0.1', 'localhost', '192.168.137.1']
+        allowed_hosts = ['162.162.5.11', '127.0.0.1', 'localhost', '192.168.137.1','192.168.1.100']
         
         # Sadece WebSocket istekleri için kontrol
         if scope['type'] == 'websocket':
