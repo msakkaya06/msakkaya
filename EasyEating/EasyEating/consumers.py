@@ -83,9 +83,6 @@ class BusinessConsumer(AsyncWebsocketConsumer):
         }))
 
 class DeskConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        self.desk_slug = self.scope['url_route']['kwargs']['desk_slug']
-        self.room_group_name = f'desk_{self.desk_slug}'
 
         # Join the desk groupclass DeskConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -134,28 +131,3 @@ class DeskConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
 
-    async def disconnect(self, close_code):
-        # Leave the desk group
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        cart_id = text_data_json['cart_id']
-
-        # Fetch the updated cart data
-        cart = Cart.objects.get(id=cart_id)
-        cart_items = list(cart.cartitem_set.values('produce__name', 'quantity', 'unit_price'))
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'cart_update',
-                'cart_items': cart_items,
-                'total_price': cart.calculate_total_price(),
-            }
-        )
-
-    async def cart_update(self, event):
-        await self.send(text_data=json.dumps(event))

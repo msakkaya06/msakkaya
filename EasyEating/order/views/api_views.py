@@ -15,6 +15,11 @@ from rest_framework import status
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from easymanagement.models import Desk, EEUser
+
 
 class ProduceListAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -215,15 +220,9 @@ class CartDetailView(APIView):
             return Response({'error': 'Aktif sepet bulunamadı.'}, status=404)
 
 
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from easymanagement.models import Desk, EEUser
-
 
 class DeskReleaseView(APIView):
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
         print("TOKEN KULLANICI:", request.user.username," İşlem: DeskReleaseView")
 

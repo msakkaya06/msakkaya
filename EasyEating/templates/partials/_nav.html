@@ -6,10 +6,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {% if user.is_manager %}
           <li class="nav-item me-auto">
-            <a class="nav-link" href="{% url 'management_index' %}">Sipariş Yönetim</a>
-          </li>
-          <li class="nav-item me-auto">
-            <a class="nav-link" href="{% url 'dashboard' %}">Restoran Yönetim</a>
+            <a class="nav-link" href="{% url 'dashboard' %}">Restoran Yönetim Ekranı</a>
           </li>
         {% endif %}
         {% if user.is_desk %}

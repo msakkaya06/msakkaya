@@ -18,21 +18,31 @@
             </ul>
 
             <hr>
-
-            <h5>Ödeme Yöntemi</h5>
+            <h5 class="mb-3">Ödeme Yöntemi</h5>
             <form method="POST" action="{% url 'process_payment' order.id %}">
                 {% csrf_token %}
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="payment_method" value="cash" checked>
-                    <label class="form-check-label">Nakit</label>
+                
+                <div class="form-check form-check-inline p-3 border rounded shadow-sm me-3">
+                    <input class="form-check-input" type="radio" name="payment_method" id="cash" value="cash" checked>
+                    <label class="form-check-label fw-bold" for="cash">
+                        💵 Nakit
+                    </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="payment_method" value="card">
-                    <label class="form-check-label">Kredi/Banka Kartı</label>
+            
+                <div class="form-check form-check-inline p-3 border rounded shadow-sm">
+                    <input class="form-check-input" type="radio" name="payment_method" id="card" value="card">
+                    <label class="form-check-label fw-bold" for="card">
+                        💳 Kredi/Banka Kartı
+                    </label>
                 </div>
-
-                <button type="submit" class="btn btn-success mt-3">Ödeme Yap</button>
+            
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success w-100 py-2 fs-5">
+                        💰 Ödeme Yap
+                    </button>
+                </div>
             </form>
+            
         </div>
     </div>
 </div>
