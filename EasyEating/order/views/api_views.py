@@ -19,6 +19,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from easymanagement.models import Desk, EEUser
+from channels.exceptions import ChannelFull
 
 
 class ProduceListAPIView(APIView):
@@ -146,21 +147,19 @@ class DecreaseCartItemView(APIView):
         return Response({'success': True,'total_price': cart_item.total_price}, status=status.HTTP_200_OK)
 
 
+
 class CartToOrderView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, cart_id):
         cart = get_object_or_404(Cart, id=cart_id)
         desk = cart.desk
-        print("TOKEN KULLANICI:", request.user.username," İşlem: CartToOrder")
+        print("TOKEN KULLANICI:", request.user.username, " İşlem: CartToOrder")
 
-
-        # Mevcut sipariş var mı kontrol et
         order = Order.objects.filter(desk=desk, isActive=True).first()
         if not order:
             order = Order.objects.create(desk=desk)
 
-        # Sepetteki onaylanmamış ürünleri siparişe ekle
         for cart_item in CartItem.objects.filter(cart=cart, isConfirm=False):
             OrderItem.objects.create(
                 order=order,
@@ -171,27 +170,37 @@ class CartToOrderView(APIView):
             cart_item.isConfirm = True
             cart_item.save()
 
-        # Fiyat hesapla ve kaydet
         order.calculate_total_price()
 
-        # WebSocket yayını yap
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            f'business_{desk.business.id}',
-            {
-                'type': 'send_order_update',
-                'order_data': {
-                    'order_id': order.id,
-                    'status': order.status,
-                    'total_price': str(order.total_price),
-                    'items': list(order.orderitem_set.values('id', 'produce__name', 'quantity', 'unit_price', 'produce__image')),
-                    'desk_name': desk.name,
-                    'desk_id': desk.id,
-                }
-            }
-        )
+        # WebSocket yayını güvenli şekilde gönder
+        try:
+            channel_layer = get_channel_layer()
+            if channel_layer is not None:
+                async_to_sync(channel_layer.group_send)(
+                    f'business_{desk.business.id}',
+                    {
+                        'type': 'send_order_update',
+                        'order_data': {
+                            'order_id': order.id,
+                            'status': order.status,
+                            'total_price': str(order.total_price),
+                            'items': list(order.orderitem_set.values(
+                                'id', 'produce__name', 'quantity', 'unit_price', 'produce__image'
+                            )),
+                            'desk_name': desk.name,
+                            'desk_id': desk.id,
+                        }
+                    }
+                )
+            else:
+                print("Uyarı: Channel layer aktif değil, WebSocket yayını yapılmadı.")
+        except ChannelFull:
+            print("Hata: WebSocket kuyruğu dolu.")
+        except Exception as e:
+            print("WebSocket gönderim hatası:", str(e))
 
         return Response({'success': True, 'order_id': order.id}, status=status.HTTP_200_OK)
+
 
 class CartDetailView(APIView):
     permission_classes = [IsAuthenticated]
