@@ -14440,3 +14440,7 @@ Traceback (most recent call last):
   File "msgpack\\_packer.pyx", line 257, in msgpack._cmsgpack.Packer._pack_inner
 TypeError: can not serialize 'decimal.Decimal' object
 [35;1mHTTP POST /order/api/cart/120/to-order/ 500 [1.93, 127.0.0.1:52751][0m
+Internal Server Error: /order/api/create-cart/
+[35;1mHTTP POST /order/api/create-cart/ 500 [1.58, 127.0.0.1:56659][0m
+Internal Server Error: /order/api/create-cart/
+[35;1mHTTP POST /order/api/create-cart/ 500 [1.50, 127.0.0.1:56660][0m

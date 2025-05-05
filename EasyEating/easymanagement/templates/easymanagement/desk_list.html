@@ -126,7 +126,7 @@ Masa Listesi
                 resetDeskToDefault(data.desk_data.desk_id); // Sadece o masayı sıfırla
             }
     
-            if (data.type === 'order_update') {
+            if (data.type === 'send_order_update') {
                 // Gelen sipariş güncellemesini masaya göre işleyin
                 var deskId = data.desk_id;
                 var orderId = data.order_id;
