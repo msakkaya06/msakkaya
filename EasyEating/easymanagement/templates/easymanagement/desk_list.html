@@ -29,7 +29,7 @@ Masa Listesi
                             <div class="mt-2">
                                 <h6>Siparişler:</h6>
                             
-                                <ul class="list-group">
+                                <ul class="items list-group">
                                     {% if desk.order %}
                                         {% for order in desk.order_items %}
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -137,6 +137,7 @@ Masa Listesi
                 // Masa listesinde ve modalda gerekli güncellemeleri yapın
                 console.log("Received:", data)
                 updateOrderList(items,deskId);
+                updateOrderModalList(deskId, orderId, status, totalPrice, items); 
             } else {
                 console.log("Received:", data)
                 updateDeskUI(data.desk_data); // Eğer logout değilse masayı normal şekilde güncelle
@@ -155,8 +156,9 @@ Masa Listesi
 
         if (deskElement) {
             // Sipariş durumu ve toplam fiyatı masa üzerinde göster
-            deskElement.querySelector(".status").textContent = status;
-            deskElement.querySelector(".total_price").textContent = totalPrice + "₺";
+            deskElement.find(".status").text(status);
+            deskElement.find(".total_price").text(totalPrice + "₺");
+            
     
             // Modal'daki öğe bilgilerini güncelleyin
             var modalElement = document.getElementById("orderModal" + deskId);

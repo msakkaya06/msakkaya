@@ -21,41 +21,41 @@
                 <p>{{ desk.id }}-000{{ desk.order.id }}</p>
               </div>
             </div>
-
             <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
-              {% for item in desk.order_items %}
-                <div class="row">
-                  <div class="col-md-2 col-lg-1">
-                    {% if item.image %}
-                      <img src="{{ item.image.url }}" alt="{{ item.product_name }}" class="rounded-circle" style="max-height: 40px; width: 40px;" />
-                    {% endif %}
+              <div class="items">
+                {% for item in desk.order_items %}
+                  <div class="row">
+                    <div class="col-md-2 col-lg-1">
+                      {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.product_name }}" class="rounded-circle" style="max-height: 40px; width: 40px;" />
+                      {% endif %}
+                    </div>
+                    <div class="col-md-4 col-lg-5">
+                      <p>{{ item.product_name }}</p>
+                    </div>
+                    <div class="col-md-3 col-lg-1">
+                      <p><span class="badge bg-primary rounded-pill">{{ item.quantity }}</span></p>
+                    </div>
+                    <div class="col-md-1 col-lg-3">
+                      <p>{{ item.price }}</p>
+                    </div>
+                    <div class="col-md-2 col-lg-2">
+                      <button type="button" class="btn btn-outline-primary btn-sm">Servis Et</button>
+                    </div>
                   </div>
-                  <div class="col-md-4 col-lg-5">
-                    <p>{{ item.product_name }}</p>
-                  </div>
-                  <div class="col-md-3 col-lg-1">
-                    <p>
-                      <span class="badge bg-primary rounded-pill">{{ item.quantity }}</span>
-                    </p>
-                  </div>
-
-                  <div class="col-md-1 col-lg-3">
-                    <p>{{ item.price }}</p>
-                  </div>
-                  <div class="col-md-2 col-lg-2">
-                    <button type="button" class="btn btn-outline-primary btn-sm">Servis Et</button>
-                  </div>
-                </div>
-                <hr />
-              {% endfor %}
+                  <hr />
+                {% endfor %}
+              </div>
             </div>
+            
             <div class="mt-2">
               <button type="button" class="btn btn-outline-danger btn-sm d-block w-100">Tümünü Servis Et</button>
             </div>
 
             <div class="row my-4">
               <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9 text-center">
-                <p class="lead fw-bold mb-0" style="color: #dc3545;">{{ desk.sum_price }} TL</p>
+                <p class="lead fw-bold mb-0 total_price" style="color: #dc3545;">{{ desk.sum_price }} TL</p>
+
                 {% if desk.order %}
                 <a href="{% url 'process_payment' desk.order.id %}" class="btn btn-success btn-sm">Ödeme Ekranı</a>
             {% else %}
