@@ -181,14 +181,19 @@ class CartToOrderView(APIView):
                     {
                         'type': 'send_order_update',
                         'order_data': {
+                            'desk_id':desk.id,
+                            'desk_name':desk.name,
                             'order_id': order.id,
                             'status': order.status,
-                            'total_price': str(order.total_price),
-                            'items': list(order.orderitem_set.values(
-                                'id', 'produce__name', 'quantity', 'unit_price', 'produce__image'
-                            )),
-                            'desk_name': desk.name,
-                            'desk_id': desk.id,
+                            'total_price': float(order.total_price or 0.0),
+                            'items': [
+                                {
+                            **item,
+                            'unit_price': float(item['unit_price'])
+                            } for item in order.orderitem_set.values(
+                            'id', 'produce__name', 'quantity', 'unit_price', 'produce__image'
+                            )
+                                    ],
                         }
                     }
                 )

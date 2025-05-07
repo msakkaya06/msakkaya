@@ -13,6 +13,21 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCart();
+    const businessId = localStorage.getItem("business_id");
+    if (!businessId) return;
+  
+    const socket = new WebSocket(`ws://${process.env.REACT_APP_API_BASE_URL.replace("http://", "")}/ws/business/${businessId}/`);
+  
+    socket.onopen = () => console.log("Business WS bağlantısı kuruldu");
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("Business WS mesajı:", data);
+      // İstersen buraya toast koyabilirsin
+    };
+    socket.onerror = (err) => console.error("Business WS hatası:", err);
+    socket.onclose = () => console.log("Business WS bağlantısı kapandı");
+  
+    return () => socket.close();
   }, []);
 
   const fetchCart = () => {

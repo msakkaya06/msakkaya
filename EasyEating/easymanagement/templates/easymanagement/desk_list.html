@@ -1,287 +1,394 @@
-
 {% extends "layout.html" %}
-{% load static %}
-{% block title %}
-Masa Listesi
-{% endblock title %}
-{% block content %}
+ {% load static %}
+  {% block title %} Masa Listesi
+   {% endblock title %} 
+ {% block content %}
 <div class="container-fluid">
-    <div class="container text-center">
-        <h3 class="blockquote">{{business}} İşletme Siparişlerini Yönetin</h3>
-    </div>
-    <div class="container-fluid">
-            <div class="row">
-                <hr>
-                {% for desk in desk_list %}
-                <div id="desk-{{ desk.id }}" class="col-lg-6">  <!-- desk.id'yi burada id'ye ekledik -->
-                    <div class="card border-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %} mb-3">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span>{{ desk.name }}</span>
-                            <a class="btn btn-sm btn-light" data-toggle="modal" data-target="#orderModal{{ desk.id }}" href="#"><i class="fas fa-eye"></i></a>
-                        </div>
-                        <div class="card-body text-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %}">
-                            <h5 class="card-title">{{ desk.name }} </h5>
-                            <p class="card-text">Toplam {{ desk.order_item_count }} adet sipariş mevcuttur</p>
-                        </div>
-                        <div class="card-footer bg-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %} text-white">
-                            <span>{{ desk.status }}</span>
-                            
-                            <div class="mt-2">
-                                <h6>Siparişler:</h6>
-                            
-                                <ul class="list-group">
-                                    {% if desk.order %}
-                                        {% for order in desk.order_items %}
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="badge bg-primary rounded-pill mx-1">{{ order.quantity }}</span>
-                                                    {% if order.image %}
-                                                        <img src="{{ order.image.url }}" alt="{{ order.product_name }}" class="me-3 rounded-circle" style="max-height: 40px; width: 40px;">
-                                                    {% endif %}
-                                                    <span>{{ order.product_name }}</span>
-                                                </div>
-                            
-                                                <button type="button" class="btn btn-outline-primary btn-sm mark-as-served" data-order-item-id="{{ order.id }}" {% if order.is_service %}disabled{% endif %}>Servis Et</button>
-                                            </li>
-                                        {% endfor %}
-                                    {% else %}
-                                        <li class="list-group-item">Bekleyen sipariş yoktur.</li>
-                                    {% endif %}
-                                </ul>
-                                
-                            </div>
-                            {% if desk.status_code == 2 %}
-                            <button type="button" class="btn btn-warning bg-white text-success btn-sm d-block w-100 mark-all-as-served mt-2" data-order-id="{{ desk.order.id }}" >{% if desk.all_items_served %} Tüm Siparişler Servis Edildi {% else %}Tümünü Servis Et{% endif %}</button>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% include "easymanagement/_partials/_order_details.html" %}
-            {% endfor %}
-            
-            </div>        
+  <div class="container text-center">
+    <h3 class="blockquote">{{business}} İşletme Siparişlerini Yönetin</h3>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <hr />
+      {% for desk in desk_list %}
+      <div id="desk-{{ desk.id }}" class="col-lg-6">
+        <!-- desk.id'yi burada id'ye ekledik -->
+        <div
+          class="card border-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %} mb-3"
+        >
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <span>{{ desk.name }}</span>
+            <a
+              class="btn btn-sm btn-light"
+              data-toggle="modal"
+              data-target="#orderModal{{ desk.id }}"
+              href="#"
+              ><i class="fas fa-eye"></i
+            ></a>
+          </div>
+          <div
+            class="card-body text-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %}"
+          >
+            <h5 class="card-title">{{ desk.name }}</h5>
+            <p class="card-text">
+              Toplam {{ desk.order_item_count }} adet sipariş mevcuttur
+            </p>
+          </div>
+          <div
+            class="card-footer bg-{% if desk.status_code == 2 %}danger {% elif desk.isReserve %}danger {% else %}success{% endif %} text-white"
+          >
+            <span>{{ desk.status }}</span>
+
+            <div class="mt-2">
+              <h6>Siparişler:</h6>
+
+              <ul class="items list-group">
+                {% if desk.order %} {% for order in desk.order_items %}
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  <div class="d-flex align-items-center">
+                    <span class="badge bg-primary rounded-pill mx-1"
+                      >{{ order.quantity }}</span
+                    >
+                    {% if order.image %}
+                    <img
+                      src="{{ order.image.url }}"
+                      alt="{{ order.product_name }}"
+                      class="me-3 rounded-circle"
+                      style="max-height: 40px; width: 40px"
+                    />
+                    {% endif %}
+                    <span>{{ order.product_name }}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm mark-as-served"
+                    data-order-item-id="{{ order.id }}"
+                    {%
+                    if
+                    order.is_service
+                    %}disabled{%
+                    endif
+                    %}
+                  >
+                    Servis Et
+                  </button>
+                </li>
+                {% endfor %} {% else %}
+                <li class="list-group-item">Bekleyen sipariş yoktur.</li>
+                {% endif %}
+              </ul>
+            </div>
+            {% if desk.status_code == 2 %}
+            <button
+              type="button"
+              class="btn btn-warning bg-white text-success btn-sm d-block w-100 mark-all-as-served mt-2"
+              data-order-id="{{ desk.order.id }}"
+            >
+              {% if desk.all_items_served %} Tüm Siparişler Servis Edildi {%
+              else %}Tümünü Servis Et{% endif %}
+            </button>
+            {% endif %}
+          </div>
         </div>
+      </div>
+      {% include "easymanagement/_partials/_order_details.html" %} {% endfor %}
     </div>
+  </div>
+</div>
 
-    <script>
-
-      $(document).ready(function() {
-        $('.mark-as-served').on('click', function() {
-            const orderItemId = $(this).data('order-item-id');
-            $.ajax({
-                url: `{% url 'mark_item_as_served' 0 %}`.replace('0', orderItemId),
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                        alert('Bir hata oluştu.');
-                    }
-                }
-            });
-        });
-    
-        $('.mark-all-as-served').on('click', function() {
-            const orderId = $(this).data('order-id');
-            $.ajax({
-                url: `{% url 'mark_all_items_as_served' 0 %}`.replace('0', orderId),
-                type: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                        alert('Bir hata oluştu.');
-                    }
-                }
-            });
-        });
+<script>
+  $(document).ready(function () {
+    $(".mark-as-served").on("click", function () {
+      const orderItemId = $(this).data("order-item-id");
+      $.ajax({
+        url: `{% url 'mark_item_as_served' 0 %}`.replace("0", orderItemId),
+        type: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        success: function (response) {
+          if (response.success) {
+            location.reload();
+          } else {
+            alert("Bir hata oluştu.");
+          }
+        },
+      });
     });
-    
-    
-    const businessId = "{{ user.business.id }}"; // İşletme ID'si
-    
-    const businessSocket = new WebSocket(`ws://localhost:8080/ws/business/${businessId}/`);
-    
-    businessSocket.onerror = function(e) {
-        console.error("WebSocket error: ", e);
-    };
-    
-    businessSocket.onclose = function(e) {
-        console.log("WebSocket connection closed:", e);
-        // Yeniden bağlantı kurmak için bir fonksiyon ekleyebilirsiniz
-    };
-    
-    businessSocket.onmessage = function(e) {
-        try {
-            const data = JSON.parse(e.data);
-    
-            // Eğer masa tamamlanmışsa ya da logout olduysa
-            if (data.desk_data && data.desk_data.status_code == 0) { // Status 1 mesela logout durumu olabilir
-                resetDeskToDefault(data.desk_data.desk_id); // Sadece o masayı sıfırla
-            }
-    
-            if (data.type === 'order_update') {
-                // Gelen sipariş güncellemesini masaya göre işleyin
-                var deskId = data.desk_id;
-                var orderId = data.order_id;
-                var status = data.status;
-                var totalPrice = data.total_price;
-                var items = data.items;
-    
-                // Masa listesinde ve modalda gerekli güncellemeleri yapın
-                console.log("Received:", data)
-                updateOrderList(items,deskId);
-            } else {
-                console.log("Received:", data)
-                updateDeskUI(data.desk_data); // Eğer logout değilse masayı normal şekilde güncelle
-            }
-        } catch (error) {
-            console.error("WebSocket message parsing error:", error);
-        }
-    };
-    
-    
-    
-    // Fonksiyon: Masa listesi ve modalda güncellemeleri işleme
-    function updateOrderModalList(deskId, orderId, status, totalPrice, items) {
-        // Masa bilgilerini DOM üzerinde bulup güncelleyin
-        var deskElement = $("#desk-" + deskId);  // jQuery seçicisini kullanın
 
-        if (deskElement) {
-            // Sipariş durumu ve toplam fiyatı masa üzerinde göster
-            deskElement.querySelector(".status").textContent = status;
-            deskElement.querySelector(".total_price").textContent = totalPrice + "₺";
-    
-            // Modal'daki öğe bilgilerini güncelleyin
-            var modalElement = document.getElementById("orderModal" + deskId);
-            if (modalElement) {
-                var itemsList = modalElement.querySelector(".items");
-                itemsList.innerHTML = ""; // Eski öğeleri temizle
-    
-                // Sipariş ürünlerini modal içerisine ekle
-                items.forEach(function(item) {
-                    var itemElement = document.createElement("li");
-                    itemElement.innerHTML = `
-              ${item.produce__name} 
-              <span class="badge badge-primary">${item.quantity}</span> 
-              - ${item.unit_price}₺`;
-                    itemsList.appendChild(itemElement);
-                });
-            }
-        }
-    }// Masa UI güncelleme fonksiyonu
-function updateDeskUI(desk) {
-  // desk.desk_id ile ilgili masa elementini buluyoruz
-  const deskElement = $(`#desk-${desk.desk_id}`);
-  console.log('Updating desk element:', deskElement);
+    $(".mark-all-as-served").on("click", function () {
+      const orderId = $(this).data("order-id");
+      $.ajax({
+        url: `{% url 'mark_all_items_as_served' 0 %}`.replace("0", orderId),
+        type: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        success: function (response) {
+          if (response.success) {
+            location.reload();
+          } else {
+            alert("Bir hata oluştu.");
+          }
+        },
+      });
+    });
+  });
 
-  if (!deskElement.length) {
+  const businessId = "{{ user.business.id }}"; // İşletme ID'si
+
+  const businessSocket = new WebSocket(
+    `ws://localhost:8080/ws/business/${businessId}/`
+  );
+
+  businessSocket.onerror = function (e) {
+    console.error("WebSocket error: ", e);
+  };
+
+  businessSocket.onclose = function (e) {
+    console.log("WebSocket connection closed:", e);
+    // Yeniden bağlantı kurmak için bir fonksiyon ekleyebilirsiniz
+  };
+
+  businessSocket.onmessage = function (e) {
+    try {
+      const data = JSON.parse(e.data);
+
+      // Eğer masa tamamlanmışsa ya da logout olduysa
+      if (data.desk_data && data.desk_data.status_code == 0) {
+        // Status 1 mesela logout durumu olabilir
+        resetDeskToDefault(data.desk_data.desk_id); // Sadece o masayı sıfırla
+      }
+
+      if (data.type === "send_order_update") {
+        // Gelen sipariş güncellemesini masaya göre işleyin
+        var deskId = data.desk_id;
+        var orderId = data.order_id;
+        var status = data.status;
+        var totalPrice = data.total_price;
+        var items = data.items;
+
+        // Masa listesinde ve modalda gerekli güncellemeleri yapın
+        console.log("Received:", data);
+        updateOrderList(items, deskId);
+        updateOrderModalList(deskId, orderId, status, totalPrice, items);
+      } else {
+        console.log("Received:", data);
+        updateDeskUI(data.desk_data); // Eğer logout değilse masayı normal şekilde güncelle
+      }
+    } catch (error) {
+      console.error("WebSocket message parsing error:", error);
+    }
+  };
+  function updateOrderModalList(deskId, orderId, status, totalPrice, items) {
+    const modalElement = document.getElementById("orderModal" + deskId);
+    if (!modalElement) return;
+
+    const priceElement = modalElement.querySelector(".total_price");
+    if (priceElement) {
+      priceElement.textContent = `${totalPrice.toLocaleString("tr-TR")} TL`;
+    }
+
+    const itemsContainer = modalElement.querySelector(".items");
+    if (!itemsContainer) return;
+    itemsContainer.innerHTML = "";
+    const paymentArea = modalElement.querySelector(".payment-area");
+    if (paymentArea) {
+      if (orderId) {
+        paymentArea.innerHTML = `
+              <a href="/management/process_payment/${orderId}/" class="btn btn-success btn-sm">Ödeme Ekranı</a>
+          `;
+      } else {
+        paymentArea.innerHTML = `<p>Ödeme yapılacak bir sipariş bulunamadı.</p>`;
+      }
+    }
+
+    // 1️⃣ Ürünleri grupla
+    const groupedItems = [];
+    items.forEach((item) => {
+      const existing = groupedItems.find(
+        (g) => g.produce__name === item.produce__name
+      );
+      if (existing) {
+        existing.quantity += item.quantity;
+      } else {
+        groupedItems.push({ ...item });
+      }
+    });
+
+    // 2️⃣ HTML’leri oluştur
+    groupedItems.forEach((item) => {
+      const itemElement = document.createElement("div");
+      itemElement.classList.add("row");
+
+      itemElement.innerHTML = `
+                <div class="col-md-2 col-lg-1">
+                    ${
+                      item.produce__image
+                        ? `<img src="/media/${item.produce__image}" alt="${item.produce__name}" class="rounded-circle" style="max-height: 40px; width: 40px;" />`
+                        : ""
+                    }
+                </div>
+                <div class="col-md-4 col-lg-5">
+                    <p>${item.produce__name}</p>
+                </div>
+                <div class="col-md-3 col-lg-1">
+                    <p><span class="badge bg-primary rounded-pill">${
+                      item.quantity
+                    }</span></p>
+                </div>
+                <div class="col-md-1 col-lg-3">
+                    <p>${Number(item.unit_price).toLocaleString("tr-TR")}₺</p>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm">Servis Et</button>
+                </div>
+            `;
+
+      itemsContainer.appendChild(itemElement);
+      itemsContainer.appendChild(document.createElement("hr"));
+    });
+  }
+
+
+
+  function updateDeskUI(desk) {
+    // desk.desk_id ile ilgili masa elementini buluyoruz
+    const deskElement = $(`#desk-${desk.desk_id}`);
+    console.log("Updating desk element:", deskElement);
+
+    if (!deskElement.length) {
       console.error(`Desk element not found for desk ID: ${desk.desk_id}`);
       return; // Eğer masa bulunamazsa fonksiyonu durdur
-  }
-
-  // Masa başlığını ve sipariş sayısını güncelle
-  deskElement.find('.card-title').text(desk.desk_name);
-  deskElement.find('.card-text').text(`Toplam ${desk.order_item_count || 0} adet sipariş mevcuttur`);
-
-  // Masa durumu (renkler ve durum bilgisi) güncelleniyor
-  const cardClass = desk.status_code == 2 || desk.is_reserve ? 'danger' : 'success';
-  deskElement.removeClass('border-success border-danger').addClass(`border-${cardClass}`);
-  deskElement.find('.card-body').removeClass('text-success text-danger').addClass(`text-${cardClass}`);
-  deskElement.find('.card-footer').removeClass('bg-success bg-danger').addClass(`bg-${cardClass}`);
-  deskElement.find('.card-footer span').text(desk.status || "");
-
-  // Siparişleri güncelle
-  const orderListElement = deskElement.find('.list-group');
-  if (orderListElement.length === 0) {
-      console.error('List group not found in the desk element');
-      return; // Eğer .list-group bulunamazsa fonksiyonu durdur
-  }
-  updateOrderList(desk.order_items || [], desk.desk_id);
-
-  // Masayı en üste taşı
-  deskElement.parent().prepend(deskElement); // Bulunan masayı listede en üste taşır
-}
-
-    
-    function resetDeskToDefault(deskId) {
-      console.log('Desk Id:',deskId)
-        const deskElement = $(`#desk-${deskId}`);
-        console.log("deskElement:", deskElement);
-      
-        if (deskElement.length) {
-            // Masanın durumunu yeşil olarak güncelle
-            deskElement.removeClass('border-danger').addClass('border-success');
-            deskElement.find('.card-body').removeClass('text-danger').addClass('text-success');
-            deskElement.find('.card-footer').removeClass('bg-danger').addClass('bg-success');
-            deskElement.find('.card-footer span').text(''); // Durum yazısını sıfırla
-    
-    
-            // Sipariş listesini sıfırlayabilirsin (isteğe bağlı)
-            deskElement.find('.list-group').empty().append('<li class="list-group-item">Bekleyen sipariş yoktur.</li>');
-        }
     }
-    
-    
-    function updateOrderList(orderItems, deskId) {
-        // jQuery objesine dönüştür
-        const deskElement = $(`#desk-${deskId}`);
-        console.log("OrderdeskElement:", deskElement);
-        const orderListElement = deskElement.find('.list-group');
-        
-        if (orderListElement.length === 0) {
-            console.error('List group not found in the desk element');
-            return; // Eğer list-group bulunamazsa fonksiyonu durdur
-        }
-    
-        orderListElement.empty(); // Mevcut listeyi temizle
-    
-        // Ürünleri grupla ve quantity'yi artır
-        const groupedItems = orderItems.reduce((acc, order) => {
-            // Aynı ürün zaten eklendiyse quantity'yi artır
-            const existingItem = acc.find(item => item.produce__name === order.produce__name);
-            
-            if (existingItem) {
-                existingItem.quantity += order.quantity;
-            } else {
-                acc.push(order);  // Yeni ürün ekle
-            }
-            return acc;
-        }, []);
-    
-        if (groupedItems.length > 0) {
-            // Her gruplandırılmış sipariş için liste elemanı oluştur
-            groupedItems.forEach(order => {
-                const imageUrl = order.produce__image ? `/media/${order.produce__image}` : '';  // Resim yolunu burada oluşturuyoruz
-                const orderItemHTML = `
+
+    // Masa başlığını ve sipariş sayısını güncelle
+    deskElement.find(".card-title").text(desk.desk_name);
+    deskElement
+      .find(".card-text")
+      .text(`Toplam ${desk.order_item_count || 0} adet sipariş mevcuttur`);
+
+    // Masa durumu (renkler ve durum bilgisi) güncelleniyor
+    const cardClass =
+      desk.status_code == 2 || desk.is_reserve ? "danger" : "success";
+    deskElement
+      .removeClass("border-success border-danger")
+      .addClass(`border-${cardClass}`);
+    deskElement
+      .find(".card-body")
+      .removeClass("text-success text-danger")
+      .addClass(`text-${cardClass}`);
+    deskElement
+      .find(".card-footer")
+      .removeClass("bg-success bg-danger")
+      .addClass(`bg-${cardClass}`);
+    deskElement.find(".card-footer span").text(desk.status || "");
+
+    // Siparişleri güncelle
+    const orderListElement = deskElement.find(".list-group");
+    if (orderListElement.length === 0) {
+      console.error("List group not found in the desk element");
+      return; // Eğer .list-group bulunamazsa fonksiyonu durdur
+    }
+    updateOrderList(desk.order_items || [], desk.desk_id);
+
+    // Masayı en üste taşı
+    deskElement.parent().prepend(deskElement); // Bulunan masayı listede en üste taşır
+  }
+
+  function resetDeskToDefault(deskId) {
+    console.log("Desk Id:", deskId);
+    const deskElement = $(`#desk-${deskId}`);
+    console.log("deskElement:", deskElement);
+
+    if (deskElement.length) {
+      // Masanın durumunu yeşil olarak güncelle
+      deskElement.removeClass("border-danger").addClass("border-success");
+      deskElement
+        .find(".card-body")
+        .removeClass("text-danger")
+        .addClass("text-success");
+      deskElement
+        .find(".card-footer")
+        .removeClass("bg-danger")
+        .addClass("bg-success");
+      deskElement.find(".card-footer span").text(""); // Durum yazısını sıfırla
+
+      // Sipariş listesini sıfırlayabilirsin (isteğe bağlı)
+      deskElement
+        .find(".list-group")
+        .empty()
+        .append('<li class="list-group-item">Bekleyen sipariş yoktur.</li>');
+    }
+  }
+
+  function updateOrderList(orderItems, deskId) {
+    // jQuery objesine dönüştür
+    const deskElement = $(`#desk-${deskId}`);
+    console.log("OrderdeskElement:", deskElement);
+    const orderListElement = deskElement.find(".list-group");
+
+    if (orderListElement.length === 0) {
+      console.error("List group not found in the desk element");
+      return; // Eğer list-group bulunamazsa fonksiyonu durdur
+    }
+
+    orderListElement.empty(); // Mevcut listeyi temizle
+
+    // Ürünleri grupla ve quantity'yi artır
+    const groupedItems = orderItems.reduce((acc, order) => {
+      // Aynı ürün zaten eklendiyse quantity'yi artır
+      const existingItem = acc.find(
+        (item) => item.produce__name === order.produce__name
+      );
+
+      if (existingItem) {
+        existingItem.quantity += order.quantity;
+      } else {
+        acc.push(order); // Yeni ürün ekle
+      }
+      return acc;
+    }, []);
+
+    if (groupedItems.length > 0) {
+      // Her gruplandırılmış sipariş için liste elemanı oluştur
+      groupedItems.forEach((order) => {
+        const imageUrl = order.produce__image
+          ? `/media/${order.produce__image}`
+          : ""; // Resim yolunu burada oluşturuyoruz
+        const orderItemHTML = `
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <span class="badge bg-primary rounded-pill mx-1">${order.quantity}</span>
-                        ${imageUrl ? `<img src="${imageUrl}" alt="${order.produce__name}" class="me-3 rounded-circle" style="max-height: 40px; width: 40px;">` : ''}
+                        <span class="badge bg-primary rounded-pill mx-1">${
+                          order.quantity
+                        }</span>
+                        ${
+                          imageUrl
+                            ? `<img src="${imageUrl}" alt="${order.produce__name}" class="me-3 rounded-circle" style="max-height: 40px; width: 40px;">`
+                            : ""
+                        }
                         <span>${order.produce__name}</span>
                     </div>
-                    <button type="button" class="btn btn-outline-primary btn-sm mark-as-served" data-order-item-id="${order.id}" ${order.is_service ? 'disabled' : ''}>Servis Et</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm mark-as-served" data-order-item-id="${
+                      order.id
+                    }" ${order.is_service ? "disabled" : ""}>Servis Et</button>
                 </li>`;
-                
-                // String'i bir jQuery objesi olarak ekleyelim
-                orderListElement.append($(orderItemHTML));
-            });
-        } else {
-            // Bekleyen sipariş yoksa mesaj göster
-            orderListElement.append('<li class="list-group-item">Bekleyen sipariş yoktur.</li>');
-        }
+
+        // String'i bir jQuery objesi olarak ekleyelim
+        orderListElement.append($(orderItemHTML));
+      });
+    } else {
+      // Bekleyen sipariş yoksa mesaj göster
+      orderListElement.append(
+        '<li class="list-group-item">Bekleyen sipariş yoktur.</li>'
+      );
     }
-    
-
-
-    </script>
+  }
+</script>
 
 {% endblock content %}
-
-

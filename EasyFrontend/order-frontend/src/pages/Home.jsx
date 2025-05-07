@@ -48,7 +48,13 @@ function OrderPage() {
     };
 
     socket.onerror = (error) => console.error("WebSocket Hatası:", error);
-    socket.onclose = () => console.log("WebSocket bağlantısı kapandı");
+    return () => {
+      socket.onmessage = null;
+      socket.onerror = null;
+      socket.onclose = null;
+      socket.close();
+    };
+    
 
     return () => socket.close();
   };

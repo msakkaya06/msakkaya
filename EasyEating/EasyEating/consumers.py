@@ -40,6 +40,8 @@ class BusinessConsumer(AsyncWebsocketConsumer):
             'desk_id': order.desk.id,
             'desk_name': order.desk.name,
         }
+        print("WebSocket'e order_update gönderiliyor...")
+
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -50,8 +52,12 @@ class BusinessConsumer(AsyncWebsocketConsumer):
 
 
     async def send_order_update(self, event):
+        print("WebSocket'e order_update gönderiliyor...")
+
+
         order_data = event['order_data']
         total_price = order_data['total_price'] if order_data['total_price'] is not None else 0.0
+        print("Gelen order_data:", order_data)
 
         # 'items' içindeki 'unit_price' değerlerini float'a çeviriyoruz
         items = order_data['items']
@@ -60,12 +66,13 @@ class BusinessConsumer(AsyncWebsocketConsumer):
 
         # JSON formatında gönder
         await self.send(text_data=json.dumps({
-            'type': 'order_update',
+            'type': 'send_order_update',
             'desk_id': order_data['desk_id'],
             'order_id': order_data['order_id'],
             'status': order_data['status'],
             'items': items,  # Güncellenmiş items listesi
             'desk_name': order_data['desk_name'],
+            'total_price': total_price,  
         }))
     
     def decimal_default(self, obj):
