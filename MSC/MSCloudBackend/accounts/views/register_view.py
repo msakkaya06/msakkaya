@@ -16,8 +16,11 @@ class RegisterView(APIView):
         user = UserService.create_user(
             username=serializer.validated_data['username'],
             email=serializer.validated_data['email'],
-            password=serializer.validated_data['password']
-        )
+            password=serializer.validated_data['password'],
+            first_name=serializer.validated_data.get('first_name', ''),
+        last_name=serializer.validated_data.get('last_name', '')
+            )
+
 
         refresh = RefreshToken.for_user(user)
         return Response({

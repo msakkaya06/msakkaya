@@ -1,6 +1,8 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
 
+from accounts.views.change_password_view import ChangePasswordView
+
 from .views.login_view import LoginView
 from .views.logout_view import LogoutView
 from .views.me_view import MeView
@@ -20,5 +22,6 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path("change-password/", ChangePasswordView.as_view(), name="change_password"),
     
 ]
