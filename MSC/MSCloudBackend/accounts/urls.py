@@ -1,6 +1,8 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
 
+from accounts.views.make_admin_view import MakeAdminView
+from accounts.views.protected_admin_view import AdminOnlyView
 from accounts.views.change_password_view import ChangePasswordView
 
 from .views.login_view import LoginView
@@ -23,5 +25,7 @@ urlpatterns = [
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('verify/', TokenVerifyView.as_view(), name='token_verify'),
     path("change-password/", ChangePasswordView.as_view(), name="change_password"),
+    path("admin-area/", AdminOnlyView.as_view(), name="admin_area"),
+    path("make-admin/", MakeAdminView.as_view(), name="make_admin"),
     
 ]
