@@ -2,8 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from django.contrib.auth import authenticate
-from accounts.serializers.password_serializers import ChangePasswordSerializer
+
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+
+from accounts.serializers.password_serializers import ChangePasswordSerializer
 
 
 class ChangePasswordView(APIView):

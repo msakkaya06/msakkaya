@@ -2,16 +2,25 @@ from rest_framework import serializers
 from accounts.models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
-    full_name = serializers.CharField(read_only=True)
-    groups = serializers.SerializerMethodField()
+    groups = serializers.SlugRelatedField(
+        many=True,
+        slug_field='name',   # 💥 ID yerine name döner
+        read_only=True
+    )
 
     class Meta:
         model = CustomUser
         fields = [
-            'id', 'username', 'email',
-            'first_name', 'last_name', 'full_name',
-            'groups', 'created_at'
+            'id',
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'full_name',
+            'groups',
+            'is_superuser',
+            'is_active',
+            'created_at',
+            'profile_image',
+            'last_login',
         ]
-
-    def get_groups(self, obj):
-        return [group.name for group in obj.groups.all()]

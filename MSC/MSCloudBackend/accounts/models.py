@@ -5,8 +5,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+def user_profile_upload_path(instance, filename):
+    return f'profiles/user_{instance.id}/{filename}'
+
 class CustomUser(AbstractUser):
-    profile_image = models.URLField(blank=True, null=True)
+    profile_image = models.ImageField(upload_to=user_profile_upload_path, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property

@@ -37,11 +37,12 @@ export default function Navbar() {
           <span className="text-gray-700">{user.first_name} {user.last_name}</span>
           <Link to="/me" className="text-sm text-blue-500 hover:underline">Profil</Link>
 
-          {user.is_superuser && (
-            <Link to="/admin-area" className="text-sm text-blue-500 hover:underline">
-              Yönetim Paneli
-            </Link>
-          )}
+{Array.isArray(user.groups) && user.groups.includes("admin") && (
+  <Link to="/admin-area" className="text-sm text-blue-500 hover:underline">
+    Yönetim Paneli
+  </Link>
+)}
+
 
           <button
             onClick={() => {

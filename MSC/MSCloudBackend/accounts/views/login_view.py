@@ -4,6 +4,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
+from django.contrib.auth.models import update_last_login 
 
 
 class LoginView(APIView):
@@ -16,5 +17,8 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
         if user:
             token, _ = Token.objects.get_or_create(user=user)
+
+            update_last_login(None, user)  # giriş tarihi güncellenir
+
             return Response({'token': token.key})
         return Response({'error': 'Geçersiz bilgiler'}, status=status.HTTP_401_UNAUTHORIZED)
