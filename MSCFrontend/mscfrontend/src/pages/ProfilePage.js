@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "../api/axios";
+import { useToast } from "../context/ToastContext";
+import { extractMessage } from "../utils/apiErrors";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -9,12 +11,11 @@ export default function ProfilePage() {
     email: "",
     profile_image: null,
   });
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
+  const { notify } = useToast();
   const fileInputRef = useRef();
 
-  // Şifre değiştirme formu
   const [passwordForm, setPasswordForm] = useState({
     old_password: "",
     new_password: "",
@@ -39,7 +40,10 @@ export default function ProfilePage() {
             profile_image: null,
           });
         })
-        .catch((err) => console.error("Profil alınamadı:", err));
+        .catch((err) => console.error("Profil alınamadı:", err))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -67,16 +71,15 @@ export default function ProfilePage() {
       });
 
       setUser((prev) => ({ ...prev, ...response.data }));
-      setMessage("Profil fotoğrafı güncellendi.");
+      notify("Profil fotoğrafı güncellendi", "success");
     } catch (err) {
-      setMessage("Fotoğraf yükleme hatası.");
+      notify(extractMessage(err), "error");
       console.error("Upload error:", err);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
 
     try {
       const token = localStorage.getItem("access");
@@ -95,10 +98,10 @@ export default function ProfilePage() {
         },
       });
 
-      setMessage("Profil başarıyla güncellendi.");
+      notify("Profil başarıyla güncellendi.", "success");
       setUser({ ...user, ...response.data });
     } catch (err) {
-      setMessage("Güncelleme başarısız oldu.");
+      notify(extractMessage(err), "error");
       console.error("Güncelleme hatası:", err);
     }
   };
@@ -115,20 +118,36 @@ export default function ProfilePage() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setPasswordMessage(res.data.message);
+      notify(res.data.message, "success");
       setPasswordForm({
         old_password: "",
         new_password: "",
         new_password2: "",
       });
+      setShowModal(false);
     } catch (err) {
-      setPasswordError(
-        err.response?.data?.error || "Bir hata oluştu, tekrar deneyin."
-      );
+      notify(extractMessage(err), "error");
+      setPasswordError(extractMessage(err));
     }
   };
 
-  if (!user) return <div className="p-8">Yükleniyor...</div>;
+  if (loading) {
+    return (
+      <div className="p-8 flex justify-center items-center h-screen">
+        <div className="animate-pulse space-y-4 w-full max-w-lg">
+          <div className="flex justify-center">
+            <div className="w-24 h-24 rounded-full bg-gray-300" />
+          </div>
+          <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto" />
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-300 rounded" />
+            <div className="h-4 bg-gray-300 rounded w-5/6" />
+            <div className="h-4 bg-gray-300 rounded w-4/6" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
@@ -198,8 +217,6 @@ export default function ProfilePage() {
             />
           </div>
 
-          {message && <p className="text-sm text-green-600">{message}</p>}
-
           <div className="flex justify-between items-center">
             <button
               type="submit"
@@ -218,7 +235,6 @@ export default function ProfilePage() {
         </form>
       </div>
 
-      {/* 🔐 Şifre Değiştirme Modali */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">

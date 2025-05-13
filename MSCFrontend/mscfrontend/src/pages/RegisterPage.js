@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "../api/axios";
 import { useToast } from "../context/ToastContext";
+import { extractMessage } from "../utils/apiErrors";
+
+
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -17,33 +20,28 @@ export default function RegisterPage() {
   };
 const handleSubmit = async (e) => {
   e.preventDefault();
-  try {
-    await axios.post("/auth/register/", form);
+try {
+  const loginRes = await axios.post("/auth/register/", form);
+  const { access, refresh } = loginRes.data;
 
-    // ✅ Otomatik login
-    const loginRes = await axios.post("/auth/login/", {
-      username: form.username,
-      password: form.password,
-    });
+  localStorage.setItem("access", access);
+  localStorage.setItem("refresh", refresh);
 
-    const { access, refresh } = loginRes.data;
-    localStorage.setItem("access", access);
-    localStorage.setItem("refresh", refresh);
+  const meRes = await axios.get("/auth/me/", {
+    headers: { Authorization: `Bearer ${access}` },
+  });
 
-    // ✅ me bilgisi
-    const meRes = await axios.get("/auth/me/", {
-      headers: { Authorization: `Bearer ${access}` },
-    });
+  notify(`Hoş geldin, ${meRes.data.full_name || meRes.data.username}!`, "success");
 
-    notify(`Hoş geldin, ${meRes.data.full_name || meRes.data.username}!`, "success");
+  setTimeout(() => {
+    window.location.href = "/dashboard";
+  }, 1500);
 
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 1500);
-  } catch (err) {
-    console.error(err);
-    notify("Kayıt başarısız. Lütfen bilgileri kontrol edin.", "error");
-  }
+} catch (err) {
+  console.error(err);
+  notify(extractMessage(err), "error");
+}
+
 };
 
 

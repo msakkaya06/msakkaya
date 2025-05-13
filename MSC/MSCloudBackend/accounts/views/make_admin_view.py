@@ -6,7 +6,7 @@ from accounts.serializers.admin_assigned_serializers import MakeAdminSerializer
 from accounts.models import CustomUser
 from rest_framework.permissions import IsAuthenticated
 from accounts.permissions import IsInGroup
-
+from msc_core.messages.accounts import ACCOUNT_MESSAGES  # ✅
 
 class MakeAdminView(APIView):
     permission_classes = [IsAuthenticated, IsInGroup("admin")]
@@ -16,12 +16,15 @@ class MakeAdminView(APIView):
         serializer.is_valid(raise_exception=True)
 
         user_id = serializer.validated_data["user_id"]
+
         try:
             target_user = CustomUser.objects.get(id=user_id)
         except CustomUser.DoesNotExist:
-            return Response({"error": "Kullanıcı bulunamadı"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": ACCOUNT_MESSAGES["user_not_found"]}, status=status.HTTP_404_NOT_FOUND)
 
         group, _ = Group.objects.get_or_create(name="admin")
         target_user.groups.add(group)
 
-        return Response({"message": f"{target_user.username} artık admin."}, status=status.HTTP_200_OK)
+        return Response({
+            "message": f"{target_user.username} - {ACCOUNT_MESSAGES['admin_granted']}"
+        }, status=status.HTTP_200_OK)

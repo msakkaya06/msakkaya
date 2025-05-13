@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "../api/axios";
 import { useToast } from "../context/ToastContext";
+import { extractMessage } from "../utils/apiErrors";
 
 
 export default function LoginPage() {
@@ -12,30 +13,32 @@ export default function LoginPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+  e.preventDefault();
+  setError(null);
 
-    try {
-      const response = await axios.post("/auth/login/", form);
-      const { access, refresh } = response.data;
+  try {
+    const response = await axios.post("/auth/login/", form);
+    const { access, refresh } = response.data;
 
-      localStorage.setItem("access", access);
-      localStorage.setItem("refresh", refresh);
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
 
-      const me = await axios.get("/auth/me/", {
-        headers: { Authorization: `Bearer ${access}` },
-      });
+    const me = await axios.get("/auth/me/", {
+      headers: { Authorization: `Bearer ${access}` },
+    });
 
-      notify(`Hoş geldin, ${me.data.full_name || me.data.username}!`, "success");
+    notify(`Hoş geldin, ${me.data.full_name || me.data.username}!`, "success");
 
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 1500); // 1.5 saniye sonra yönlendir
-    } catch (err) {
-      console.error("Login hatası:", err);
-      setError("Giriş başarısız");
-    }
-  };
+    setTimeout(() => {
+      window.location.href = "/dashboard";
+    }, 1500);
+  } catch (err) {
+    const message = extractMessage(err);
+    notify(message, "error");
+    setError(message); // Form içinde de gösteriyorsan bu kalabilir
+  }
+};
+
 
   // return içeriği aşağıda devam eder...
 

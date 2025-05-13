@@ -2,11 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from django.contrib.auth import authenticate
-
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 
 from accounts.serializers.password_serializers import ChangePasswordSerializer
-
+from msc_core.messages.accounts import ACCOUNT_MESSAGES  # ✅ eklendi
 
 class ChangePasswordView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -20,12 +19,15 @@ class ChangePasswordView(APIView):
         new_password = serializer.validated_data["new_password"]
 
         if not user.check_password(old_password):
-            return Response({"error": "Eski şifre yanlış"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": ACCOUNT_MESSAGES["wrong_old_password"]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         user.set_password(new_password)
         user.save()
 
-        # Tüm refresh token'ları iptal et
+        # Refresh token'ları blackliste at
         tokens = OutstandingToken.objects.filter(user=user)
         for token in tokens:
             try:
@@ -33,4 +35,7 @@ class ChangePasswordView(APIView):
             except:
                 pass
 
-        return Response({"message": "Şifre başarıyla değiştirildi"}, status=status.HTTP_200_OK)
+        return Response(
+            {"message": ACCOUNT_MESSAGES["password_changed"]},
+            status=status.HTTP_200_OK,
+        )
