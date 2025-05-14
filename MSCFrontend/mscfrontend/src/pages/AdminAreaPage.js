@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useToast } from "../context/ToastContext";
 import { useModal } from "../context/ModalContext";
 import { useApi } from "../hooks/useApi";
 
@@ -9,6 +8,7 @@ export default function AdminAreaPage() {
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterAdmin, setFilterAdmin] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { openModal } = useModal();
   const { request, loading } = useApi();
@@ -21,12 +21,14 @@ export default function AdminAreaPage() {
     page = 1,
     status = filterStatus,
     admin = filterAdmin,
+    search = searchQuery,
   } = {}) => {
     let url = `/auth/admin/users/?page=${page}`;
     if (status === "active") url += "&is_active=true";
     else if (status === "inactive") url += "&is_active=false";
     if (admin === "admin") url += "&is_admin=true";
     else if (admin === "normal") url += "&is_admin=false";
+    if (search) url += `&search=${encodeURIComponent(search)}`;
 
     try {
       const data = await request({ url, silent: !showLoading });
@@ -42,35 +44,20 @@ export default function AdminAreaPage() {
 
   useEffect(() => {
     fetchUsers({ showLoading: true, page });
-  }, [page, filterStatus, filterAdmin]);
+  }, [page, filterStatus, filterAdmin, searchQuery]);
 
   const makeAdmin = async (userId) => {
-    await request({
-      method: "POST",
-      url: "/auth/make-admin/",
-      data: { user_id: userId },
-      silent: true,
-    });
+    await request({ method: "POST", url: "/auth/make-admin/", data: { user_id: userId }, silent: true });
     fetchUsers({ page });
   };
 
   const removeAdmin = async (userId) => {
-    await request({
-      method: "POST",
-      url: "/auth/remove-admin/",
-      data: { user_id: userId },
-      silent: true,
-    });
+    await request({ method: "POST", url: "/auth/remove-admin/", data: { user_id: userId }, silent: true });
     fetchUsers({ page });
   };
 
   const toggleActive = async (userId) => {
-    await request({
-      method: "POST",
-      url: "/auth/toggle-active/",
-      data: { user_id: userId },
-      silent: true,
-    });
+    await request({ method: "POST", url: "/auth/toggle-active/", data: { user_id: userId }, silent: true });
     fetchUsers({ page });
   };
 
@@ -78,7 +65,7 @@ export default function AdminAreaPage() {
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Admin Panel – Kullanıcı Listesi</h1>
 
-      {/* Filtreler */}
+      {/* Filtre & Arama */}
       <div className="mb-6 flex flex-wrap gap-6 items-center text-sm">
         {/* Durum filtresi */}
         <div className="flex gap-2 items-center">
@@ -97,7 +84,7 @@ export default function AdminAreaPage() {
           </select>
         </div>
 
-        {/* Admin filtresi */}
+        {/* Rol filtresi */}
         <div className="flex gap-2 items-center">
           <label className="text-gray-600">Rol:</label>
           <select
@@ -113,16 +100,28 @@ export default function AdminAreaPage() {
             <option value="normal">Normal Kullanıcılar</option>
           </select>
         </div>
+
+        {/* Arama kutusu */}
+        <div className="flex gap-2 items-center">
+          <label className="text-gray-600">Ara:</label>
+          <input
+            type="text"
+            placeholder="İsim, kullanıcı adı veya email"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setPage(1);
+            }}
+            className="border px-3 py-1 rounded w-64"
+          />
+        </div>
       </div>
 
       {/* Skeleton */}
       {loading ? (
         <div className="animate-pulse">
           {[...Array(10)].map((_, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-7 items-center gap-4 bg-white px-4 py-3 border-b"
-            >
+            <div key={idx} className="grid grid-cols-7 items-center gap-4 bg-white px-4 py-3 border-b">
               <div className="w-10 h-10 bg-gray-300 rounded-full" />
               <div className="h-4 bg-gray-300 rounded w-full col-span-1" />
               <div className="h-4 bg-gray-300 rounded w-full col-span-1" />
@@ -231,38 +230,12 @@ export default function AdminAreaPage() {
           {/* Sayfalama */}
           <div className="flex justify-between items-center mt-6 text-sm">
             <div className="space-x-2">
-              <button
-                onClick={() => setPage(1)}
-                disabled={page === 1}
-                className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-              >
-                ⏮ İlk
-              </button>
-              <button
-                onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                disabled={!pagination.previous}
-                className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-              >
-                ← Önceki
-              </button>
-              <button
-                onClick={() => setPage((p) => p + 1)}
-                disabled={!pagination.next}
-                className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-              >
-                Sonraki →
-              </button>
-              <button
-                onClick={() => setPage(totalPages)}
-                disabled={page === totalPages}
-                className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
-              >
-                ⏭ Son
-              </button>
+              <button onClick={() => setPage(1)} disabled={page === 1} className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50">⏮ İlk</button>
+              <button onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={!pagination.previous} className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50">← Önceki</button>
+              <button onClick={() => setPage((p) => p + 1)} disabled={!pagination.next} className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50">Sonraki →</button>
+              <button onClick={() => setPage(totalPages)} disabled={page === totalPages} className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50">⏭ Son</button>
             </div>
-            <div className="text-gray-600">
-              Sayfa {page} / {totalPages} — Toplam {pagination.count} kullanıcı
-            </div>
+            <div className="text-gray-600">Sayfa {page} / {totalPages} — Toplam {pagination.count} kullanıcı</div>
           </div>
         </>
       )}

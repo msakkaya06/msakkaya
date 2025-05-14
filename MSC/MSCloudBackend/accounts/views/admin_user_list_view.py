@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from rest_framework.pagination import PageNumberPagination
-
+from django.db.models import Q
 from accounts.models import CustomUser
 from accounts.permissions import IsInGroup
 from accounts.serializers.user_serializer import UserSerializer
@@ -28,6 +28,14 @@ class AdminUserListView(APIView):
         paginator = PageNumberPagination()
         paginator.page_size = 10
         result_page = paginator.paginate_queryset(users, request)
+        search = request.query_params.get("search")
+        if search:
+            users = users.filter(
+            Q(email__icontains=search) |
+            Q(username__icontains=search) |
+            Q(first_name__icontains=search) |
+            Q(last_name__icontains=search)
+    )
 
         serializer = UserSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
