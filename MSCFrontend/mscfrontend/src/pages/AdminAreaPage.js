@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../context/ModalContext";
 import { useApi } from "../hooks/useApi";
+import { useDebounce } from "../hooks/useDebounce";
 
 export default function AdminAreaPage() {
   const [users, setUsers] = useState([]);
@@ -9,10 +10,9 @@ export default function AdminAreaPage() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterAdmin, setFilterAdmin] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const debouncedSearch = useDebounce(searchQuery);
   const { openModal } = useModal();
   const { request, loading } = useApi();
-
   const pageSize = 10;
   const totalPages = Math.ceil(pagination.count / pageSize);
 
@@ -42,9 +42,9 @@ export default function AdminAreaPage() {
     } catch {}
   };
 
-  useEffect(() => {
-    fetchUsers({ showLoading: true, page });
-  }, [page, filterStatus, filterAdmin, searchQuery]);
+useEffect(() => {
+  fetchUsers({ showLoading: true, page, search: debouncedSearch });
+}, [debouncedSearch, filterStatus, filterAdmin, page]);
 
   const makeAdmin = async (userId) => {
     await request({ method: "POST", url: "/auth/make-admin/", data: { user_id: userId }, silent: true });
