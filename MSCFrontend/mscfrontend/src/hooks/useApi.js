@@ -8,36 +8,42 @@ export function useApi() {
   const { notify } = useToast();
 
   const request = async ({
-    method = "GET",
-    url,
-    data = null,
-    headers = {},
-    notifyOnSuccess = true,
-    silent = false,
-  }) => {
-    if (!silent) setLoading(true);
-    try {
-      const token = localStorage.getItem("access");
-      const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
-      const response = await axios({
-        method,
-        url,
-        data,
-        headers: { ...headers, ...authHeaders },
-      });
+  method = "GET",
+  url,
+  data = null,
+  headers = {},
+  notifyOnSuccess = true,
+  silent = false,
+}) => {
+  if (!silent) setLoading(true);
 
-      if (notifyOnSuccess && response.data.message) {
-        notify(response.data.message, "success");
-      }
+  const label = `[API] ${method} ${url}`;
+  console.time(label); // ⏱️ süre ölçüm başlat
 
-      return response.data;
-    } catch (err) {
-      notify(extractMessage(err), "error");
-      throw err;
-    } finally {
-      if (!silent) setLoading(false);
+  try {
+    const token = localStorage.getItem("access");
+    const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios({
+      method,
+      url,
+      data,
+      headers: { ...headers, ...authHeaders },
+    });
+
+    if (notifyOnSuccess && response.data.message) {
+      notify(response.data.message, "success");
     }
-  };
+
+    return response.data;
+  } catch (err) {
+    notify(extractMessage(err), "error");
+    throw err;
+  } finally {
+    console.timeEnd(label); // ⏱️ süre ölçüm bitir
+    if (!silent) setLoading(false);
+  }
+};
+
 
   return { request, loading };
 }

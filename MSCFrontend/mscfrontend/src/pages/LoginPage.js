@@ -30,7 +30,7 @@ export default function LoginPage() {
     notify(`Hoş geldin, ${me.data.full_name || me.data.username}!`, "success");
 
     setTimeout(() => {
-      window.location.href = "/dashboard";
+      window.location.href = "/cloud";
     }, 1500);
   } catch (err) {
     const message = extractMessage(err);

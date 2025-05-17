@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import CloudPage from "./pages/CloudPage";
 import DashboardPage from "./pages/DashboardPage";
+
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
 import AdminAreaPage from "./pages/AdminAreaPage";
@@ -19,11 +21,10 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/dashboard"
+            <Route path="/cloud/:folderId?" 
               element={
                 <PrivateRoute>
-                  <DashboardPage />
+                  <CloudPage  />
                 </PrivateRoute>
               }
             />
